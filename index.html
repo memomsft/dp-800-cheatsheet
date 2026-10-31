@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b3a6b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DP-800 · Cheatsheet corto</title>
+<script>(function(){try{var t=JSON.parse(localStorage.getItem('dp800s-theme')||'null')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+<style>
+:root{--bg:#f4f6fa;--panel:#fff;--panel2:#eef2f7;--text:#16202b;--muted:#5a6878;--border:#d9e1ea;--accent:#0f6cbd;--d1:#2f80ed;--d2:#8b5cf6;--d3:#10b981;--code:#e6eef7;--codefg:#0b4a85;--shadow:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.05);--mono:"Cascadia Code",Consolas,ui-monospace,monospace}
+[data-theme=dark]{--bg:#0b1118;--panel:#121b26;--panel2:#182331;--text:#e6edf3;--muted:#93a4b7;--border:#243445;--accent:#5ab0ff;--code:#1b2a3a;--codefg:#a5d3ff;--shadow:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1200px;margin:0 auto;padding:0 18px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
+.top .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.top b{font-size:15px}.top nav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.top nav a{padding:3px 10px;border-radius:99px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:13px;font-weight:600}
+.top nav a:hover{text-decoration:none;border-color:var(--accent)}
+.btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:8px;padding:4px 10px;font:inherit;font-size:13px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.hero{margin:20px 0 6px;padding:20px 22px;border-radius:16px;color:#fff;background:linear-gradient(135deg,#0b3a6b,#1b2a5a 60%,#4c2a8a);box-shadow:var(--shadow)}
+.hero h1{margin:0 0 4px;font-size:clamp(22px,3vw,30px)}.hero p{margin:4px 0 0;opacity:.92}
+.hero a{color:#bfe0ff;text-decoration:underline}
+h2{font-size:21px;margin:30px 0 4px;display:flex;align-items:center;gap:10px}
+h2 small{font-size:13px;font-weight:600;color:var(--muted)}
+h2:before{content:"";width:6px;height:22px;border-radius:3px;background:var(--c,var(--accent))}
+.lead{margin:0 0 10px;color:var(--muted);font-size:14px}
+#d1{--c:var(--d1)}#d2{--c:var(--d2)}#d3{--c:var(--d3)}
+.note{margin:12px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--border);border-left:5px solid var(--accent);background:var(--panel);font-size:14px}
+.note.warn{border-left-color:#e5484d}.note.memo{border-left-color:var(--d2)}
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel);margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
+thead th{background:var(--panel2);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--panel2) 50%,transparent)}
+.pistas td:nth-child(2){font-weight:600}.pistas td:first-child{width:38%}
+tr.grp td{background:var(--panel2)!important;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--c)}
+tr.grp.d1 td{color:var(--d1)}tr.grp.d2 td{color:var(--d2)}tr.grp.d3 td{color:var(--d3)}
+code{font-family:var(--mono);font-size:.87em;background:var(--code);color:var(--codefg);padding:.1em .35em;border-radius:5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:12px;margin-top:8px}
+.card{background:var(--panel);border:1px solid var(--border);border-top:4px solid var(--c);border-radius:14px;padding:12px 15px 14px;box-shadow:var(--shadow);min-width:0}
+.card h3{margin:0 0 6px;font-size:16px}.card h3 .n{display:inline-block;margin-right:6px;padding:0 7px;border-radius:6px;font-size:12px;color:#fff;background:var(--c)}
+.card ul{margin:4px 0;padding-left:18px}.card li{margin:4px 0;font-size:14px}
+.card .tw{margin:6px 0}.card table{font-size:12.5px}.card th,.card td{padding:5px 8px}
+pre{margin:8px 0;padding:9px 12px;border-radius:10px;background:#0e1621;color:#e6edf3;overflow:auto;font:12.5px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+pre code{background:none;color:inherit;padding:0}
+.tk-k{color:#7cc7ff;font-weight:600}.tk-f{color:#e5d28b}.tk-s{color:#f0a47c}.tk-n{color:#b5e08f}.tk-c{color:#7a9a74;font-style:italic}.tk-v{color:#9cdcfe}.tk-t{color:#4ec9b0}.tk-key{color:#9cdcfe}
+.cifras{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:8px}
+.cifras div{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13.5px}
+footer{margin:34px 0 50px;color:var(--muted);font-size:13px}
+@media print{
+  @page{size:A4;margin:9mm}
+  .top,.btn{display:none!important}
+  body{background:#fff;color:#000;font-size:9.6px;line-height:1.35}
+  .wrap{max-width:none;padding:0}
+  .hero{color:#000;background:#fff;border:1px solid #999;box-shadow:none;padding:8px 12px;margin:0 0 4px}.hero a{color:#000}
+  h2{font-size:14px;margin:10px 0 3px;break-after:avoid}
+  .cards{display:block;column-count:2;column-gap:9px}
+  .card{break-inside:avoid;margin:0 0 8px;box-shadow:none;padding:6px 9px}
+  .card li{font-size:9.4px;margin:2px 0}.card h3{font-size:11px}
+  table{font-size:8.8px}th,td{padding:2px 5px}
+  .tw{overflow:visible;border-color:#bbb}
+  pre{background:#f4f6f8;color:#111;font-size:8.2px;padding:4px 7px;break-inside:avoid}
+  .tk-k{color:#0b5cad}.tk-f{color:#7a5c00}.tk-s{color:#b13a00}.tk-n{color:#2d7a1f}.tk-c{color:#5b7a56}.tk-v{color:#0b6a8a}.tk-t{color:#0f7a6a}.tk-key{color:#0b6a8a}
+  .note{break-inside:avoid;padding:4px 8px;font-size:9.4px}
+  .cifras{grid-template-columns:repeat(3,1fr)}.cifras div{font-size:9.2px;padding:3px 6px}
+  tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <b>DP-800</b>
+  <nav><a href="#pistas">Pistas</a><a href="#d1">D1 · Diseño</a><a href="#d2">D2 · Seguridad / deploy</a><a href="#d3">D3 · IA</a><a href="#cifras">Cifras</a></nav>
+  <button class="btn" id="theme">🌓 Tema</button><button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <h1>DP-800 · Cheatsheet corto</h1>
+  <p>Qué elegir, cuándo y con qué palabra clave. Solo lo que sale en el <i>skills measured</i> oficial, a nivel de reconocimiento: no memorices límites ni opciones finas. Para el detalle: <a href="referencia.html">referencia completa →</a></p>
+</section>
+
+<section id="pistas">
+<h2>1 · Si el enunciado dice… → piensa en… <small>(léelo antes de cada práctica)</small></h2>
+<div class="tw"><table class="pistas">
+<thead><tr><th>Si el enunciado dice…</th><th>Piensa en</th><th>Palabra clave</th></tr></thead>
+<tbody>
+<tr class="grp d1"><td colspan="3">D1 · Diseñar y desarrollar</td></tr>
+<tr><td>Historial de cambios; ver cómo estaba el dato ayer, sin triggers</td><td>Temporal table</td><td><code>SYSTEM_VERSIONING</code> · <code>FOR SYSTEM_TIME AS OF</code></td></tr>
+<tr><td>Prueba de que nadie alteró los datos</td><td>Ledger table</td><td><code>LEDGER = ON</code> · <code>APPEND_ONLY = ON</code></td></tr>
+<tr><td>Miles de inserts concurrentes; datos efímeros o de caché</td><td>Memory-optimized table</td><td><code>MEMORY_OPTIMIZED = ON</code> · <code>SCHEMA_ONLY</code></td></tr>
+<tr><td>Consultar archivos del lake u otra fuente sin copiar los datos</td><td>External table</td><td><code>CREATE EXTERNAL DATA SOURCE</code> + <code>EXTERNAL TABLE</code></td></tr>
+<tr><td>Relaciones muchos-a-muchos; "camino más corto"</td><td>Graph tables</td><td><code>AS NODE</code> · <code>AS EDGE</code> · <code>MATCH</code></td></tr>
+<tr><td>Agregaciones sobre millones de filas (analítica)</td><td>Columnstore index</td><td><code>CLUSTERED COLUMNSTORE INDEX</code></td></tr>
+<tr><td>Atributos distintos por fila; datos semi-estructurados</td><td>Columna <code>json</code></td><td>JSON index · <code>JSON_VALUE</code></td></tr>
+<tr><td>Número compartido entre tablas; pedirlo antes del INSERT</td><td>SEQUENCE</td><td><code>NEXT VALUE FOR</code></td></tr>
+<tr><td>Cargar o archivar por periodo en segundos</td><td>Partitioning</td><td><code>SWITCH PARTITION</code></td></tr>
+<tr><td>Lecturas pesadas y repetitivas con agregaciones</td><td>Indexed view</td><td><code>SCHEMABINDING</code> + unique clustered index</td></tr>
+<tr><td>"Como una vista, pero con parámetros"</td><td>Inline table-valued function</td><td><code>CROSS APPLY</code></td></tr>
+<tr><td>Varias sentencias + transacción + parámetro OUTPUT</td><td>Stored procedure</td><td><code>EXEC</code> · <code>OUTPUT</code></td></tr>
+<tr><td>Reaccionar automáticamente a INSERT / UPDATE / DELETE</td><td>DML trigger</td><td><code>AFTER</code> · <code>INSTEAD OF</code> · <code>inserted</code>/<code>deleted</code></td></tr>
+<tr><td>Suma acumulada; fila anterior; top-N por grupo</td><td>Window function</td><td><code>OVER (PARTITION BY … ORDER BY …)</code></td></tr>
+<tr><td>Jerarquía de profundidad variable</td><td>CTE recursiva</td><td><code>UNION ALL</code> · <code>MAXRECURSION</code></td></tr>
+<tr><td>Construir JSON anidado con arreglo · JSON → filas · leer un valor</td><td>JSON functions</td><td><code>JSON_OBJECT</code>+<code>JSON_ARRAYAGG</code> · <code>OPENJSON</code> · <code>JSON_VALUE</code></td></tr>
+<tr><td>Validar o extraer con un patrón (email, teléfono)</td><td>Regex</td><td><code>REGEXP_LIKE</code> · <code>REGEXP_SUBSTR</code></td></tr>
+<tr><td>Nombres con errores de escritura / casi iguales</td><td>Fuzzy matching</td><td><code>EDIT_DISTANCE</code> · <code>JARO_WINKLER_DISTANCE</code></td></tr>
+<tr><td>Re-lanzar el error original dentro de CATCH</td><td>THROW</td><td><code>THROW;</code></td></tr>
+<tr><td>Instrucciones fijas de Copilot para todo el repo · solo para <code>.sql</code></td><td>Instruction files</td><td><code>.github/copilot-instructions.md</code> · <code>*.instructions.md</code> + <code>applyTo</code></td></tr>
+<tr><td>Que el asistente consulte SQL / Fabric en vivo</td><td>MCP server</td><td><code>mcp.json</code> · Agent mode</td></tr>
+<tr class="grp d2"><td colspan="3">D2 · Seguridad, rendimiento y despliegue</td></tr>
+<tr><td>"Ni el DBA debe ver el dato"</td><td>Always Encrypted</td><td>CMK / CEK · deterministic / randomized</td></tr>
+<tr><td>Soporte ve solo los últimos 4 dígitos, sin cambiar la app</td><td>Dynamic Data Masking</td><td><code>partial()</code> · <code>UNMASK</code></td></tr>
+<tr><td>Cada usuario o tenant ve solo sus filas</td><td>Row-Level Security</td><td><code>CREATE SECURITY POLICY</code> · <code>FILTER</code>/<code>BLOCK PREDICATE</code></td></tr>
+<tr><td>Cifrar archivos y backups sin tocar la app</td><td>TDE</td><td>cifrado en reposo</td></tr>
+<tr><td>Sin contraseñas en la cadena de conexión</td><td>Entra ID + Managed Identity</td><td><code>FROM EXTERNAL PROVIDER</code></td></tr>
+<tr><td>Registrar quién accedió o qué hizo</td><td>Auditing</td><td>SQL Audit · Azure SQL Auditing</td></tr>
+<tr><td>Los lectores bloquean a los escritores, sin cambiar el código</td><td>RCSI / SNAPSHOT</td><td><code>READ_COMMITTED_SNAPSHOT</code></td></tr>
+<tr><td>Estaba rápida y ahora lenta (cambió el plan)</td><td>Query Store</td><td><i>Regressed Queries</i> · <code>sp_query_store_force_plan</code></td></tr>
+<tr><td>Las consultas más costosas, en el portal de Azure</td><td>Query Performance Insight</td><td>usa Query Store</td></tr>
+<tr><td>Dos transacciones se esperan mutuamente (ciclo)</td><td>Deadlock</td><td>error <code>1205</code> · víctima</td></tr>
+<tr><td>Desplegar el esquema desde Git / CI</td><td>SQL Database Project</td><td><code>.dacpac</code> · <code>sqlpackage</code> Publish</td></tr>
+<tr><td>La BD productiva cambió y el repo no lo sabe</td><td>Schema drift</td><td><code>DriftReport</code> · Schema Compare</td></tr>
+<tr><td>Aprobación manual antes de producción · el equipo dueño revisa</td><td>Environment + required reviewers · CODEOWNERS</td><td>branch protection</td></tr>
+<tr><td>Sin secretos ni contraseñas en el pipeline</td><td>OIDC / Key Vault</td><td><code>azure/login</code> · <code>id-token: write</code></td></tr>
+<tr><td>API REST y GraphQL sobre la BD sin programarla</td><td>Data API builder</td><td><code>dab-config.json</code> · <code>dab init</code></td></tr>
+<tr><td>Detectar cambios: solo qué fila · con valores antes/después · stream de eventos · función serverless · low-code</td><td>Change Tracking · CDC · CES · Functions SQL trigger · Logic Apps</td><td>ver tabla en M8</td></tr>
+<tr><td>Telemetría de la app · logs y métricas de la BD</td><td>Application Insights · Log Analytics</td><td>diagnostic settings</td></tr>
+<tr class="grp d3"><td colspan="3">D3 · IA en la base de datos</td></tr>
+<tr><td>Generar embeddings desde T-SQL</td><td>External model</td><td><code>CREATE EXTERNAL MODEL</code> · <code>AI_GENERATE_EMBEDDINGS</code></td></tr>
+<tr><td>Texto demasiado largo para el modelo</td><td>Chunking</td><td><code>AI_GENERATE_CHUNKS</code> · overlap</td></tr>
+<tr><td>Buscar un SKU, código o frase exacta</td><td>Full-text search</td><td><code>CONTAINS</code> · <code>FREETEXT</code></td></tr>
+<tr><td>Buscar por significado o sinónimos</td><td>Vector search</td><td><code>VECTOR_DISTANCE</code> · <code>VECTOR_SEARCH</code></td></tr>
+<tr><td>Lo mejor de ambos; máximo recall</td><td>Hybrid search + RRF</td><td><code>1/(k + rank)</code></td></tr>
+<tr><td>Millones de vectores, la velocidad manda · pocos datos, exactitud total</td><td>ANN · ENN</td><td><code>CREATE VECTOR INDEX</code> · <code>VECTOR_DISTANCE</code></td></tr>
+<tr><td>Respuestas basadas en MIS datos, sin reentrenar el modelo</td><td>RAG</td><td>retrieve → augment → generate</td></tr>
+<tr><td>Llamar a Azure OpenAI desde T-SQL</td><td>REST desde SQL</td><td><code>sp_invoke_external_rest_endpoint</code></td></tr>
+<tr><td>Armar el contexto · leer la respuesta del LLM</td><td>JSON</td><td><code>FOR JSON PATH</code> · <code>JSON_VALUE(@response, '$.result.choices[0].message.content')</code></td></tr>
+<tr><td>Llamar al modelo sin guardar la API key en texto</td><td>Managed Identity</td><td><code>DATABASE SCOPED CREDENTIAL</code> · <code>IDENTITY = 'Managed Identity'</code></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="d1">
+<h2>D1 · Diseñar y desarrollar <small>35–40 %</small></h2>
+<div class="cards">
+
+<article class="card"><h3><span class="n">M1</span>Objetos de base de datos</h3><ul>
+<li><b>Tipos:</b> el más pequeño que alcance. <code>decimal(p,s)</code> para dinero exacto, <code>datetime2</code> mejor que <code>datetime</code>, <code>nvarchar</code> solo si necesitas Unicode.</li>
+<li><b>Índices:</b> <i>clustered</i> = ordena la tabla (uno por tabla, casi siempre la PK) · <i>nonclustered</i> = estructura aparte (varios) · <code>INCLUDE</code> = columnas extra para "cubrir" la consulta · <i>filtered</i> = solo las filas del <code>WHERE</code>.</li>
+<li><b>Columnstore</b> = analítica (agregaciones, compresión). Rowstore = OLTP.</li>
+<li><b>In-memory:</b> <code>SCHEMA_AND_DATA</code> (default, persiste) vs <code>SCHEMA_ONLY</code> (se pierde al reiniciar).</li>
+<li><b>Temporal:</b> dos columnas <code>datetime2</code> + <code>PERIOD FOR SYSTEM_TIME</code>; la history table la maneja el motor. <b>Ledger:</b> <i>updatable</i> (permite UPDATE/DELETE y guarda historial) vs <i>append-only</i> (solo INSERT).</li>
+<li><b>JSON:</b> tipo <code>json</code> o <code>nvarchar(max)</code> + <code>ISJSON()</code>. Índice: <code>CREATE JSON INDEX</code> o columna calculada con <code>JSON_VALUE</code> + índice normal.</li>
+<li><b>Constraints:</b> PK (único, sin NULL) · FK (<code>ON DELETE CASCADE | SET NULL | NO ACTION</code>) · UNIQUE (admite un NULL) · CHECK · DEFAULT.</li>
+<li><b>SEQUENCE</b> es un objeto propio (no va atado a una tabla como <code>IDENTITY</code>).</li>
+<li><b>Partitioning:</b> partition <i>function</i> (los límites) → <i>scheme</i> (filegroups) → tabla <code>ON scheme(col)</code>. <code>RANGE LEFT</code>: el valor límite queda en la partición de la izquierda; <code>RIGHT</code>: en la de la derecha.</li></ul>
+<pre><code class="lang-sql">CREATE SEQUENCE dbo.OrderSeq START WITH 1 INCREMENT BY 1;
+SELECT NEXT VALUE FOR dbo.OrderSeq;</code></pre></article>
+
+<article class="card"><h3><span class="n">M2</span>Programabilidad</h3><ul>
+<li><b>View:</b> guarda una consulta (simplifica y limita acceso). <code>WITH CHECK OPTION</code> evita filas que la view luego no vería. <b>Indexed view</b> = materializada: <code>SCHEMABINDING</code> + índice clustered único.</li>
+<li><b>Funciones:</b> escalar (1 valor) · <i>inline</i> TVF (un solo <code>SELECT</code>, la más rápida, "view con parámetros") · <i>multi-statement</i> TVF (más lenta, estimaciones pobres). Regla: prefiere inline.</li>
+<li><b>Stored procedure:</b> lógica + parámetros (<code>OUTPUT</code>) + transacciones; se llama con <code>EXEC</code>, no dentro de un <code>SELECT</code>. Buenas prácticas: <code>SET NOCOUNT ON</code>, <code>EXECUTE AS</code>.</li>
+<li><b>Trigger:</b> <code>AFTER</code> (después del cambio) o <code>INSTEAD OF</code> (en lugar del cambio; típico en views). Usa las tablas virtuales <code>inserted</code> / <code>deleted</code>. Se dispara por <i>sentencia</i>, no por fila → escribe código para varias filas. Existen también DDL y logon triggers.</li>
+<li><b>Atajo:</b> ¿parámetro en el <code>FROM</code>? iTVF · ¿modificas datos o necesitas transacción? SP · ¿reusar un valor dentro de un <code>SELECT</code>? función escalar.</li></ul></article>
+
+<article class="card"><h3><span class="n">M3</span>T-SQL avanzado</h3><ul>
+<li><b>CTE:</b> <code>WITH x AS (…)</code>. Recursiva = miembro ancla + <code>UNION ALL</code> + miembro recursivo; <code>OPTION (MAXRECURSION n)</code> (default 100; 0 = sin límite).</li>
+<li><b>Window:</b> <code>función() OVER (PARTITION BY … ORDER BY …)</code>: ranking (<code>ROW_NUMBER</code>, <code>RANK</code>, <code>DENSE_RANK</code>), vecinos (<code>LAG</code>, <code>LEAD</code>), acumulados (<code>SUM() OVER</code>).</li>
+<li><b>Graph:</b> <code>WHERE MATCH(a-(arista)-&gt;b)</code>; <code>SHORTEST_PATH</code> para el camino más corto.</li>
+<li><b>Correlacionadas:</b> la subconsulta usa columnas de la externa; <code>EXISTS</code> / <code>NOT EXISTS</code>; <code>CROSS APPLY</code> / <code>OUTER APPLY</code> aplican una función o subconsulta fila por fila.</li>
+<li><b>Errores:</b> <code>TRY…CATCH</code> · <code>THROW</code> (moderno; <code>THROW;</code> re-lanza el original) vs <code>RAISERROR</code> (antiguo, formato printf) · <code>SET XACT_ABORT ON</code> · <code>XACT_STATE()</code>.</li></ul>
+<div class="tw"><table><thead><tr><th>Función</th><th>Para qué</th></tr></thead><tbody>
+<tr><td><code>JSON_VALUE</code></td><td>un valor escalar</td></tr>
+<tr><td><code>JSON_QUERY</code></td><td>un objeto o arreglo</td></tr>
+<tr><td><code>OPENJSON … WITH</code></td><td>JSON → filas y columnas</td></tr>
+<tr><td><code>JSON_OBJECT</code> / <code>JSON_ARRAY</code></td><td>construir JSON</td></tr>
+<tr><td><code>JSON_ARRAYAGG</code></td><td>varias filas → un arreglo JSON</td></tr>
+<tr><td><code>JSON_CONTAINS</code></td><td>¿el JSON contiene este valor?</td></tr>
+<tr><td><code>FOR JSON PATH</code></td><td>resultado de consulta → JSON</td></tr>
+<tr><td><code>REGEXP_LIKE</code></td><td>¿coincide con el patrón? (predicado)</td></tr>
+<tr><td><code>REGEXP_REPLACE</code> · <code>_SUBSTR</code> · <code>_INSTR</code> · <code>_COUNT</code></td><td>reemplazar · extraer · posición · contar</td></tr>
+<tr><td><code>REGEXP_MATCHES</code> · <code>REGEXP_SPLIT_TO_TABLE</code></td><td>devuelven una <b>tabla</b> (van en <code>FROM</code>/<code>APPLY</code>)</td></tr>
+<tr><td><code>EDIT_DISTANCE</code></td><td>n.º de ediciones (menor = más parecido)</td></tr>
+<tr><td><code>EDIT_DISTANCE_SIMILARITY</code></td><td>similitud 0–100</td></tr>
+<tr><td><code>JARO_WINKLER_DISTANCE</code></td><td>distancia 0–1 (<b>0 = idéntico</b>)</td></tr>
+</tbody></table></div></article>
+
+<article class="card"><h3><span class="n">M4</span>Herramientas con IA</h3><ul>
+<li><b>Instrucciones para Copilot:</b> <code>.github/copilot-instructions.md</code> (todo el repo) · <code>.github/instructions/*.instructions.md</code> con <code>applyTo: "**/*.sql"</code> (solo esos archivos) · <code>AGENTS.md</code> (agentes) · <code>.github/prompts/*.prompt.md</code> (plantillas bajo demanda).</li>
+<li><b>Chat:</b> modos Ask / Edit / Agent; eliges modelo y herramientas (tools) en el chat. Las herramientas MCP requieren <b>Agent mode</b>.</li>
+<li><b>MCP</b> (Model Context Protocol): estándar para que el asistente use herramientas y datos externos. Config en <code>.vscode/mcp.json</code> (clave <code>servers</code>). Hay servidores para SQL Server (extensión MSSQL / SQL MCP Server) y para un Fabric lakehouse.</li>
+<li><b>Copilot in Fabric:</b> necesita una capacidad de Fabric de pago (F2+ / P1+) y que el admin habilite el tenant setting.</li>
+<li><b>Seguridad:</b> no pegues secretos ni datos sensibles en prompts · el MCP debe usar una cuenta de <b>solo lectura / mínimo privilegio</b> · revisa el SQL generado antes de ejecutarlo · ojo con <i>prompt injection</i> (datos que traen instrucciones escondidas).</li></ul></article>
+
+</div></section>
+
+<section id="d2">
+<h2>D2 · Seguridad, rendimiento y despliegue <small>35–40 %</small></h2>
+<div class="cards">
+
+<article class="card"><h3><span class="n">M5</span>Seguridad y cumplimiento</h3>
+<div class="tw"><table><thead><tr><th>Técnica</th><th>Protege de…</th></tr></thead><tbody>
+<tr><td><b>Always Encrypted</b></td><td>DBA y operador cloud: el motor nunca ve el dato en claro</td></tr>
+<tr><td><b>Cell-level</b> (<code>ENCRYPTBYKEY</code>)</td><td>leer la columna sin la clave (el servidor descifra)</td></tr>
+<tr><td><b>TDE</b></td><td>robo de archivos y backups (cifra en reposo)</td></tr>
+<tr><td><b>DDM</b></td><td>exposición en resultados (solo enmascara, no cifra)</td></tr>
+<tr><td><b>RLS</b></td><td>ver filas ajenas (multi-tenant)</td></tr></tbody></table></div>
+<ul>
+<li><b>Always Encrypted:</b> <i>Deterministic</i> (mismo valor → mismo cifrado; permite <code>=</code>, JOIN, GROUP BY; revela patrones) vs <i>Randomized</i> (más seguro; sin comparaciones). Con <i>enclave</i> se permiten <code>LIKE</code> y rangos. Claves: CMK (p. ej. Key Vault) cifra la CEK; el cliente conecta con <code>Column Encryption Setting=Enabled</code>.</li>
+<li><b>DDM:</b> <code>default()</code>, <code>email()</code>, <code>random()</code>, <code>partial()</code>; el permiso <code>UNMASK</code> ve el dato real. No es un control fuerte.</li>
+<li><b>RLS:</b> función inline + <code>CREATE SECURITY POLICY</code>. <code>FILTER PREDICATE</code> limita lo que se <i>lee</i>; <code>BLOCK PREDICATE</code> impide <i>escribir</i> filas no permitidas.</li>
+<li><b>Permisos:</b> <code>GRANT</code> / <code>DENY</code> / <code>REVOKE</code>; <b>DENY gana</b>. Usa roles, mínimo privilegio y permisos a nivel de esquema.</li>
+<li><b>Passwordless:</b> Entra ID + Managed Identity; <code>CREATE USER [x] FROM EXTERNAL PROVIDER</code>; connection string <code>Authentication=Active Directory Default</code> / <code>Managed Identity</code>.</li>
+<li><b>Auditing:</b> SQL Server Audit (server audit + audit specification) · Azure SQL Auditing hacia Storage, Log Analytics o Event Hubs.</li>
+<li><b>Endpoints de modelos:</b> <code>CREATE DATABASE SCOPED CREDENTIAL … WITH IDENTITY = 'Managed Identity'</code> (sin API keys en texto).</li>
+<li><b>Endpoints DAB (REST / GraphQL / MCP):</b> autenticación Entra ID, roles y permisos por entidad y acción, <code>host.mode = production</code>, MCP con permisos mínimos.</li></ul></article>
+
+<article class="card"><h3><span class="n">M6</span>Rendimiento</h3><ul>
+<li><b>Tier:</b> DTU = paquete simple · vCore = eliges cómputo y almacenamiento por separado. <i>General Purpose</i> = uso general · <i>Business Critical</i> = baja latencia + réplica de lectura · <i>Hyperscale</i> = bases muy grandes (&gt; 4 TB), escala y restore rápidos · <i>Serverless</i> = se auto-pausa (cargas intermitentes).</li>
+<li><b>Planes:</b> <i>actual</i> (lo que pasó) vs <i>estimated</i>. Seek bueno · Scan sobre tabla grande malo · Key Lookup → agrega <code>INCLUDE</code> · avisos de conversión implícita / missing index.</li>
+<li><b>Query Store:</b> historial de consultas y planes; <i>Regressed Queries</i>; fuerza un plan con <code>sp_query_store_force_plan</code>. <b>QPI</b> es la vista del portal sobre Query Store.</li>
+<li><b>DMVs:</b> <code>sys.dm_exec_requests</code> (qué corre / quién bloquea) · <code>dm_exec_query_stats</code> (consumo acumulado) · <code>dm_tran_locks</code> (locks) · <code>dm_os_wait_stats</code> (esperas) · <code>dm_db_missing_index_*</code> (índices sugeridos).</li>
+<li><b>Blocking</b> = espera en cadena (cede al terminar el que bloquea). <b>Deadlock</b> = ciclo; el motor mata una víctima (error 1205). Arreglo: transacciones cortas, mismo orden de acceso, buenos índices, RCSI, reintentos.</li></ul>
+<div class="tw"><table><thead><tr><th>Isolation level</th><th>Dirty</th><th>Non-rep.</th><th>Phantom</th></tr></thead><tbody>
+<tr><td>READ UNCOMMITTED</td><td>Sí</td><td>Sí</td><td>Sí</td></tr>
+<tr><td>READ COMMITTED <i>(default SQL Server)</i></td><td>No</td><td>Sí</td><td>Sí</td></tr>
+<tr><td>READ COMMITTED SNAPSHOT <i>(RCSI · default Azure SQL DB)</i></td><td>No</td><td>Sí</td><td>Sí</td></tr>
+<tr><td>REPEATABLE READ</td><td>No</td><td>No</td><td>Sí</td></tr>
+<tr><td>SNAPSHOT <i>(ALLOW_SNAPSHOT_ISOLATION)</i></td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td>SERIALIZABLE</td><td>No</td><td>No</td><td>No</td></tr></tbody></table></div>
+<p class="lead" style="margin:2px 0 0">RCSI y SNAPSHOT usan <i>row versioning</i>: los lectores no bloquean a los escritores.</p></article>
+
+<article class="card"><h3><span class="n">M7</span>CI/CD con SQL Database Projects</h3><ul>
+<li><b>Flujo:</b> proyecto SQL (SDK-style, <code>Microsoft.Build.Sql</code>) → <code>dotnet build</code> → <code>.dacpac</code> → <code>sqlpackage</code> Publish (o <code>azure/sql-action</code>) → base de datos.</li>
+<li><b>sqlpackage:</b> <code>Publish</code> (aplica) · <code>Script</code> (genera el T-SQL) · <code>DeployReport</code> (resumen) · <code>DriftReport</code> (¿alguien cambió la BD?) · <code>Extract</code> (BD → dacpac).</li>
+<li><b>Pruebas:</b> <i>unit</i> con tSQLt (<code>FakeTable</code>, <code>AssertEquals</code>) vs <i>integration</i> con una BD real o contenedor.</li>
+<li><b>Datos de referencia:</b> post-deployment script idempotente (<code>MERGE</code>), versionado en Git.</li>
+<li><b>Git:</b> ramas + pull request; branch protection (checks obligatorios y revisores) · <code>CODEOWNERS</code> · <i>Environments</i> con <i>required reviewers</i> para producción.</li>
+<li><b>Secretos:</b> GitHub secrets o Azure Key Vault; mejor <b>OIDC</b> (<code>azure/login</code> con <code>id-token: write</code>), sin contraseñas.</li></ul>
+<pre><code class="lang-bash">dotnet build
+sqlpackage /Action:Publish /SourceFile:db.dacpac /TargetConnectionString:"..."</code></pre></article>
+
+<article class="card"><h3><span class="n">M8</span>DAB y servicios de Azure</h3><ul>
+<li><b>Data API builder</b> = API REST + GraphQL sobre tablas, vistas y stored procedures, sin código. CLI: <code>dab init</code>, <code>dab add</code>, <code>dab start</code>.</li>
+<li><b>Por entidad:</b> <code>source</code> (tabla/vista/SP) · <code>permissions</code> (rol + acciones) · <code>relationships</code> (GraphQL) · <code>cache</code> (<code>enabled</code>, <code>ttl-seconds</code>). <b>Paginación:</b> <code>default-page-size</code> / <code>max-page-size</code>.</li>
+<li><b>Consultas:</b> REST <code>$filter</code> <code>$orderby</code> <code>$select</code> <code>$first</code> <code>$after</code> · GraphQL <code>filter</code> <code>orderBy</code> <code>first</code> <code>after</code>.</li>
+<li><b>Hosting:</b> contenedor (Azure Container Apps / App Service) u otro servicio de Azure. <b>Monitoreo:</b> Application Insights (telemetría de la app) + Log Analytics (logs/métricas de la BD vía diagnostic settings).</li></ul>
+<pre><code class="lang-json">{ "data-source": { "database-type": "mssql", "connection-string": "@env('SQL_CONN')" },
+  "runtime": { "rest": { "enabled": true }, "graphql": { "enabled": true }, "host": { "mode": "production" } },
+  "entities": { "Book": { "source": { "object": "dbo.Books", "type": "table" },
+      "permissions": [ { "role": "anonymous", "actions": [ "read" ] } ] } } }</code></pre>
+<div class="tw"><table><thead><tr><th>Para detectar cambios</th><th>Qué da</th><th>Úsalo cuando…</th></tr></thead><tbody>
+<tr><td><b>Change Tracking</b></td><td>solo <i>qué filas</i> cambiaron (PK + operación); ligero; exige PK</td><td>sincronización incremental simple</td></tr>
+<tr><td><b>CDC</b></td><td>historial con valores antes/después (lee el log)</td><td>auditoría o ETL con detalle</td></tr>
+<tr><td><b>CES</b> <i>(Preview)</i></td><td>stream de eventos casi en tiempo real hacia Event Hubs</td><td>arquitectura orientada a eventos</td></tr>
+<tr><td><b>Azure Functions</b> (SQL trigger)</td><td>función serverless que se dispara con los cambios (usa Change Tracking)</td><td>procesar cambios con tu propio código</td></tr>
+<tr><td><b>Logic Apps</b></td><td>flujo low-code con trigger SQL (polling)</td><td>integrar con otros servicios sin programar</td></tr></tbody></table></div></article>
+
+</div></section>
+
+<section id="d3">
+<h2>D3 · IA en la base de datos <small>25–30 %</small></h2>
+<div class="cards">
+
+<article class="card"><h3><span class="n">M9</span>Modelos y embeddings</h3><ul>
+<li><b>Embedding</b> = vector numérico que representa el significado. Se guarda en una columna <code>vector(n)</code>; <b>n debe coincidir con el modelo</b> y no se mezclan modelos.</li>
+<li><b>Elegir modelo:</b> <i>small</i> (barato y rápido) vs <i>large</i> (mejor calidad, más dimensiones) · multilingüe o multimodal solo si el caso lo pide · <i>structured output</i> = el modelo responde con un JSON que cumple un esquema.</li>
+<li><b>Qué incrustar:</b> texto con significado (título + descripción + categoría). No IDs, fechas ni números sueltos.</li>
+<li><b>Chunking:</b> trozos de tamaño fijo con solapamiento (<i>overlap</i>) para respetar el límite de tokens.</li></ul>
+<pre><code class="lang-sql">CREATE EXTERNAL MODEL EmbedModel WITH (
+  LOCATION = 'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;deploy&gt;/embeddings?api-version=...',
+  API_FORMAT = 'Azure OpenAI', MODEL_TYPE = EMBEDDINGS,
+  MODEL = 'text-embedding-3-small', CREDENTIAL = [https://&lt;recurso&gt;.openai.azure.com]);
+SELECT AI_GENERATE_EMBEDDINGS(N'hola' USE MODEL EmbedModel);</code></pre>
+<div class="tw"><table><thead><tr><th>Mantener embeddings al cambiar los datos</th><th>Nota</th></tr></thead><tbody>
+<tr><td><b>Table trigger</b></td><td>simple, pero síncrono: alarga la transacción</td></tr>
+<tr><td><b>Change Tracking</b> / <b>Azure Functions</b></td><td>asíncrono y ligero (Functions usa CT)</td></tr>
+<tr><td><b>Logic Apps</b></td><td>low-code, integra otros servicios</td></tr>
+<tr><td><b>CDC</b> / <b>CES</b></td><td>alto volumen o arquitectura de eventos</td></tr>
+<tr><td><b>Microsoft Foundry</b></td><td>aloja/evalúa el modelo; no detecta cambios por sí solo</td></tr></tbody></table></div></article>
+
+<article class="card"><h3><span class="n">M10</span>Búsqueda inteligente</h3>
+<div class="tw"><table><thead><tr><th></th><th>Full-text</th><th>Vector</th><th>Hybrid</th></tr></thead><tbody>
+<tr><td>Cuándo</td><td>SKU, error, frase exacta</td><td>por significado / sinónimos</td><td>no sabes cómo busca el usuario; RAG</td></tr>
+<tr><td>T-SQL</td><td><code>CONTAINS</code> <code>FREETEXT</code></td><td><code>VECTOR_DISTANCE</code> <code>VECTOR_SEARCH</code></td><td>ambos + RRF</td></tr></tbody></table></div>
+<ul>
+<li><b>Funciones:</b> <code>VECTOR_DISTANCE('cosine', a, b)</code> (distancia exacta) · <code>VECTOR_SEARCH</code> (búsqueda aproximada con índice) · <code>VECTOR_NORMALIZE</code> (normaliza el vector) · <code>VECTORPROPERTY</code> (dimensiones / tipo base).</li>
+<li><b>Métricas:</b> <i>cosine</i> (la habitual para texto) · <i>euclidean</i> · <i>dot</i> (con vectores normalizados).</li>
+<li><b>ENN</b> (exacta): recall 100 %, recorre todo → pocos datos o filtros muy selectivos. <b>ANN</b> (aproximada): recall &lt; 100 % pero rápida → necesita <code>CREATE VECTOR INDEX</code> (DiskANN) y millones de vectores.</li>
+<li><b>RRF</b> (Reciprocal Rank Fusion): suma <code>1/(k + rank)</code> de cada lista (full-text + vector), con k ≈ 60; no hace falta normalizar scores.</li></ul>
+<pre><code class="lang-sql">-- ENN (exacta)
+SELECT TOP (5) id FROM dbo.Docs ORDER BY VECTOR_DISTANCE('cosine', embedding, @q);
+-- ANN, docs vigentes
+SELECT TOP (5) WITH APPROXIMATE t.id, s.distance
+FROM VECTOR_SEARCH(TABLE = dbo.Docs AS t, COLUMN = embedding,
+                   SIMILAR_TO = @q, METRIC = 'cosine') AS s
+ORDER BY s.distance;
+-- ANN, como lo enseña Learn: VECTOR_SEARCH(..., TOP_N = 5)</code></pre></article>
+
+<article class="card"><h3><span class="n">M11</span>RAG con SQL</h3><ul>
+<li><b>RAG</b> = <i>Retrieve</i> (busca contexto con vector/hybrid) → <i>Augment</i> (lo mete en el prompt) → <i>Generate</i> (el LLM responde).</li>
+<li><b>Úsalo cuando</b> los datos son privados o cambian, necesitas citar la fuente y no quieres reentrenar. <b>Fine-tuning</b> = conocimiento estable que debe quedar dentro del modelo.</li>
+<li><b>En T-SQL:</b> <code>sp_invoke_external_rest_endpoint</code> con <code>@url</code>, <code>@payload</code>, <code>@credential</code> y <code>@response OUTPUT</code> (método por defecto <code>POST</code>).</li>
+<li><b>Contexto:</b> <code>FOR JSON PATH</code> o <code>JSON_OBJECT</code> + <code>JSON_ARRAY</code>. <b>Respuesta:</b> <code>JSON_VALUE</code> sobre <code>$.result.choices[0].message.content</code>.</li>
+<li><b>Seguridad:</b> credencial con Managed Identity; no envíes datos de más; respeta RLS al recuperar el contexto.</li></ul>
+<pre><code class="lang-sql">DECLARE @response nvarchar(max);
+EXEC sp_invoke_external_rest_endpoint
+     @url = N'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;d&gt;/chat/completions?api-version=...',
+     @credential = [https://&lt;recurso&gt;.openai.azure.com],
+     @payload = @json, @response = @response OUTPUT;
+SELECT JSON_VALUE(@response, '$.result.choices[0].message.content');</code></pre></article>
+
+</div></section>
+
+<section id="cifras">
+<h2>Cifras que sí conviene saber</h2>
+<div class="cifras">
+<div><code>MAXRECURSION</code> default <b>100</b> (0 = sin límite)</div>
+<div><code>THROW</code>: n.º de error <b>≥ 50000</b></div>
+<div>Isolation por defecto: SQL Server = <b>READ COMMITTED</b> · Azure SQL DB = <b>RCSI</b></div>
+<div>Deadlock: error <b>1205</b></div>
+<div><code>vector</code>: máx. <b>1,998</b> dims (float32) · <b>3,996</b> (float16)</div>
+<div>Dims: ada-002 y 3-small = <b>1,536</b> · 3-large = <b>3,072</b></div>
+<div>RRF: <code>1/(k+rank)</code>, <b>k ≈ 60</b></div>
+<div><code>sp_invoke_external_rest_endpoint</code>: <code>@timeout</code> <b>30 s</b> (máx. 230) · <code>@retry_count</code> <b>0–10</b></div>
+<div>DAB: página por defecto <b>100</b>, máx. <b>100,000</b></div>
+<div><code>EDIT_DISTANCE_SIMILARITY</code> <b>0–100</b> · <code>JARO_WINKLER_DISTANCE</code> <b>0–1</b> (0 = igual)</div>
+</div>
+<div class="note warn"><b>Learn vs docs actuales:</b> Learn enseña <code>VECTOR_SEARCH(…, TOP_N = k)</code>; la doc vigente usa <code>SELECT TOP (N) WITH APPROXIMATE … ORDER BY distance</code> y marca <code>TOP_N</code> como deprecado. Reconoce las dos formas. Además, <code>JARO_WINKLER_DISTANCE</code> es una <i>distancia</i> (0 = idéntico), no una similitud.</div>
+</section>
+
+<footer>Resumen no oficial basado en Microsoft Learn (curso DP-800T00-A) y la documentación oficial, verificado el 30-oct-2026. Skills measured as of March 12, 2026. Confirma lo crítico en la <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-800" target="_blank" rel="noopener">guía de estudio oficial</a>. Material de estudio personal; no es contenido oficial de Microsoft ni está afiliado a Microsoft.</footer>
+</main>
+
+<script>
+(function(){
+'use strict';
+var esc=function(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})};
+var KW=new Set(('ADD ALTER AND AS ASC BY CREATE DECLARE DEFAULT DELETE DESC DROP ELSE END EXEC EXECUTE EXISTS FROM GROUP IN INSERT INTO IS JOIN KEY LEFT NOT NULL OF ON OR ORDER OUTPUT OVER PARTITION PRIMARY SELECT SET TABLE THEN TOP UNION UPDATE USE VALUES VIEW WHEN WHERE WITH SEQUENCE START INCREMENT EXTERNAL MODEL SELECT APPROXIMATE').split(' '));
+var TY=new Set('INT BIGINT BIT DECIMAL DATETIME2 NVARCHAR VARCHAR VECTOR JSON'.split(' '));
+function run(code,re,cls){var out='',last=0,m;re.lastIndex=0;while((m=re.exec(code))){out+=esc(code.slice(last,m.index));var c=cls(m,re.lastIndex);out+=c?'<span class="'+c+'">'+esc(m[0])+'</span>':esc(m[0]);last=m.index+m[0].length;if(!m[0].length)re.lastIndex++}return out+esc(code.slice(last))}
+var SQL=/(--[^\n]*)|(N?'(?:[^']|'')*')|(@@?[A-Za-z_]\w*)|(\b\d+(?:\.\d+)?\b)|(\b[A-Za-z_][\w$]*\b)/g;
+function hlSql(c){return run(c,SQL,function(m,e){if(m[1])return'tk-c';if(m[2])return'tk-s';if(m[3])return'tk-v';if(m[4])return'tk-n';var u=m[5].toUpperCase();if(TY.has(u))return'tk-t';if(KW.has(u))return'tk-k';if(/^\s*\(/.test(c.slice(e,e+8)))return'tk-f';if(/^[A-Z][A-Z0-9_]+$/.test(m[5]))return'tk-k';return null})}
+var JS=/("(?:[^"\\\n]|\\.)*")(\s*:)?|(\b(?:true|false|null)\b)|(\b\d+\b)/g;
+function hlJson(c){return run(c,JS,function(m){return m[1]?(m[2]?'tk-key':'tk-s'):m[3]?'tk-k':'tk-n'})}
+var SH=/(#[^\n]*)|("(?:[^"\\]|\\.)*")|(\s\/?-{0,2}[A-Za-z]+:|\s--?[A-Za-z][\w-]*)|(\b(?:dotnet|sqlpackage|dab)\b)/g;
+function hlSh(c){return run(c,SH,function(m){return m[1]?'tk-c':m[2]?'tk-s':m[3]?'tk-t':'tk-f'})}
+document.querySelectorAll('pre code').forEach(function(el){var t=el.textContent.replace(/\s+$/,'');var l=(el.className.match(/lang-(\w+)/)||[])[1];el.innerHTML=l==='sql'?hlSql(t):l==='json'?hlJson(t):l==='bash'?hlSh(t):esc(t)});
+document.getElementById('theme').addEventListener('click',function(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('dp800s-theme',JSON.stringify(t))}catch(e){}});
+})();
+</script>
+</body>
+</html>
