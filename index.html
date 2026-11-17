@@ -3,346 +3,828 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0b3a6b">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DP-800 · Cheatsheet corto</title>
-<script>(function(){try{var t=JSON.parse(localStorage.getItem('dp800s-theme')||'null')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+<meta name="theme-color" content="#060A14">
+<meta name="description" content="Cheatsheet del examen DP-800 (SQL AI Developer Associate): pistas de reconocimiento, resumen por módulo y cifras clave.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230078D4'/%3E%3Cstop offset='.55' stop-color='%235B5FC7'/%3E%3Cstop offset='1' stop-color='%23038387'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='28' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='19' fill='white'%3EDP%3C/text%3E%3Ctext x='32' y='49' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='19' fill='white'%3E800%3C/text%3E%3C/svg%3E">
+<title>DP-800 · Cheatsheet</title>
+<script>(function(){try{var t=JSON.parse(localStorage.getItem('dp800s-theme')||'null')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){document.documentElement.setAttribute('data-theme','light')}})();</script>
 <style>
-:root{--bg:#f4f6fa;--panel:#fff;--panel2:#eef2f7;--text:#16202b;--muted:#5a6878;--border:#d9e1ea;--accent:#0f6cbd;--d1:#2f80ed;--d2:#8b5cf6;--d3:#10b981;--code:#e6eef7;--codefg:#0b4a85;--shadow:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.05);--mono:"Cascadia Code",Consolas,ui-monospace,monospace}
-[data-theme=dark]{--bg:#0b1118;--panel:#121b26;--panel2:#182331;--text:#e6edf3;--muted:#93a4b7;--border:#243445;--accent:#5ab0ff;--code:#1b2a3a;--codefg:#a5d3ff;--shadow:none}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1200px;margin:0 auto;padding:0 18px}
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
-.top .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
-.top b{font-size:15px}.top nav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-.top nav a{padding:3px 10px;border-radius:99px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:13px;font-weight:600}
-.top nav a:hover{text-decoration:none;border-color:var(--accent)}
-.btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:8px;padding:4px 10px;font:inherit;font-size:13px;cursor:pointer}
-.btn:hover{border-color:var(--accent)}
-.hero{margin:20px 0 6px;padding:20px 22px;border-radius:16px;color:#fff;background:linear-gradient(135deg,#0b3a6b,#1b2a5a 60%,#4c2a8a);box-shadow:var(--shadow)}
-.hero h1{margin:0 0 4px;font-size:clamp(22px,3vw,30px)}.hero p{margin:4px 0 0;opacity:.92}
-.hero a{color:#bfe0ff;text-decoration:underline}
-h2{font-size:21px;margin:30px 0 4px;display:flex;align-items:center;gap:10px}
-h2 small{font-size:13px;font-weight:600;color:var(--muted)}
-h2:before{content:"";width:6px;height:22px;border-radius:3px;background:var(--c,var(--accent))}
-.lead{margin:0 0 10px;color:var(--muted);font-size:14px}
-#d1{--c:var(--d1)}#d2{--c:var(--d2)}#d3{--c:var(--d3)}
-.note{margin:12px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--border);border-left:5px solid var(--accent);background:var(--panel);font-size:14px}
-.note.warn{border-left-color:#e5484d}.note.memo{border-left-color:var(--d2)}
-.tw{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel);margin:8px 0}
-table{border-collapse:collapse;width:100%;font-size:13.5px}
-th,td{padding:7px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
-thead th{background:var(--panel2);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
-tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--panel2) 50%,transparent)}
-.pistas td:nth-child(2){font-weight:600}.pistas td:first-child{width:38%}
-tr.grp td{background:var(--panel2)!important;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--c)}
-tr.grp.d1 td{color:var(--d1)}tr.grp.d2 td{color:var(--d2)}tr.grp.d3 td{color:var(--d3)}
-code{font-family:var(--mono);font-size:.87em;background:var(--code);color:var(--codefg);padding:.1em .35em;border-radius:5px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:12px;margin-top:8px}
-.card{background:var(--panel);border:1px solid var(--border);border-top:4px solid var(--c);border-radius:14px;padding:12px 15px 14px;box-shadow:var(--shadow);min-width:0}
-.card h3{margin:0 0 6px;font-size:16px}.card h3 .n{display:inline-block;margin-right:6px;padding:0 7px;border-radius:6px;font-size:12px;color:#fff;background:var(--c)}
-.card ul{margin:4px 0;padding-left:18px}.card li{margin:4px 0;font-size:14px}
-.card .tw{margin:6px 0}.card table{font-size:12.5px}.card th,.card td{padding:5px 8px}
-pre{margin:8px 0;padding:9px 12px;border-radius:10px;background:#0e1621;color:#e6edf3;overflow:auto;font:12.5px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
-pre code{background:none;color:inherit;padding:0}
-.tk-k{color:#7cc7ff;font-weight:600}.tk-f{color:#e5d28b}.tk-s{color:#f0a47c}.tk-n{color:#b5e08f}.tk-c{color:#7a9a74;font-style:italic}.tk-v{color:#9cdcfe}.tk-t{color:#4ec9b0}.tk-key{color:#9cdcfe}
-.cifras{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:8px}
-.cifras div{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13.5px}
-footer{margin:34px 0 50px;color:var(--muted);font-size:13px}
+/* DP-800 · Cheatsheet — mismo lenguaje visual que el deck «Fabric AI Development»:
+   keynote + Azure Architecture + Fluent 2. Un solo archivo, sin red ni fuentes web. */
+:root{
+  color-scheme:light;
+  --blue:#0078D4;--violet:#5B5FC7;--teal:#038387;--green:#107C10;--amber:#C25400;--red:#C4314B;
+  --ink:#16161C;--ink2:#464651;--ink3:#6B6B78;--line:#E2E2E8;--surf:#F6F6F9;--surf2:#ECECF2;
+  --bg:#FFFFFF;--panel:#FFFFFF;--dot:#E1E1EA;--link:#0A63B0;--navy:#060A14;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 12px 32px rgba(0,0,0,.07);
+  --font:"Segoe UI Variable Display","Segoe UI Variable","Segoe UI",system-ui,-apple-system,"SF Pro Display","Helvetica Neue",Roboto,Arial,sans-serif;
+  --mono:"Cascadia Code","SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --c:#0078D4;--ct:#0A63B0;--cl:#E8F2FC;
+}
+[data-theme=dark]{
+  color-scheme:dark;
+  --ink:#E8EBF5;--ink2:#C5CCE0;--ink3:#97A0BD;--line:#232C47;--surf:#0F1629;--surf2:#18213A;
+  --bg:#070B16;--panel:#0D1426;--dot:#131C34;--link:#6DB6FF;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 14px 36px rgba(0,0,0,.35);
+  --ct:#6DB6FF;--cl:rgba(0,120,212,.18);
+}
+/* Un color por dominio (igual que las facetas del deck) */
+[data-d="1"]{--c:#0078D4;--ct:#0A63B0;--cl:#E8F2FC;--cd:#0A3F7A;--glow:#3c9bf5;--deep:#041a33;--top:#0f6bc4;--o1:#0b5cc4;--o2:#3c9bf5}
+[data-d="2"]{--c:#5B5FC7;--ct:#4A4EB4;--cl:#EDEEFB;--cd:#2E2F7A;--glow:#8588ee;--deep:#120d38;--top:#5258c9;--o1:#4a3fd0;--o2:#8588ee}
+[data-d="3"]{--c:#038387;--ct:#02686C;--cl:#E4F3F3;--cd:#05494C;--glow:#24b8bd;--deep:#02282a;--top:#07878b;--o1:#05878b;--o2:#24b8bd}
+[data-d="x"]{--c:#C25400;--ct:#A04500;--cl:#FFF1E0;--cd:#6B2F00;--glow:#f59a3c;--deep:#2a1100;--top:#d06a0f;--o1:#c25400;--o2:#f59a3c}
+[data-theme=dark] [data-d="1"]{--ct:#6DB6FF;--cl:rgba(0,120,212,.2)}
+[data-theme=dark] [data-d="2"]{--ct:#A8ABF6;--cl:rgba(91,95,199,.26)}
+[data-theme=dark] [data-d="3"]{--ct:#55D6DB;--cl:rgba(3,131,135,.26)}
+[data-theme=dark] [data-d="x"]{--ct:#FFB066;--cl:rgba(194,84,0,.24)}
+
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:78px;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background-image:radial-gradient(var(--dot) 1.3px,transparent 1.7px);background-size:38px 38px}
+h1,h2,h3{text-wrap:balance}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+b,strong{font-weight:650;color:var(--ink)}
+.ic{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.14em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+code{font-family:var(--mono);font-size:.86em;background:var(--surf2);color:var(--ink);padding:.12em .42em;border-radius:7px;overflow-wrap:anywhere}
+[data-theme=dark] code{background:rgba(255,255,255,.08)}
+
+/* ---- Progreso y cabecera ---- */
+#progress{position:fixed;top:0;left:0;right:0;height:4px;z-index:60;background:rgba(120,120,140,.16)}
+#progress i{display:block;height:100%;width:100%;background:var(--pc,var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .12s linear,background .5s}
+.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:saturate(1.5) blur(14px);backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);flex:none}.brand:hover{text-decoration:none}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--violet) 55%,var(--teal));display:grid;place-items:center;color:#fff;font:800 11px/1.05 var(--font);letter-spacing:.3px;text-align:center}
+.brand b{display:block;font-size:15px;line-height:1.1;letter-spacing:-.01em}.brand small{color:var(--ink3);font-size:12px}
+.tabs{display:flex;gap:6px;flex:1;overflow-x:auto;scrollbar-width:none;padding:3px 2px;min-width:0}.tabs::-webkit-scrollbar{display:none}
+.tabs a{white-space:nowrap;padding:6px 13px;border-radius:999px;font-weight:650;font-size:13.5px;color:var(--ink2);border:1px solid transparent}
+.tabs a:hover{background:var(--surf);color:var(--ink);text-decoration:none}
+.tabs a[aria-current]{background:var(--cl);color:var(--ct);border-color:color-mix(in srgb,var(--c) 32%,transparent)}
+.tools{display:flex;gap:8px;flex:none}
+.tbtn{display:inline-flex;align-items:center;gap:8px;font:600 13.5px var(--font);padding:7px 13px;border-radius:11px;background:var(--panel);color:var(--ink);border:1.5px solid var(--line);cursor:pointer;transition:transform .25s var(--ease),border-color .2s}
+.tbtn:hover{transform:translateY(-1px);border-color:var(--blue)}
+
+/* ---- Hero (oscuro, como la portada del deck) ---- */
+.dark{background:var(--navy);color:#fff}
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.bg{position:absolute;inset:0;overflow:hidden;z-index:-1}
+.bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 70% 40%,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 40%,#000 0%,transparent 70%)}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 16s ease-in-out infinite}
+.orb.a{width:640px;height:640px;left:-150px;top:-220px;background:#0b5cc4}
+.orb.b{width:520px;height:520px;right:-90px;top:20px;background:#5B5FC7;animation-delay:-5s}
+.orb.c{width:480px;height:480px;left:36%;bottom:-300px;background:#038387;animation-delay:-9s}
+.orb.d{width:340px;height:340px;right:14%;bottom:-170px;background:#107C10;opacity:.32;animation-delay:-3s}
+@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(50px,-34px,0) scale(1.08)}}
+.hero-in{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:52px;align-items:center;padding-top:72px;padding-bottom:68px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:650;color:var(--ct)}
+.dark .eyebrow{color:#7fb8ff}
+.hero h1{font-size:clamp(56px,8vw,96px);line-height:.92;letter-spacing:-.04em;font-weight:700;margin:16px 0 20px}
+.grad{background:linear-gradient(100deg,#4aa8ff,#8c90ff 45%,#e879b9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:clamp(19px,2vw,24px);line-height:1.35;color:#c5cce0;max-width:34ch;letter-spacing:-.005em}
+.hero .lead b{color:#fff}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0}
+.pill{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:8px 18px 8px 14px;font-weight:650;font-size:14.5px;background:var(--c);color:#fff;white-space:nowrap}
+.pill:hover{text-decoration:none;filter:brightness(1.08)}
+.pill small{font-weight:600;opacity:.85;font-size:.92em}
+.meta{margin-top:18px;font-size:13.5px;color:#97a0bd}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:650 15px var(--font);padding:12px 22px;border-radius:14px;background:#fff;color:#16161C;border:1.5px solid transparent;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .3s var(--ease)}
+.btn:hover{transform:translateY(-3px);text-decoration:none}
+.btn.ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.28);box-shadow:none}
+.glass{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);border-radius:24px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.wpanel{padding:26px 26px 22px;position:relative}
+.oh{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:650;color:rgba(255,255,255,.78)}
+.wrow{display:grid;grid-template-columns:auto 1fr auto;gap:6px 16px;align-items:center;padding:16px 4px 14px;border-top:1px solid rgba(255,255,255,.16);color:#fff;margin-top:14px}
+.wrow:first-of-type{margin-top:10px}
+.wrow:hover{text-decoration:none}
+.wrow:hover .wic{transform:scale(1.06) rotate(-3deg)}
+.wic{width:54px;height:54px;border-radius:16px;background:#fff;color:var(--c);display:grid;place-items:center;font-size:28px;box-shadow:0 8px 22px rgba(0,0,0,.3);transition:transform .35s var(--ease)}
+.wtx b{display:block;font-size:17.5px;line-height:1.15;color:#fff;letter-spacing:-.01em}.wtx small{display:block;color:#c5cce0;font-size:13px;margin-top:3px}
+.wpc{font-size:34px;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
+.wpc small{font-size:.42em;letter-spacing:0;font-weight:650;color:#c5cce0;margin-left:3px}
+.wbar{grid-column:1/-1;height:7px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;display:block}
+.wbar u{display:block;height:100%;width:var(--w);border-radius:99px;background:linear-gradient(90deg,var(--glow),#fff);text-decoration:none;transform-origin:left;animation:grow 1.3s var(--ease) .3s both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.wpanel .xs{margin-top:8px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:#c5cce0}
+
+/* ---- Secciones ---- */
+.sec{padding-top:64px}
+.sec-h h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.06;font-weight:700;margin:0 0 10px}
+.sub{color:var(--ink2);font-size:16.5px;max-width:70ch}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 4px}
+.find{position:relative;flex:1 1 250px;max-width:400px}
+.find .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:17px}
+.find input{width:100%;padding:10px 14px 10px 38px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:14.5px;outline:none;transition:border-color .2s,box-shadow .2s}
+.find input:focus{border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 18%,transparent)}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.seg button{font:650 13.5px var(--font);padding:9px 14px;background:none;border:0;color:var(--ink2);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--surf)}
+.seg button[aria-pressed=true]{background:var(--c);color:#fff}
+.seg button[data-d="all"]{--c:var(--ink)}
+[data-theme=dark] .seg button[data-d="all"][aria-pressed=true]{background:#E8EBF5;color:#0D1426}
+.tog{display:inline-flex;align-items:center;gap:9px;font:650 13.5px var(--font);padding:9px 15px;border-radius:12px;background:var(--panel);color:var(--ink);border:1.5px solid var(--line);cursor:pointer;transition:all .2s}
+.tog:hover{border-color:var(--blue)}
+.tog[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.count{margin-left:auto;color:var(--ink3);font-size:13px}
+.empty{margin:18px 0 0;padding:18px;text-align:center;color:var(--ink3);border:2px dashed var(--line);border-radius:18px}
+
+/* Grupos punteados (Azure Architecture) con las pistas: el grupo es el contenedor, la tabla va plana dentro */
+.grp{position:relative;border:2px dashed color-mix(in srgb,var(--c) 42%,var(--line));border-radius:26px;padding:26px 18px 10px;margin:34px 0 0;background:color-mix(in srgb,var(--panel) 88%,transparent)}
+.grp>.gl{position:absolute;top:-17px;left:24px;background:var(--bg);padding:0 12px;font-size:14px;font-weight:650;letter-spacing:.03em;color:var(--ct);display:flex;align-items:center;gap:9px}
+.grp>.gl .ic{font-size:19px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+thead th{border-top:0;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:650;white-space:nowrap}
+tbody tr:first-child td{border-top:0}
+tbody tr:hover td{background:color-mix(in srgb,var(--c) 6%,transparent)}
+.pistas .c-m{width:58px;padding-right:0}
+.pistas .c-q{width:39%}
+.pistas .c-a{width:21%;font-weight:650;color:var(--ink)}
+.pistas td.c-q{color:var(--ink2)}
+.pistas td.c-a b{color:var(--ct)}
+.pistas td.c-k code{margin:0 3px 3px 0;display:inline-block}
+.mt{display:inline-block;min-width:36px;text-align:center;padding:1px 8px;border-radius:8px;font-size:12px;font-weight:700;background:var(--cl);color:var(--ct);border:1px solid color-mix(in srgb,var(--c) 30%,transparent)}
+.mt:hover{background:var(--c);color:#fff;text-decoration:none}
+.practice .pistas tbody tr{cursor:pointer}
+.practice .pistas tr:not(.rv) .c-a,.practice .pistas tr:not(.rv) .c-k{filter:blur(7px);opacity:.75;user-select:none;transition:filter .25s}
+.practice .pistas tr.rv .c-a,.practice .pistas tr.rv .c-k{transition:filter .25s}
+
+/* ---- Apertura de dominio (como las aperturas de faceta del deck) ---- */
+.dom{padding-top:72px}
+.open{position:relative;overflow:hidden;isolation:isolate;border-radius:30px;color:#fff;
+  background:radial-gradient(900px 520px at 88% 8%,var(--glow) 0%,transparent 62%),linear-gradient(135deg,var(--deep) 0%,var(--cd) 58%,var(--top) 100%);box-shadow:0 20px 48px rgba(0,0,0,.2)}
+.open .orb.a{background:var(--o1);width:420px;height:420px;left:-120px;top:-160px}
+.open .orb.b{background:var(--o2);width:360px;height:360px;right:-60px;top:-60px;opacity:.4}
+.open-in{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;align-items:center;padding:38px 42px}
+.otile{width:108px;height:108px;border-radius:28px;background:#fff;color:var(--c);display:grid;place-items:center;font-size:56px;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.open .oh{color:rgba(255,255,255,.82)}
+.open h2{font-size:clamp(30px,4vw,54px);letter-spacing:-.035em;line-height:1;font-weight:700;margin:8px 0 6px}
+.open .en{color:rgba(255,255,255,.78);font-size:15.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:7px 14px;font-size:14px;font-weight:600;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff}
+.chip:hover{background:rgba(255,255,255,.22);text-decoration:none}
+.chip em{font-style:normal;font-weight:700;opacity:.8}
+.chip.w{background:#fff;color:#16161C;border-color:#fff}
+
+/* ---- Tarjetas de módulo ---- */
+.cards{columns:2 480px;column-gap:22px;margin-top:26px}
+.card{position:relative;break-inside:avoid;display:block;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:28px 26px 22px;margin:0 0 22px;box-shadow:var(--shadow)}
+.card::before{content:"";position:absolute;left:26px;top:-1px;width:44px;height:4px;border-radius:0 0 4px 4px;background:var(--c)}
+.card h3{display:flex;align-items:center;gap:13px;font-size:21px;letter-spacing:-.018em;line-height:1.15;font-weight:650;margin-bottom:14px}
+.card.wide{column-span:all}
+.cols2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 34px;align-items:start}
+.cols2>ul{margin-top:0}.cols2>.term{margin-top:8px}
+.num{min-width:42px;height:42px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font:700 14px var(--font);flex:none;padding:0 4px}
+.card ul{padding-left:19px;margin:6px 0}
+.card li{margin:7px 0;line-height:1.5}
+.card li::marker{color:var(--c)}
+.card .tw{margin:14px 0}
+.card table{font-size:13.5px}
+.card th,.card td{padding:8px 10px}
+.card thead th{font-size:11px;padding-top:2px}
+.card td:first-child{padding-left:0}.card th:first-child{padding-left:0}.card td:last-child,.card th:last-child{padding-right:0}
+.card td:first-child b{color:var(--ct)}
+tr.sh td{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ct);padding-top:12px;border-top:1px solid var(--line)}
+tr.sh td small{text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink3);margin-left:6px;font-size:12px}
+.rule,.trap{margin:14px 0 4px;padding:11px 15px;border-radius:14px;font-size:14px;color:var(--ink2)}
+.rule{background:var(--cl)}
+.trap{background:color-mix(in srgb,var(--amber) 9%,var(--panel));display:flex;gap:10px;align-items:flex-start}
+.trap .ic{font-size:18px;color:var(--amber);margin-top:2px}[data-theme=dark] .trap .ic{color:#FFB066}
+[data-theme=dark] .trap{background:rgba(194,84,0,.14)}
+/* Madurez (insignias como en el deck) */
+.bdg{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:650;border:1px solid;white-space:nowrap;vertical-align:1px;letter-spacing:0;text-transform:none}
+.bdg::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.bdg.pv{background:#FFF4CE;color:#7A4B00;border-color:#F2D27A}
+.bdg.ga{background:#E6F3E6;color:#0B5A0B;border-color:#A9D6A9}
+[data-theme=dark] .bdg.pv{background:rgba(242,210,122,.14);color:#F2D27A;border-color:rgba(242,210,122,.4)}
+[data-theme=dark] .bdg.ga{background:rgba(120,210,120,.14);color:#8fe08f;border-color:rgba(120,210,120,.4)}
+
+/* Cadena de pasos (patrón «flujo» del deck) */
+.flow{display:flex;align-items:stretch;gap:0;margin:12px 0;flex-wrap:wrap;row-gap:8px}
+.stp{display:flex;align-items:center;gap:0}
+.scard{padding:8px 14px;border-radius:14px;background:var(--cl);color:var(--ct);font-weight:650;font-size:13.5px;border:1px solid color-mix(in srgb,var(--c) 28%,transparent);white-space:nowrap}
+.scard small{display:block;font-weight:500;color:var(--ink3);font-size:11.5px}
+.chev{width:26px;display:grid;place-items:center;color:var(--c);flex:none}
+.chev::before{content:"";border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+
+/* Terminal (patrón .term del deck) */
+.term{margin:14px 0 4px;background:#0B0D12;border:1px solid #232734;border-radius:16px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.28);font-family:var(--mono);color:#E7EAF3}
+.term .tb{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#151823;border-bottom:1px solid #232734}
+.term .tb i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.term .tb i:nth-child(2){background:#febc2e}.term .tb i:nth-child(3){background:#28c840}
+.term .tb span{margin-left:8px;font:12.5px var(--font);color:#8b93ad;flex:1}
+.term .cp{font:600 11.5px var(--font);color:#c5cce0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:3px 10px;cursor:pointer}
+.term .cp:hover{background:rgba(255,255,255,.16)}
+.term pre{margin:0;padding:14px 18px;overflow:auto;font:12.5px/1.62 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+.term pre code{background:none;color:inherit;padding:0;font:inherit;border-radius:0}
+.tk-k{color:#6cb6ff;font-weight:600}.tk-f{color:#ffd479}.tk-s{color:#ff9e7a}.tk-n{color:#4fd0a0}.tk-c{color:#7e87a6;font-style:italic}.tk-v{color:#9cdcfe}.tk-t{color:#4fd0a0}.tk-key{color:#9cdcfe}
+
+/* ---- Cifras: lista de datos, un renglón por cifra ---- */
+.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;margin-top:22px;border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr) auto;gap:4px 18px;align-items:baseline;padding:15px 2px;border-bottom:1px solid var(--line)}
+.sv{font-size:27px;font-weight:700;letter-spacing:-.03em;color:var(--ct);font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap}
+.sv small{font-size:.52em;font-weight:650;letter-spacing:0;color:var(--ink3);margin-left:4px}
+.st{color:var(--ink2);font-size:14.5px;line-height:1.4}.st small{display:block;color:var(--ink3);font-size:13px}
+.callout{display:flex;gap:14px;align-items:flex-start;margin-top:34px;padding:20px 24px;border-radius:22px;background:color-mix(in srgb,var(--amber) 8%,var(--panel));border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);color:var(--ink2);font-size:14.5px}
+[data-theme=dark] .callout{background:rgba(194,84,0,.14)}
+.callout .ic{font-size:26px;color:var(--amber);margin-top:2px}[data-theme=dark] .callout .ic{color:#FFB066}
+.callout ul{padding-left:18px;margin-top:6px}.callout li{margin:5px 0}.callout b:first-child{display:block;color:var(--ink);font-size:16px}
+
+footer{margin:72px 0 0;padding:34px 0 46px;font-size:13.5px;color:#97a0bd}
+footer p{max-width:100ch}footer a{color:#7fb8ff}
+footer .ft{display:flex;gap:14px;align-items:center;margin-bottom:12px;color:#fff;font-weight:650;font-size:15px}
+
+/* ---- Responsive ---- */
+@media screen and (max-width:980px){
+  .hero-in{grid-template-columns:1fr;gap:34px;padding-top:48px;padding-bottom:48px}
+  .open-in{padding:30px}
+  .cols2{grid-template-columns:1fr}
+  .spec{grid-template-columns:1fr}
+  .tools .tbtn span{display:none}
+}
+@media screen and (max-width:760px){
+  .wrap{padding:0 14px}
+  .brand>span:last-child{display:none}
+  .spec-row{grid-template-columns:minmax(0,1fr) auto;gap:2px 12px}.sv{grid-column:1/-1;font-size:24px}
+  .otile{width:72px;height:72px;font-size:38px;border-radius:20px}
+  .open-in{gap:18px;padding:22px 18px}
+  .cards{columns:1}
+  .pistas thead{display:none}
+  .pistas,.pistas tbody,.pistas tr,.pistas td{display:block;width:auto!important}
+  .pistas tr{padding:12px 14px;border-top:1px solid var(--line);position:relative}
+  .pistas tbody tr:first-child{border-top:0}
+  .pistas td{border:0;padding:2px 0}
+  .pistas .c-m{position:absolute;right:12px;top:12px;padding:0}
+  .pistas .c-q{padding-right:48px;font-weight:600;color:var(--ink)}
+  .pistas .c-a{margin-top:2px}
+  .card table{font-size:13px}.card td:first-child{white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ---- Impresión: hoja A4 sobria, sin fondos ni animaciones ---- */
 @media print{
   @page{size:A4;margin:9mm}
-  .top,.btn{display:none!important}
-  body{background:#fff;color:#000;font-size:9.6px;line-height:1.35}
+  html{scroll-padding-top:0}
+  body{background:#fff!important;color:#000;font-size:9.4px;line-height:1.35}
+  :root,[data-theme=dark]{--ink:#111;--ink2:#222;--ink3:#555;--line:#bbb;--surf:#f1f3f5;--surf2:#eceff2;--panel:#fff;--bg:#fff;--link:#0b5cad}
+  .top,#progress,.toolbar,.bg,.cta,.meta,.chips,.hero .pills,.wpanel,.otile,.count,.empty,.term .cp{display:none!important}
   .wrap{max-width:none;padding:0}
-  .hero{color:#000;background:#fff;border:1px solid #999;box-shadow:none;padding:8px 12px;margin:0 0 4px}.hero a{color:#000}
-  h2{font-size:14px;margin:10px 0 3px;break-after:avoid}
-  .cards{display:block;column-count:2;column-gap:9px}
-  .card{break-inside:avoid;margin:0 0 8px;box-shadow:none;padding:6px 9px}
-  .card li{font-size:9.4px;margin:2px 0}.card h3{font-size:11px}
-  table{font-size:8.8px}th,td{padding:2px 5px}
-  .tw{overflow:visible;border-color:#bbb}
-  pre{background:#f4f6f8;color:#111;font-size:8.2px;padding:4px 7px;break-inside:avoid}
-  .tk-k{color:#0b5cad}.tk-f{color:#7a5c00}.tk-s{color:#b13a00}.tk-n{color:#2d7a1f}.tk-c{color:#5b7a56}.tk-v{color:#0b6a8a}.tk-t{color:#0f7a6a}.tk-key{color:#0b6a8a}
-  .note{break-inside:avoid;padding:4px 8px;font-size:9.4px}
-  .cifras{grid-template-columns:repeat(3,1fr)}.cifras div{font-size:9.2px;padding:3px 6px}
+  .dark,.hero,.open{background:#fff!important;color:#000!important;box-shadow:none;border-radius:0}
+  .hero-in{display:block;padding:0 0 4px}
+  .hero h1{font-size:24px;margin:0;letter-spacing:-.02em}.grad{background:none;color:#0b5cad;-webkit-text-fill-color:#0b5cad}
+  .hero .lead{color:#222;font-size:10.5px;max-width:none;margin:2px 0 0}
+  .eyebrow,.dark .eyebrow{color:#555;font-size:8.5px}
+  .sec,.dom{padding-top:10px}
+  .sec-h h2{font-size:14px;margin:2px 0}.sub{font-size:9.4px}
+  .grp{border:1px solid #bbb;border-radius:6px;padding:8px 4px 4px;margin:10px 0 0}.grp>.gl{font-size:10px;background:#fff;top:-8px;left:10px;padding:0 6px}
+  .tw{box-shadow:none;border-radius:6px;border-color:#bbb}
+  th,td{padding:2px 5px}thead th{font-size:8px;position:static}
   tr{break-inside:avoid}
+  .practice .pistas tr:not(.rv) .c-a,.practice .pistas tr:not(.rv) .c-k{filter:none;opacity:1}
+  .open-in{display:block;padding:0}.open h2{font-size:14px;color:#000;margin:0}.open .oh{color:#555;font-size:8.5px}.open .en{color:#333;font-size:9.4px}
+  .cards{columns:2;column-gap:9px;margin-top:4px}
+  .card{box-shadow:none;border-radius:6px;padding:6px 9px;margin:0 0 7px;border:1px solid #bbb}.card::before{display:none}
+  .card h3{font-size:11px;margin-bottom:4px}.num{min-width:26px;height:18px;border-radius:5px;font-size:9px}
+  .card li{margin:2px 0}.card ul{margin:2px 0;padding-left:14px}
+  .card table{font-size:8.6px}.card .tw{margin:4px 0}
+  .rule,.trap{padding:3px 7px;margin:4px 0;font-size:9px;break-inside:avoid}
+  .hero .lead b{color:#000}
+  .card thead th{font-size:8px;padding-top:0}
+  tr.sh td{font-size:8px;padding-top:4px}tr.sh td small{font-size:8px}
+  .scard{font-size:9px;padding:2px 8px;border-radius:8px}.scard small{font-size:8px}.chev{width:14px}.flow{margin:4px 0}
+  .mt{font-size:8px;min-width:24px;padding:0 5px;border-radius:5px}
+  .bdg{font-size:8px;padding:0 6px}
+  .cols2{gap:0 12px}.card.wide .term{margin:4px 0}
+  .term{box-shadow:none;background:#f4f6f8;color:#111;border-color:#bbb;border-radius:5px;break-inside:avoid;margin:5px 0}
+  .term .tb{display:none}.term pre{padding:4px 7px;font-size:8px;white-space:pre-wrap}
+  .tk-k{color:#0b5cad}.tk-f{color:#7a5c00}.tk-s{color:#b13a00}.tk-n{color:#2d7a1f}.tk-c{color:#5b7a56}.tk-v{color:#0b6a8a}.tk-t{color:#0f7a6a}.tk-key{color:#0b6a8a}
+  .spec{grid-template-columns:repeat(2,1fr);column-gap:14px;margin-top:4px}.spec-row{padding:3px 0;grid-template-columns:74px 1fr auto;gap:2px 8px}
+  .sv{font-size:12px}.st{font-size:8.6px}.st small{font-size:8px}
+  .callout{break-inside:avoid;padding:5px 9px;font-size:9px;margin-top:6px}
+  footer{background:#fff!important;color:#444;margin-top:8px;padding:6px 0;font-size:8px}footer .ft{display:none}footer a{color:#0b5cad}
 }
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-  <b>DP-800</b>
-  <nav><a href="#pistas">Pistas</a><a href="#d1">D1 · Diseño</a><a href="#d2">D2 · Seguridad / deploy</a><a href="#d3">D3 · IA</a><a href="#cifras">Cifras</a></nav>
-  <button class="btn" id="theme">🌓 Tema</button><button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="g-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7l-5 5 5 5M15.5 7l5 5-5 5M13.6 5l-3.2 14"/></g></symbol>
+<symbol id="g-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.6-3 7.8-7 9.5-4-1.7-7-4.9-7-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></g></symbol>
+<symbol id="g-spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.2 6.3 6.3 2.2-6.3 2.2L12 19.5l-2.2-6.3L3.5 11l6.3-2.2z"/><path fill="currentColor" d="M19 15.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></symbol>
+<symbol id="g-db" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></g></symbol>
+<symbol id="g-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></g></symbol>
+<symbol id="g-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></symbol>
+<symbol id="g-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V4h10v5"/><path d="M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/></g></symbol>
+<symbol id="g-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></g></symbol>
+<symbol id="g-warn" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.3v.1"/></g></symbol>
+</svg>
+
+<div id="progress" aria-hidden="true"><i></i></div>
+
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="#top" aria-label="DP-800 Cheatsheet, ir al inicio"><span class="logo">DP<br>800</span><span><b>SQL AI Developer</b><small>Cheatsheet</small></span></a>
+  <nav class="tabs" id="tabs" aria-label="Secciones">
+    <a href="#pistas" data-s="pistas" data-d="1">Pistas</a>
+    <a href="#d1" data-s="d1" data-d="1">D1 · Diseño</a>
+    <a href="#d2" data-s="d2" data-d="2">D2 · Seguridad y deploy</a>
+    <a href="#d3" data-s="d3" data-d="3">D3 · IA</a>
+    <a href="#cifras" data-s="cifras" data-d="x">Cifras</a>
+  </nav>
+  <div class="tools">
+    <button class="tbtn" id="theme" type="button" aria-label="Cambiar tema claro/oscuro"><svg class="ic"><use href="#g-theme"/></svg><span>Tema</span></button>
+    <button class="tbtn" type="button" onclick="window.print()" aria-label="Imprimir"><svg class="ic"><use href="#g-print"/></svg><span>Imprimir</span></button>
+  </div>
 </div></header>
 
-<main class="wrap">
-<section class="hero">
-  <h1>DP-800 · Cheatsheet corto</h1>
-  <p>Qué elegir, cuándo y con qué palabra clave. Solo lo que sale en el <i>skills measured</i> oficial, a nivel de reconocimiento: no memorices límites ni opciones finas. Para el detalle: <a href="referencia.html">referencia completa →</a></p>
+<main>
+<section class="hero dark" id="top">
+  <div class="bg"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span><span class="orb d"></span></div>
+  <div class="wrap hero-in">
+    <div>
+      <p class="eyebrow">Microsoft Certified · SQL AI Developer Associate</p>
+      <h1>DP-800<br><span class="grad">Cheatsheet</span></h1>
+      <p class="lead"><b>Qué elegir, cuándo y con qué palabra clave.</b> Solo lo que mide el examen, a nivel de reconocimiento.</p>
+      <div class="pills">
+        <a class="pill" data-d="1" href="#d1"><svg class="ic"><use href="#g-code"/></svg>D1 Diseño <small>35–40 %</small></a>
+        <a class="pill" data-d="2" href="#d2"><svg class="ic"><use href="#g-shield"/></svg>D2 Seguridad y deploy <small>35–40 %</small></a>
+        <a class="pill" data-d="3" href="#d3"><svg class="ic"><use href="#g-spark"/></svg>D3 IA <small>25–30 %</small></a>
+      </div>
+      <div class="cta"><a class="btn" href="#pistas">Empezar por las pistas ↓</a><a class="btn ghost" href="referencia.html">Referencia completa →</a></div>
+      <p class="meta">Skills measured as of March 12, 2026 · verificado el 17-nov-2026 · material de estudio no oficial</p>
+    </div>
+    <aside class="glass wpanel" aria-label="Peso de cada dominio en el examen">
+      <p class="oh">Peso en el examen</p>
+      <a class="wrow" data-d="1" href="#d1"><span class="wic"><svg class="ic"><use href="#g-code"/></svg></span><span class="wtx"><b>Diseñar y desarrollar</b><small>Objetos · programabilidad · T-SQL · herramientas con IA</small></span><span class="wpc"><span data-count="35">35</span>–<span data-count="40">40</span><small>%</small></span><i class="wbar"><u style="--w:38%"></u></i></a>
+      <a class="wrow" data-d="2" href="#d2"><span class="wic"><svg class="ic"><use href="#g-shield"/></svg></span><span class="wtx"><b>Seguridad, rendimiento y deploy</b><small>Cifrado · RLS · Query Store · CI/CD · DAB</small></span><span class="wpc"><span data-count="35">35</span>–<span data-count="40">40</span><small>%</small></span><i class="wbar"><u style="--w:38%"></u></i></a>
+      <a class="wrow" data-d="3" href="#d3"><span class="wic"><svg class="ic"><use href="#g-spark"/></svg></span><span class="wtx"><b>IA en la base de datos</b><small>Embeddings · búsqueda vectorial · RAG</small></span><span class="wpc"><span data-count="25">25</span>–<span data-count="30">30</span><small>%</small></span><i class="wbar"><u style="--w:28%"></u></i></a>
+      <p class="xs">Para aprobar se necesitan 700 de 1000 puntos.</p>
+    </aside>
+  </div>
 </section>
 
-<section id="pistas">
-<h2>1 · Si el enunciado dice… → piensa en… <small>(léelo antes de cada práctica)</small></h2>
-<div class="tw"><table class="pistas">
-<thead><tr><th>Si el enunciado dice…</th><th>Piensa en</th><th>Palabra clave</th></tr></thead>
+<div class="wrap">
+
+<!-- ===================== 1 · PISTAS ===================== -->
+<section class="sec" id="pistas" data-d="1">
+  <div class="sec-h">
+    <h2>Si el enunciado dice… → piensa en…</h2>
+    <p class="sub">Léelo antes de cada práctica. Con el <b>modo práctica</b> se tapan las respuestas: pulsa una fila para revelarla.</p>
+  </div>
+  <div class="toolbar">
+    <label class="find"><svg class="ic"><use href="#g-search"/></svg><span class="sr">Filtrar pistas</span><input id="q" type="search" placeholder="Filtrar pistas…  ( / )" autocomplete="off"></label>
+    <div class="seg" id="seg" role="group" aria-label="Filtrar por dominio">
+      <button type="button" data-d="all" aria-pressed="true">Todos</button><button type="button" data-d="1" aria-pressed="false">D1</button><button type="button" data-d="2" aria-pressed="false">D2</button><button type="button" data-d="3" aria-pressed="false">D3</button>
+    </div>
+    <button class="tog" id="practice" type="button" aria-pressed="false"><svg class="ic"><use href="#g-eye"/></svg>Modo práctica</button>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <div class="grp" data-d="1">
+    <div class="gl"><svg class="ic"><use href="#g-code"/></svg>D1 · Diseñar y desarrollar</div>
+    <div class="tw"><table class="pistas">
+      <thead><tr><th class="c-m">Mód.</th><th class="c-q">Si el enunciado dice…</th><th class="c-a">Piensa en</th><th class="c-k">Palabra clave</th></tr></thead>
+      <tbody>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Historial de cambios; ver cómo estaba el dato ayer, sin triggers</td><td class="c-a"><b>Temporal table</b></td><td class="c-k"><code>SYSTEM_VERSIONING</code> <code>FOR SYSTEM_TIME AS OF</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Prueba de que nadie alteró los datos</td><td class="c-a"><b>Ledger table</b></td><td class="c-k"><code>LEDGER = ON</code> <code>APPEND_ONLY = ON</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Miles de inserts concurrentes; datos efímeros o de caché</td><td class="c-a"><b>Memory-optimized table</b></td><td class="c-k"><code>MEMORY_OPTIMIZED = ON</code> <code>SCHEMA_ONLY</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Consultar datos de otra fuente (p. ej. archivos del lake) sin copiarlos</td><td class="c-a"><b>External table</b></td><td class="c-k"><code>EXTERNAL DATA SOURCE</code> + <code>EXTERNAL FILE FORMAT</code> + <code>EXTERNAL TABLE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Relaciones muchos-a-muchos; «camino más corto»</td><td class="c-a"><b>Graph tables</b></td><td class="c-k"><code>AS NODE</code> <code>AS EDGE</code> <code>MATCH</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Agregaciones sobre millones de filas (analítica)</td><td class="c-a"><b>Columnstore index</b></td><td class="c-k"><code>CLUSTERED COLUMNSTORE INDEX</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Atributos distintos por fila; datos semi-estructurados</td><td class="c-a"><b>Columna <code>json</code></b></td><td class="c-k"><code>CREATE JSON INDEX</code> <code>JSON_VALUE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Número compartido entre tablas; pedirlo antes del INSERT</td><td class="c-a"><b>SEQUENCE</b></td><td class="c-k"><code>NEXT VALUE FOR</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m1">M1</a></td><td class="c-q">Cargar o archivar por periodo en segundos</td><td class="c-a"><b>Partitioning</b></td><td class="c-k"><code>SWITCH PARTITION</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m2">M2</a></td><td class="c-q">Lecturas pesadas y repetitivas con agregaciones</td><td class="c-a"><b>Indexed view</b></td><td class="c-k"><code>SCHEMABINDING</code> + índice clustered único</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m2">M2</a></td><td class="c-q">«Como una vista, pero con parámetros»</td><td class="c-a"><b>Inline table-valued function</b></td><td class="c-k"><code>CROSS APPLY</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m2">M2</a></td><td class="c-q">Varias sentencias + transacción + parámetro OUTPUT</td><td class="c-a"><b>Stored procedure</b></td><td class="c-k"><code>EXEC</code> <code>OUTPUT</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m2">M2</a></td><td class="c-q">Reaccionar automáticamente a INSERT / UPDATE / DELETE</td><td class="c-a"><b>DML trigger</b></td><td class="c-k"><code>AFTER</code> <code>INSTEAD OF</code> <code>inserted</code>/<code>deleted</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Suma acumulada; fila anterior; top-N por grupo</td><td class="c-a"><b>Window function</b></td><td class="c-k"><code>OVER (PARTITION BY … ORDER BY …)</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Jerarquía de profundidad variable</td><td class="c-a"><b>CTE recursiva</b></td><td class="c-k"><code>UNION ALL</code> <code>MAXRECURSION</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Construir JSON anidado con arreglo · JSON → filas · leer un valor</td><td class="c-a"><b>JSON functions</b></td><td class="c-k"><code>JSON_OBJECT</code>+<code>JSON_ARRAYAGG</code> · <code>OPENJSON</code> · <code>JSON_VALUE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Validar o extraer con un patrón (email, teléfono)</td><td class="c-a"><b>Regex</b></td><td class="c-k"><code>REGEXP_LIKE</code> <code>REGEXP_SUBSTR</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Nombres con errores de escritura / casi iguales</td><td class="c-a"><b>Fuzzy matching</b></td><td class="c-k"><code>EDIT_DISTANCE</code> <code>JARO_WINKLER_DISTANCE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m3">M3</a></td><td class="c-q">Re-lanzar el error original dentro de CATCH</td><td class="c-a"><b>THROW</b></td><td class="c-k"><code>THROW;</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m4">M4</a></td><td class="c-q">Instrucciones fijas de Copilot para todo el repo · solo para <code>.sql</code></td><td class="c-a"><b>Instruction files</b></td><td class="c-k"><code>.github/copilot-instructions.md</code> · <code>*.instructions.md</code> + <code>applyTo</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m4">M4</a></td><td class="c-q">Que el asistente consulte SQL / Fabric en vivo</td><td class="c-a"><b>MCP server</b></td><td class="c-k"><code>mcp.json</code> · Agent mode</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="grp" data-d="2">
+    <div class="gl"><svg class="ic"><use href="#g-shield"/></svg>D2 · Seguridad, rendimiento y despliegue</div>
+    <div class="tw"><table class="pistas">
+      <thead><tr><th class="c-m">Mód.</th><th class="c-q">Si el enunciado dice…</th><th class="c-a">Piensa en</th><th class="c-k">Palabra clave</th></tr></thead>
+      <tbody>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">«Ni el DBA debe ver el dato»</td><td class="c-a"><b>Always Encrypted</b></td><td class="c-k">CMK / CEK · deterministic / randomized</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">Soporte ve solo los últimos 4 dígitos, sin cambiar la app</td><td class="c-a"><b>Dynamic Data Masking</b></td><td class="c-k"><code>partial()</code> <code>UNMASK</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">Cada usuario o tenant ve solo sus filas</td><td class="c-a"><b>Row-Level Security</b></td><td class="c-k"><code>CREATE SECURITY POLICY</code> <code>FILTER</code>/<code>BLOCK PREDICATE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">Cifrar archivos y backups sin tocar la app</td><td class="c-a"><b>TDE</b></td><td class="c-k">cifrado en reposo</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">Sin contraseñas en la cadena de conexión</td><td class="c-a"><b>Entra ID + Managed Identity</b></td><td class="c-k"><code>FROM EXTERNAL PROVIDER</code> · <code>Authentication=Active Directory Managed Identity</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m5">M5</a></td><td class="c-q">Registrar quién accedió o qué hizo</td><td class="c-a"><b>Auditing</b></td><td class="c-k">SQL Server Audit · Azure SQL Auditing</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Los lectores bloquean a los escritores, sin cambiar el código</td><td class="c-a"><b>RCSI / SNAPSHOT</b></td><td class="c-k"><code>READ_COMMITTED_SNAPSHOT</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Estaba rápida y ahora lenta (cambió el plan)</td><td class="c-a"><b>Query Store</b></td><td class="c-k"><i>Regressed Queries</i> · <code>sp_query_store_force_plan</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Las consultas más costosas, en el portal de Azure</td><td class="c-a"><b>Query Performance Insight</b></td><td class="c-k">se apoya en Query Store</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Qué corre y quién bloquea ahora · consumo acumulado por consulta</td><td class="c-a"><b>DMVs</b></td><td class="c-k"><code>sys.dm_exec_requests</code> · <code>sys.dm_exec_query_stats</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Dos transacciones se esperan mutuamente (ciclo)</td><td class="c-a"><b>Deadlock</b></td><td class="c-k">error <code>1205</code> · víctima</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m6">M6</a></td><td class="c-q">Carga intermitente · BD muy grande, escala y restore rápidos · mínima latencia</td><td class="c-a"><b>Serverless · Hyperscale · Business Critical</b></td><td class="c-k">auto-pausa · hasta 128 TB · réplica de lectura incluida</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m7">M7</a></td><td class="c-q">Desplegar el esquema desde Git / CI</td><td class="c-a"><b>SQL Database Project</b></td><td class="c-k"><code>.dacpac</code> · <code>sqlpackage</code> Publish</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m7">M7</a></td><td class="c-q">La BD productiva cambió y el repo no lo sabe</td><td class="c-a"><b>Schema drift</b></td><td class="c-k"><code>DriftReport</code> · Schema Compare</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m7">M7</a></td><td class="c-q">Aprobación manual antes de producción · el equipo dueño revisa</td><td class="c-a"><b>Environment + required reviewers · CODEOWNERS</b></td><td class="c-k">branch protection</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m7">M7</a></td><td class="c-q">Sin secretos ni contraseñas en el pipeline</td><td class="c-a"><b>OIDC / Key Vault</b></td><td class="c-k"><code>azure/login</code> <code>id-token: write</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m8">M8</a></td><td class="c-q">API REST y GraphQL sobre la BD sin programarla</td><td class="c-a"><b>Data API builder</b></td><td class="c-k"><code>dab-config.json</code> <code>dab init</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m8">M8</a></td><td class="c-q">Detectar cambios: solo qué fila · antes/después · stream de eventos · función serverless · low-code</td><td class="c-a"><b>Change Tracking · CDC · CES · Functions · Logic Apps</b></td><td class="c-k">en ese orden; ver tabla en M8</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m8">M8</a></td><td class="c-q">Telemetría de la app · logs y métricas de la BD</td><td class="c-a"><b>Application Insights · Log Analytics</b></td><td class="c-k">diagnostic settings</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="grp" data-d="3">
+    <div class="gl"><svg class="ic"><use href="#g-spark"/></svg>D3 · IA en la base de datos</div>
+    <div class="tw"><table class="pistas">
+      <thead><tr><th class="c-m">Mód.</th><th class="c-q">Si el enunciado dice…</th><th class="c-a">Piensa en</th><th class="c-k">Palabra clave</th></tr></thead>
+      <tbody>
+      <tr><td class="c-m"><a class="mt" href="#m9">M9</a></td><td class="c-q">Generar embeddings desde T-SQL</td><td class="c-a"><b>External model</b></td><td class="c-k"><code>CREATE EXTERNAL MODEL</code> <code>AI_GENERATE_EMBEDDINGS</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m9">M9</a></td><td class="c-q">Texto demasiado largo para el modelo</td><td class="c-a"><b>Chunking</b></td><td class="c-k"><code>AI_GENERATE_CHUNKS</code> · overlap</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m9">M9</a></td><td class="c-q">Mantener los embeddings al día cuando cambian los datos</td><td class="c-a"><b>Trigger · Change Tracking + Functions · Logic Apps · CDC/CES</b></td><td class="c-k">ver tabla en M9</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m10">M10</a></td><td class="c-q">Buscar un SKU, código o frase exacta</td><td class="c-a"><b>Full-text search</b></td><td class="c-k"><code>CONTAINS</code> <code>FREETEXT</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m10">M10</a></td><td class="c-q">Buscar por significado o sinónimos</td><td class="c-a"><b>Vector search</b></td><td class="c-k"><code>VECTOR_DISTANCE</code> <code>VECTOR_SEARCH</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m10">M10</a></td><td class="c-q">Lo mejor de ambos; máximo recall</td><td class="c-a"><b>Hybrid search + RRF</b></td><td class="c-k"><code>1/(k + rank)</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m10">M10</a></td><td class="c-q">Cientos de miles de vectores o más, la velocidad manda · pocos (&lt; 50,000), exactitud total</td><td class="c-a"><b>ANN · ENN</b></td><td class="c-k"><code>CREATE VECTOR INDEX</code> + <code>VECTOR_SEARCH</code> · <code>VECTOR_DISTANCE</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m11">M11</a></td><td class="c-q">Respuestas basadas en MIS datos, sin reentrenar el modelo</td><td class="c-a"><b>RAG</b></td><td class="c-k">retrieve → augment → generate</td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m11">M11</a></td><td class="c-q">Llamar a Azure OpenAI desde T-SQL</td><td class="c-a"><b>REST desde SQL</b></td><td class="c-k"><code>sp_invoke_external_rest_endpoint</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m11">M11</a></td><td class="c-q">Armar el contexto · leer la respuesta del LLM</td><td class="c-a"><b>JSON</b></td><td class="c-k"><code>FOR JSON PATH</code> · <code>JSON_VALUE(@response, '$.result.choices[0].message.content')</code></td></tr>
+      <tr><td class="c-m"><a class="mt" href="#m11">M11</a></td><td class="c-q">Llamar al modelo sin guardar la API key en texto</td><td class="c-a"><b>Managed Identity</b></td><td class="c-k"><code>DATABASE SCOPED CREDENTIAL</code> · <code>IDENTITY = 'Managed Identity'</code></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <p class="empty" id="empty" hidden>Ninguna pista coincide con el filtro.</p>
+</section>
+
+<!-- ===================== D1 ===================== -->
+<section class="dom" id="d1" data-d="1">
+  <div class="open">
+    <div class="bg"><span class="orb a"></span><span class="orb b"></span></div>
+    <div class="open-in">
+      <span class="otile"><svg class="ic"><use href="#g-code"/></svg></span>
+      <div>
+        <p class="oh">Dominio 1 · Design and develop database solutions</p>
+        <h2>Diseñar y desarrollar</h2>
+        <p class="en">Objetos de base de datos, programabilidad, T-SQL avanzado y herramientas con IA.</p>
+        <div class="chips"><span class="chip w">35–40 % del examen</span><a class="chip" href="#m1"><em>M1</em>Objetos</a><a class="chip" href="#m2"><em>M2</em>Programabilidad</a><a class="chip" href="#m3"><em>M3</em>T-SQL avanzado</a><a class="chip" href="#m4"><em>M4</em>Herramientas con IA</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="cards">
+
+<article class="card" id="m1">
+<h3><span class="num">M1</span>Objetos de base de datos</h3>
+<ul>
+<li><b>Tipos:</b> el más pequeño que alcance · <code>decimal(p,s)</code> para dinero · <code>datetime2</code> mejor que <code>datetime</code> · <code>nvarchar</code> solo si necesitas Unicode.</li>
+<li><b>Índices:</b> <i>clustered</i> ordena la tabla (uno; casi siempre la PK) · <i>nonclustered</i> = estructura aparte · <code>INCLUDE</code> cubre la consulta · <i>filtered</i> indexa solo el <code>WHERE</code>. <b>Columnstore</b> = analítica; rowstore = OLTP.</li>
+</ul>
+<div class="tw"><table>
+<thead><tr><th>Tabla</th><th>Claves</th></tr></thead>
 <tbody>
-<tr class="grp d1"><td colspan="3">D1 · Diseñar y desarrollar</td></tr>
-<tr><td>Historial de cambios; ver cómo estaba el dato ayer, sin triggers</td><td>Temporal table</td><td><code>SYSTEM_VERSIONING</code> · <code>FOR SYSTEM_TIME AS OF</code></td></tr>
-<tr><td>Prueba de que nadie alteró los datos</td><td>Ledger table</td><td><code>LEDGER = ON</code> · <code>APPEND_ONLY = ON</code></td></tr>
-<tr><td>Miles de inserts concurrentes; datos efímeros o de caché</td><td>Memory-optimized table</td><td><code>MEMORY_OPTIMIZED = ON</code> · <code>SCHEMA_ONLY</code></td></tr>
-<tr><td>Consultar archivos del lake u otra fuente sin copiar los datos</td><td>External table</td><td><code>CREATE EXTERNAL DATA SOURCE</code> + <code>EXTERNAL TABLE</code></td></tr>
-<tr><td>Relaciones muchos-a-muchos; "camino más corto"</td><td>Graph tables</td><td><code>AS NODE</code> · <code>AS EDGE</code> · <code>MATCH</code></td></tr>
-<tr><td>Agregaciones sobre millones de filas (analítica)</td><td>Columnstore index</td><td><code>CLUSTERED COLUMNSTORE INDEX</code></td></tr>
-<tr><td>Atributos distintos por fila; datos semi-estructurados</td><td>Columna <code>json</code></td><td>JSON index · <code>JSON_VALUE</code></td></tr>
-<tr><td>Número compartido entre tablas; pedirlo antes del INSERT</td><td>SEQUENCE</td><td><code>NEXT VALUE FOR</code></td></tr>
-<tr><td>Cargar o archivar por periodo en segundos</td><td>Partitioning</td><td><code>SWITCH PARTITION</code></td></tr>
-<tr><td>Lecturas pesadas y repetitivas con agregaciones</td><td>Indexed view</td><td><code>SCHEMABINDING</code> + unique clustered index</td></tr>
-<tr><td>"Como una vista, pero con parámetros"</td><td>Inline table-valued function</td><td><code>CROSS APPLY</code></td></tr>
-<tr><td>Varias sentencias + transacción + parámetro OUTPUT</td><td>Stored procedure</td><td><code>EXEC</code> · <code>OUTPUT</code></td></tr>
-<tr><td>Reaccionar automáticamente a INSERT / UPDATE / DELETE</td><td>DML trigger</td><td><code>AFTER</code> · <code>INSTEAD OF</code> · <code>inserted</code>/<code>deleted</code></td></tr>
-<tr><td>Suma acumulada; fila anterior; top-N por grupo</td><td>Window function</td><td><code>OVER (PARTITION BY … ORDER BY …)</code></td></tr>
-<tr><td>Jerarquía de profundidad variable</td><td>CTE recursiva</td><td><code>UNION ALL</code> · <code>MAXRECURSION</code></td></tr>
-<tr><td>Construir JSON anidado con arreglo · JSON → filas · leer un valor</td><td>JSON functions</td><td><code>JSON_OBJECT</code>+<code>JSON_ARRAYAGG</code> · <code>OPENJSON</code> · <code>JSON_VALUE</code></td></tr>
-<tr><td>Validar o extraer con un patrón (email, teléfono)</td><td>Regex</td><td><code>REGEXP_LIKE</code> · <code>REGEXP_SUBSTR</code></td></tr>
-<tr><td>Nombres con errores de escritura / casi iguales</td><td>Fuzzy matching</td><td><code>EDIT_DISTANCE</code> · <code>JARO_WINKLER_DISTANCE</code></td></tr>
-<tr><td>Re-lanzar el error original dentro de CATCH</td><td>THROW</td><td><code>THROW;</code></td></tr>
-<tr><td>Instrucciones fijas de Copilot para todo el repo · solo para <code>.sql</code></td><td>Instruction files</td><td><code>.github/copilot-instructions.md</code> · <code>*.instructions.md</code> + <code>applyTo</code></td></tr>
-<tr><td>Que el asistente consulte SQL / Fabric en vivo</td><td>MCP server</td><td><code>mcp.json</code> · Agent mode</td></tr>
-<tr class="grp d2"><td colspan="3">D2 · Seguridad, rendimiento y despliegue</td></tr>
-<tr><td>"Ni el DBA debe ver el dato"</td><td>Always Encrypted</td><td>CMK / CEK · deterministic / randomized</td></tr>
-<tr><td>Soporte ve solo los últimos 4 dígitos, sin cambiar la app</td><td>Dynamic Data Masking</td><td><code>partial()</code> · <code>UNMASK</code></td></tr>
-<tr><td>Cada usuario o tenant ve solo sus filas</td><td>Row-Level Security</td><td><code>CREATE SECURITY POLICY</code> · <code>FILTER</code>/<code>BLOCK PREDICATE</code></td></tr>
-<tr><td>Cifrar archivos y backups sin tocar la app</td><td>TDE</td><td>cifrado en reposo</td></tr>
-<tr><td>Sin contraseñas en la cadena de conexión</td><td>Entra ID + Managed Identity</td><td><code>FROM EXTERNAL PROVIDER</code></td></tr>
-<tr><td>Registrar quién accedió o qué hizo</td><td>Auditing</td><td>SQL Audit · Azure SQL Auditing</td></tr>
-<tr><td>Los lectores bloquean a los escritores, sin cambiar el código</td><td>RCSI / SNAPSHOT</td><td><code>READ_COMMITTED_SNAPSHOT</code></td></tr>
-<tr><td>Estaba rápida y ahora lenta (cambió el plan)</td><td>Query Store</td><td><i>Regressed Queries</i> · <code>sp_query_store_force_plan</code></td></tr>
-<tr><td>Las consultas más costosas, en el portal de Azure</td><td>Query Performance Insight</td><td>usa Query Store</td></tr>
-<tr><td>Dos transacciones se esperan mutuamente (ciclo)</td><td>Deadlock</td><td>error <code>1205</code> · víctima</td></tr>
-<tr><td>Desplegar el esquema desde Git / CI</td><td>SQL Database Project</td><td><code>.dacpac</code> · <code>sqlpackage</code> Publish</td></tr>
-<tr><td>La BD productiva cambió y el repo no lo sabe</td><td>Schema drift</td><td><code>DriftReport</code> · Schema Compare</td></tr>
-<tr><td>Aprobación manual antes de producción · el equipo dueño revisa</td><td>Environment + required reviewers · CODEOWNERS</td><td>branch protection</td></tr>
-<tr><td>Sin secretos ni contraseñas en el pipeline</td><td>OIDC / Key Vault</td><td><code>azure/login</code> · <code>id-token: write</code></td></tr>
-<tr><td>API REST y GraphQL sobre la BD sin programarla</td><td>Data API builder</td><td><code>dab-config.json</code> · <code>dab init</code></td></tr>
-<tr><td>Detectar cambios: solo qué fila · con valores antes/después · stream de eventos · función serverless · low-code</td><td>Change Tracking · CDC · CES · Functions SQL trigger · Logic Apps</td><td>ver tabla en M8</td></tr>
-<tr><td>Telemetría de la app · logs y métricas de la BD</td><td>Application Insights · Log Analytics</td><td>diagnostic settings</td></tr>
-<tr class="grp d3"><td colspan="3">D3 · IA en la base de datos</td></tr>
-<tr><td>Generar embeddings desde T-SQL</td><td>External model</td><td><code>CREATE EXTERNAL MODEL</code> · <code>AI_GENERATE_EMBEDDINGS</code></td></tr>
-<tr><td>Texto demasiado largo para el modelo</td><td>Chunking</td><td><code>AI_GENERATE_CHUNKS</code> · overlap</td></tr>
-<tr><td>Buscar un SKU, código o frase exacta</td><td>Full-text search</td><td><code>CONTAINS</code> · <code>FREETEXT</code></td></tr>
-<tr><td>Buscar por significado o sinónimos</td><td>Vector search</td><td><code>VECTOR_DISTANCE</code> · <code>VECTOR_SEARCH</code></td></tr>
-<tr><td>Lo mejor de ambos; máximo recall</td><td>Hybrid search + RRF</td><td><code>1/(k + rank)</code></td></tr>
-<tr><td>Millones de vectores, la velocidad manda · pocos datos, exactitud total</td><td>ANN · ENN</td><td><code>CREATE VECTOR INDEX</code> · <code>VECTOR_DISTANCE</code></td></tr>
-<tr><td>Respuestas basadas en MIS datos, sin reentrenar el modelo</td><td>RAG</td><td>retrieve → augment → generate</td></tr>
-<tr><td>Llamar a Azure OpenAI desde T-SQL</td><td>REST desde SQL</td><td><code>sp_invoke_external_rest_endpoint</code></td></tr>
-<tr><td>Armar el contexto · leer la respuesta del LLM</td><td>JSON</td><td><code>FOR JSON PATH</code> · <code>JSON_VALUE(@response, '$.result.choices[0].message.content')</code></td></tr>
-<tr><td>Llamar al modelo sin guardar la API key en texto</td><td>Managed Identity</td><td><code>DATABASE SCOPED CREDENTIAL</code> · <code>IDENTITY = 'Managed Identity'</code></td></tr>
+<tr><td><b>In-memory</b></td><td><code>MEMORY_OPTIMIZED = ON</code> · <code>DURABILITY</code> = <code>SCHEMA_AND_DATA</code> (default) o <code>SCHEMA_ONLY</code> (se pierde al reiniciar)</td></tr>
+<tr><td><b>Temporal</b></td><td>2 columnas <code>datetime2</code> + <code>PERIOD FOR SYSTEM_TIME</code> + <code>SYSTEM_VERSIONING = ON</code></td></tr>
+<tr><td><b>Ledger</b></td><td>actualizable: <code>SYSTEM_VERSIONING = ON, LEDGER = ON</code> · solo INSERT: <code>LEDGER = ON (APPEND_ONLY = ON)</code></td></tr>
+<tr><td><b>External</b></td><td>solo metadatos: <code>EXTERNAL DATA SOURCE</code> + <code>EXTERNAL FILE FORMAT</code> + <code>EXTERNAL TABLE</code>. <span class="bdg pv">Preview</span> en Azure SQL DB y Fabric; GA en SQL Server 2025</td></tr>
+<tr><td><b>Graph</b></td><td><code>AS NODE</code> / <code>AS EDGE</code> + <code>MATCH</code></td></tr>
 </tbody></table></div>
+<ul>
+<li><b>JSON:</b> tipo <code>json</code> (o <code>nvarchar(max)</code> + <code>ISJSON()</code>). Índice: <code>CREATE JSON INDEX</code> (solo columnas <code>json</code>) o columna calculada con <code>JSON_VALUE</code> + índice normal.</li>
+<li><b>Constraints:</b> PK (único, sin NULL) · FK (<code>ON DELETE CASCADE | SET NULL | NO ACTION</code>) · UNIQUE (admite <b>un</b> NULL) · CHECK · DEFAULT.</li>
+<li><b>SEQUENCE:</b> objeto propio, no atado a una tabla (a diferencia de <code>IDENTITY</code>): se comparte y se pide antes del INSERT.</li>
+<li><b>Partitioning:</b> partition <i>function</i> (límites) → <i>scheme</i> (filegroups) → tabla <code>ON scheme(col)</code>. <code>RANGE LEFT</code>: el límite queda en la partición izquierda; <code>RIGHT</code>: en la derecha.</li>
+</ul>
+</article>
+
+<article class="card" id="m2">
+<h3><span class="num">M2</span>Programabilidad</h3>
+<div class="tw"><table>
+<thead><tr><th>Objeto</th><th>Detalle</th></tr></thead>
+<tbody>
+<tr><td><b>View</b></td><td>simplifica o limita el acceso · <code>WITH CHECK OPTION</code> impide filas que la view no vería · <b>indexed view</b>: <code>SCHEMABINDING</code> + índice clustered único (con <code>GROUP BY</code>, <code>COUNT_BIG(*)</code>)</td></tr>
+<tr><td><b>Función escalar</b></td><td>devuelve un valor; se reusa dentro de un <code>SELECT</code></td></tr>
+<tr><td><b>iTVF</b> (inline)</td><td>«view con parámetros»: un solo <code>SELECT</code>, la más rápida; en <code>FROM</code> o <code>CROSS APPLY</code></td></tr>
+<tr><td><b>TVF multi-statement</b></td><td>varios pasos; estimación fija de 100 filas → prefiere iTVF</td></tr>
+<tr><td><b>Stored procedure</b></td><td>modifica datos, transacciones, <code>OUTPUT</code>; se llama con <code>EXEC</code>, no dentro de un <code>SELECT</code> · <code>SET NOCOUNT ON</code> · <code>EXECUTE AS</code></td></tr>
+<tr><td><b>Trigger</b></td><td><code>AFTER</code> o <code>INSTEAD OF</code> (típico en views) · <code>inserted</code> / <code>deleted</code> · se dispara <b>por sentencia</b>, no por fila · también DDL y logon</td></tr>
+</tbody></table></div>
+<p class="rule"><b>Atajo:</b> ¿parámetro en el <code>FROM</code>? iTVF · ¿modificas datos o necesitas transacción? SP · ¿reusar un valor en un <code>SELECT</code>? función escalar.</p>
+</article>
+
+<article class="card" id="m3">
+<h3><span class="num">M3</span>T-SQL avanzado</h3>
+<ul>
+<li><b>CTE:</b> <code>WITH x AS (…)</code>. Recursiva = ancla + <code>UNION ALL</code> + miembro recursivo; <code>OPTION (MAXRECURSION n)</code> (default 100; 0 = sin límite).</li>
+<li><b>Window:</b> <code>fn() OVER (PARTITION BY … ORDER BY …)</code>: ranking (<code>ROW_NUMBER</code> <code>RANK</code> <code>DENSE_RANK</code>), vecinos (<code>LAG</code> <code>LEAD</code>), acumulados (<code>SUM() OVER</code>).</li>
+<li><b>Graph:</b> <code>WHERE MATCH(a-(arista)-&gt;b)</code>; camino más corto: <code>MATCH(SHORTEST_PATH(a(-(e)-&gt;b)+))</code> con <code>FOR PATH</code> en el <code>FROM</code>.</li>
+<li><b>Correlacionadas:</b> la subconsulta usa columnas de la externa · <code>EXISTS</code> · <code>CROSS APPLY</code> / <code>OUTER APPLY</code> = por fila.</li>
+<li><b>Errores:</b> <code>TRY…CATCH</code> · <code>THROW</code> (moderno; <code>THROW;</code> re-lanza el original; error propio ≥ 50000; la sentencia anterior debe terminar en <code>;</code>) vs <code>RAISERROR</code> · <code>SET XACT_ABORT ON</code> · <code>XACT_STATE()</code>.</li>
+</ul>
+<div class="tw"><table>
+<thead><tr><th>Función</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr class="sh"><td colspan="2">JSON</td></tr>
+<tr><td><code>JSON_VALUE</code> · <code>JSON_QUERY</code></td><td>un valor escalar · un objeto o arreglo</td></tr>
+<tr><td><code>OPENJSON … WITH</code></td><td>JSON → filas y columnas</td></tr>
+<tr><td><code>JSON_OBJECT</code> · <code>JSON_ARRAY</code> · <code>JSON_ARRAYAGG</code></td><td>construir JSON (<code>ARRAYAGG</code>: varias filas → un arreglo)</td></tr>
+<tr><td><code>JSON_CONTAINS</code> · <code>FOR JSON PATH</code></td><td>¿contiene el valor? · consulta → JSON</td></tr>
+<tr class="sh"><td colspan="2">Regex<small>REGEXP_LIKE y las de tabla exigen compat. level 170</small></td></tr>
+<tr><td><code>REGEXP_LIKE</code></td><td>predicado: ¿coincide con el patrón?</td></tr>
+<tr><td><code>REGEXP_REPLACE</code> · <code>_SUBSTR</code> · <code>_INSTR</code> · <code>_COUNT</code></td><td>reemplazar · extraer · posición · contar</td></tr>
+<tr><td><code>REGEXP_MATCHES</code> · <code>REGEXP_SPLIT_TO_TABLE</code></td><td>devuelven una <b>tabla</b> (van en <code>FROM</code> / <code>APPLY</code>)</td></tr>
+<tr class="sh"><td colspan="2">Fuzzy <span class="bdg pv">Preview</span><small>SQL Server 2025: PREVIEW_FEATURES</small></td></tr>
+<tr><td><code>EDIT_DISTANCE</code></td><td>n.º de ediciones (menor = más parecido)</td></tr>
+<tr><td><code>EDIT_DISTANCE_SIMILARITY</code> · <code>JARO_WINKLER_SIMILARITY</code></td><td>similitud 0–100</td></tr>
+<tr><td><code>JARO_WINKLER_DISTANCE</code></td><td>distancia: <b>0 = idéntico</b></td></tr>
+</tbody></table></div>
+</article>
+
+<article class="card" id="m4">
+<h3><span class="num">M4</span>Herramientas con IA</h3>
+<ul>
+<li><b>Instrucciones:</b> <code>.github/copilot-instructions.md</code> (todo el repo) · <code>.github/instructions/*.instructions.md</code> con <code>applyTo: "**/*.sql"</code> (solo esos archivos) · <code>AGENTS.md</code> (agentes) · <code>.github/prompts/*.prompt.md</code> (plantillas).</li>
+<li><b>Chat:</b> eliges <b>modelo</b> y modo (Ask / Edit / Agent); el icono <i>tools</i> activa herramientas. MCP requiere <b>Agent mode</b>.</li>
+<li><b>MCP:</b> Config <code>.vscode/mcp.json</code> (clave <code>servers</code>); secretos en <code>inputs</code>, nunca en el JSON. SQL: <b>SQL MCP Server</b> (DAB; datos, no esquema); la extensión MSSQL no usa MCP. Fabric: <i>data agent</i> publicado → pestaña MCP → URL.</li>
+<li><b>Copilot in Fabric:</b> capacidad F2+ (o P1+); activo por defecto en F2+, el admin revisa los tenant settings.</li>
+<li><b>Seguridad:</b> sin credenciales en prompts · revisa el SQL generado (<code>GRANT</code> mínimo, <code>sp_executesql</code>) · MCP con cuenta de solo lectura, red privada y entorno dev/test.</li>
+</ul>
+</article>
+
+  </div>
 </section>
 
-<section id="d1">
-<h2>D1 · Diseñar y desarrollar <small>35–40 %</small></h2>
-<div class="cards">
+<!-- ===================== D2 ===================== -->
+<section class="dom" id="d2" data-d="2">
+  <div class="open">
+    <div class="bg"><span class="orb a"></span><span class="orb b"></span></div>
+    <div class="open-in">
+      <span class="otile"><svg class="ic"><use href="#g-shield"/></svg></span>
+      <div>
+        <p class="oh">Dominio 2 · Secure, optimize, and deploy database solutions</p>
+        <h2>Seguridad, rendimiento y despliegue</h2>
+        <p class="en">Cifrado y acceso, rendimiento y concurrencia, CI/CD con SQL Database Projects y servicios de Azure.</p>
+        <div class="chips"><span class="chip w">35–40 % del examen</span><a class="chip" href="#m5"><em>M5</em>Seguridad</a><a class="chip" href="#m6"><em>M6</em>Rendimiento</a><a class="chip" href="#m7"><em>M7</em>CI/CD</a><a class="chip" href="#m8"><em>M8</em>DAB y Azure</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="cards">
 
-<article class="card"><h3><span class="n">M1</span>Objetos de base de datos</h3><ul>
-<li><b>Tipos:</b> el más pequeño que alcance. <code>decimal(p,s)</code> para dinero exacto, <code>datetime2</code> mejor que <code>datetime</code>, <code>nvarchar</code> solo si necesitas Unicode.</li>
-<li><b>Índices:</b> <i>clustered</i> = ordena la tabla (uno por tabla, casi siempre la PK) · <i>nonclustered</i> = estructura aparte (varios) · <code>INCLUDE</code> = columnas extra para "cubrir" la consulta · <i>filtered</i> = solo las filas del <code>WHERE</code>.</li>
-<li><b>Columnstore</b> = analítica (agregaciones, compresión). Rowstore = OLTP.</li>
-<li><b>In-memory:</b> <code>SCHEMA_AND_DATA</code> (default, persiste) vs <code>SCHEMA_ONLY</code> (se pierde al reiniciar).</li>
-<li><b>Temporal:</b> dos columnas <code>datetime2</code> + <code>PERIOD FOR SYSTEM_TIME</code>; la history table la maneja el motor. <b>Ledger:</b> <i>updatable</i> (permite UPDATE/DELETE y guarda historial) vs <i>append-only</i> (solo INSERT).</li>
-<li><b>JSON:</b> tipo <code>json</code> o <code>nvarchar(max)</code> + <code>ISJSON()</code>. Índice: <code>CREATE JSON INDEX</code> o columna calculada con <code>JSON_VALUE</code> + índice normal.</li>
-<li><b>Constraints:</b> PK (único, sin NULL) · FK (<code>ON DELETE CASCADE | SET NULL | NO ACTION</code>) · UNIQUE (admite un NULL) · CHECK · DEFAULT.</li>
-<li><b>SEQUENCE</b> es un objeto propio (no va atado a una tabla como <code>IDENTITY</code>).</li>
-<li><b>Partitioning:</b> partition <i>function</i> (los límites) → <i>scheme</i> (filegroups) → tabla <code>ON scheme(col)</code>. <code>RANGE LEFT</code>: el valor límite queda en la partición de la izquierda; <code>RIGHT</code>: en la de la derecha.</li></ul>
-<pre><code class="lang-sql">CREATE SEQUENCE dbo.OrderSeq START WITH 1 INCREMENT BY 1;
-SELECT NEXT VALUE FOR dbo.OrderSeq;</code></pre></article>
-
-<article class="card"><h3><span class="n">M2</span>Programabilidad</h3><ul>
-<li><b>View:</b> guarda una consulta (simplifica y limita acceso). <code>WITH CHECK OPTION</code> evita filas que la view luego no vería. <b>Indexed view</b> = materializada: <code>SCHEMABINDING</code> + índice clustered único.</li>
-<li><b>Funciones:</b> escalar (1 valor) · <i>inline</i> TVF (un solo <code>SELECT</code>, la más rápida, "view con parámetros") · <i>multi-statement</i> TVF (más lenta, estimaciones pobres). Regla: prefiere inline.</li>
-<li><b>Stored procedure:</b> lógica + parámetros (<code>OUTPUT</code>) + transacciones; se llama con <code>EXEC</code>, no dentro de un <code>SELECT</code>. Buenas prácticas: <code>SET NOCOUNT ON</code>, <code>EXECUTE AS</code>.</li>
-<li><b>Trigger:</b> <code>AFTER</code> (después del cambio) o <code>INSTEAD OF</code> (en lugar del cambio; típico en views). Usa las tablas virtuales <code>inserted</code> / <code>deleted</code>. Se dispara por <i>sentencia</i>, no por fila → escribe código para varias filas. Existen también DDL y logon triggers.</li>
-<li><b>Atajo:</b> ¿parámetro en el <code>FROM</code>? iTVF · ¿modificas datos o necesitas transacción? SP · ¿reusar un valor dentro de un <code>SELECT</code>? función escalar.</li></ul></article>
-
-<article class="card"><h3><span class="n">M3</span>T-SQL avanzado</h3><ul>
-<li><b>CTE:</b> <code>WITH x AS (…)</code>. Recursiva = miembro ancla + <code>UNION ALL</code> + miembro recursivo; <code>OPTION (MAXRECURSION n)</code> (default 100; 0 = sin límite).</li>
-<li><b>Window:</b> <code>función() OVER (PARTITION BY … ORDER BY …)</code>: ranking (<code>ROW_NUMBER</code>, <code>RANK</code>, <code>DENSE_RANK</code>), vecinos (<code>LAG</code>, <code>LEAD</code>), acumulados (<code>SUM() OVER</code>).</li>
-<li><b>Graph:</b> <code>WHERE MATCH(a-(arista)-&gt;b)</code>; <code>SHORTEST_PATH</code> para el camino más corto.</li>
-<li><b>Correlacionadas:</b> la subconsulta usa columnas de la externa; <code>EXISTS</code> / <code>NOT EXISTS</code>; <code>CROSS APPLY</code> / <code>OUTER APPLY</code> aplican una función o subconsulta fila por fila.</li>
-<li><b>Errores:</b> <code>TRY…CATCH</code> · <code>THROW</code> (moderno; <code>THROW;</code> re-lanza el original) vs <code>RAISERROR</code> (antiguo, formato printf) · <code>SET XACT_ABORT ON</code> · <code>XACT_STATE()</code>.</li></ul>
-<div class="tw"><table><thead><tr><th>Función</th><th>Para qué</th></tr></thead><tbody>
-<tr><td><code>JSON_VALUE</code></td><td>un valor escalar</td></tr>
-<tr><td><code>JSON_QUERY</code></td><td>un objeto o arreglo</td></tr>
-<tr><td><code>OPENJSON … WITH</code></td><td>JSON → filas y columnas</td></tr>
-<tr><td><code>JSON_OBJECT</code> / <code>JSON_ARRAY</code></td><td>construir JSON</td></tr>
-<tr><td><code>JSON_ARRAYAGG</code></td><td>varias filas → un arreglo JSON</td></tr>
-<tr><td><code>JSON_CONTAINS</code></td><td>¿el JSON contiene este valor?</td></tr>
-<tr><td><code>FOR JSON PATH</code></td><td>resultado de consulta → JSON</td></tr>
-<tr><td><code>REGEXP_LIKE</code></td><td>¿coincide con el patrón? (predicado)</td></tr>
-<tr><td><code>REGEXP_REPLACE</code> · <code>_SUBSTR</code> · <code>_INSTR</code> · <code>_COUNT</code></td><td>reemplazar · extraer · posición · contar</td></tr>
-<tr><td><code>REGEXP_MATCHES</code> · <code>REGEXP_SPLIT_TO_TABLE</code></td><td>devuelven una <b>tabla</b> (van en <code>FROM</code>/<code>APPLY</code>)</td></tr>
-<tr><td><code>EDIT_DISTANCE</code></td><td>n.º de ediciones (menor = más parecido)</td></tr>
-<tr><td><code>EDIT_DISTANCE_SIMILARITY</code></td><td>similitud 0–100</td></tr>
-<tr><td><code>JARO_WINKLER_DISTANCE</code></td><td>distancia 0–1 (<b>0 = idéntico</b>)</td></tr>
-</tbody></table></div></article>
-
-<article class="card"><h3><span class="n">M4</span>Herramientas con IA</h3><ul>
-<li><b>Instrucciones para Copilot:</b> <code>.github/copilot-instructions.md</code> (todo el repo) · <code>.github/instructions/*.instructions.md</code> con <code>applyTo: "**/*.sql"</code> (solo esos archivos) · <code>AGENTS.md</code> (agentes) · <code>.github/prompts/*.prompt.md</code> (plantillas bajo demanda).</li>
-<li><b>Chat:</b> modos Ask / Edit / Agent; eliges modelo y herramientas (tools) en el chat. Las herramientas MCP requieren <b>Agent mode</b>.</li>
-<li><b>MCP</b> (Model Context Protocol): estándar para que el asistente use herramientas y datos externos. Config en <code>.vscode/mcp.json</code> (clave <code>servers</code>). Hay servidores para SQL Server (extensión MSSQL / SQL MCP Server) y para un Fabric lakehouse.</li>
-<li><b>Copilot in Fabric:</b> necesita una capacidad de Fabric de pago (F2+ / P1+) y que el admin habilite el tenant setting.</li>
-<li><b>Seguridad:</b> no pegues secretos ni datos sensibles en prompts · el MCP debe usar una cuenta de <b>solo lectura / mínimo privilegio</b> · revisa el SQL generado antes de ejecutarlo · ojo con <i>prompt injection</i> (datos que traen instrucciones escondidas).</li></ul></article>
-
-</div></section>
-
-<section id="d2">
-<h2>D2 · Seguridad, rendimiento y despliegue <small>35–40 %</small></h2>
-<div class="cards">
-
-<article class="card"><h3><span class="n">M5</span>Seguridad y cumplimiento</h3>
-<div class="tw"><table><thead><tr><th>Técnica</th><th>Protege de…</th></tr></thead><tbody>
+<article class="card" id="m5">
+<h3><span class="num">M5</span>Seguridad y cumplimiento</h3>
+<div class="tw"><table>
+<thead><tr><th>Técnica</th><th>Protege de…</th></tr></thead>
+<tbody>
 <tr><td><b>Always Encrypted</b></td><td>DBA y operador cloud: el motor nunca ve el dato en claro</td></tr>
 <tr><td><b>Cell-level</b> (<code>ENCRYPTBYKEY</code>)</td><td>leer la columna sin la clave (el servidor descifra)</td></tr>
 <tr><td><b>TDE</b></td><td>robo de archivos y backups (cifra en reposo)</td></tr>
 <tr><td><b>DDM</b></td><td>exposición en resultados (solo enmascara, no cifra)</td></tr>
-<tr><td><b>RLS</b></td><td>ver filas ajenas (multi-tenant)</td></tr></tbody></table></div>
+<tr><td><b>RLS</b></td><td>ver filas ajenas (multi-tenant)</td></tr>
+</tbody></table></div>
 <ul>
-<li><b>Always Encrypted:</b> <i>Deterministic</i> (mismo valor → mismo cifrado; permite <code>=</code>, JOIN, GROUP BY; revela patrones) vs <i>Randomized</i> (más seguro; sin comparaciones). Con <i>enclave</i> se permiten <code>LIKE</code> y rangos. Claves: CMK (p. ej. Key Vault) cifra la CEK; el cliente conecta con <code>Column Encryption Setting=Enabled</code>.</li>
-<li><b>DDM:</b> <code>default()</code>, <code>email()</code>, <code>random()</code>, <code>partial()</code>; el permiso <code>UNMASK</code> ve el dato real. No es un control fuerte.</li>
+<li><b>Always Encrypted:</b> <i>Deterministic</i> (mismo valor → mismo cifrado; permite <code>=</code>, JOIN, GROUP BY) vs <i>Randomized</i> (más seguro; sin comparaciones). Con <i>enclave seguro</i>: <code>LIKE</code> y rangos. La CMK (p. ej. Key Vault) cifra la CEK; el cliente usa <code>Column Encryption Setting=Enabled</code>.</li>
+<li><b>DDM:</b> <code>default()</code> <code>email()</code> <code>random()</code> <code>partial()</code> (y <code>datetime()</code> desde 2022); <code>UNMASK</code> ve el dato real. No es un control fuerte.</li>
 <li><b>RLS:</b> función inline + <code>CREATE SECURITY POLICY</code>. <code>FILTER PREDICATE</code> limita lo que se <i>lee</i>; <code>BLOCK PREDICATE</code> impide <i>escribir</i> filas no permitidas.</li>
-<li><b>Permisos:</b> <code>GRANT</code> / <code>DENY</code> / <code>REVOKE</code>; <b>DENY gana</b>. Usa roles, mínimo privilegio y permisos a nivel de esquema.</li>
-<li><b>Passwordless:</b> Entra ID + Managed Identity; <code>CREATE USER [x] FROM EXTERNAL PROVIDER</code>; connection string <code>Authentication=Active Directory Default</code> / <code>Managed Identity</code>.</li>
-<li><b>Auditing:</b> SQL Server Audit (server audit + audit specification) · Azure SQL Auditing hacia Storage, Log Analytics o Event Hubs.</li>
-<li><b>Endpoints de modelos:</b> <code>CREATE DATABASE SCOPED CREDENTIAL … WITH IDENTITY = 'Managed Identity'</code> (sin API keys en texto).</li>
-<li><b>Endpoints DAB (REST / GraphQL / MCP):</b> autenticación Entra ID, roles y permisos por entidad y acción, <code>host.mode = production</code>, MCP con permisos mínimos.</li></ul></article>
+<li><b>Permisos:</b> <code>GRANT</code> / <code>DENY</code> / <code>REVOKE</code>; <b>DENY gana</b>. Roles, mínimo privilegio, permisos a nivel de esquema.</li>
+<li><b>Passwordless:</b> <code>CREATE USER [x] FROM EXTERNAL PROVIDER</code> · <code>Authentication=Active Directory Managed Identity</code> (user-assigned: <code>User ID=&lt;client_id&gt;</code>) o <code>Active Directory Default</code>.</li>
+<li><b>Auditing:</b> SQL Server Audit (server audit + audit specification) · Azure SQL Auditing → Storage, Log Analytics o Event Hubs.</li>
+<li><b>Endpoints de modelos:</b> <code>DATABASE SCOPED CREDENTIAL</code> con <code>IDENTITY = 'Managed Identity'</code> (código en M9); rol <i>Cognitive Services OpenAI User</i>; permiso <code>EXECUTE ON EXTERNAL MODEL</code>.</li>
+<li><b>Endpoints DAB (REST / GraphQL / MCP):</b> <code>authentication.provider = "EntraID"</code> (por defecto <code>Unauthenticated</code> → todo es <code>anonymous</code>) · permisos por rol y acción en cada entidad · <code>host.mode = production</code>. El endpoint MCP usa esos permisos.</li>
+</ul>
+</article>
 
-<article class="card"><h3><span class="n">M6</span>Rendimiento</h3><ul>
-<li><b>Tier:</b> DTU = paquete simple · vCore = eliges cómputo y almacenamiento por separado. <i>General Purpose</i> = uso general · <i>Business Critical</i> = baja latencia + réplica de lectura · <i>Hyperscale</i> = bases muy grandes (&gt; 4 TB), escala y restore rápidos · <i>Serverless</i> = se auto-pausa (cargas intermitentes).</li>
-<li><b>Planes:</b> <i>actual</i> (lo que pasó) vs <i>estimated</i>. Seek bueno · Scan sobre tabla grande malo · Key Lookup → agrega <code>INCLUDE</code> · avisos de conversión implícita / missing index.</li>
-<li><b>Query Store:</b> historial de consultas y planes; <i>Regressed Queries</i>; fuerza un plan con <code>sp_query_store_force_plan</code>. <b>QPI</b> es la vista del portal sobre Query Store.</li>
-<li><b>DMVs:</b> <code>sys.dm_exec_requests</code> (qué corre / quién bloquea) · <code>dm_exec_query_stats</code> (consumo acumulado) · <code>dm_tran_locks</code> (locks) · <code>dm_os_wait_stats</code> (esperas) · <code>dm_db_missing_index_*</code> (índices sugeridos).</li>
-<li><b>Blocking</b> = espera en cadena (cede al terminar el que bloquea). <b>Deadlock</b> = ciclo; el motor mata una víctima (error 1205). Arreglo: transacciones cortas, mismo orden de acceso, buenos índices, RCSI, reintentos.</li></ul>
-<div class="tw"><table><thead><tr><th>Isolation level</th><th>Dirty</th><th>Non-rep.</th><th>Phantom</th></tr></thead><tbody>
+<article class="card" id="m6">
+<h3><span class="num">M6</span>Rendimiento</h3>
+<ul>
+<li><b>Tier:</b> DTU = paquete simple · vCore = cómputo y almacenamiento por separado. <i>General Purpose</i> = uso general · <i>Business Critical</i> = baja latencia + réplica de lectura incluida · <i>Hyperscale</i> = hasta 128 TB, escala y restore rápidos · <i>Serverless</i> (GP e Hyperscale) = se auto-pausa.</li>
+<li><b>Planes:</b> <i>actual</i> vs <i>estimated</i> · Seek bueno, Scan sobre tabla grande malo · Key Lookup → <code>INCLUDE</code> · avisos de conversión implícita / missing index.</li>
+<li><b>Query Store:</b> historial de consultas y planes; <i>Regressed Queries</i>; <code>sp_query_store_force_plan</code>; <i>hints</i> sin tocar el código. <b>QPI</b> = vista del portal sobre Query Store.</li>
+<li><b>DMVs:</b> <code>sys.dm_exec_requests</code> (qué corre / quién bloquea) · <code>dm_exec_query_stats</code> (consumo acumulado) · <code>dm_tran_locks</code> · <code>dm_os_wait_stats</code> (esperas) · <code>dm_db_missing_index_*</code>.</li>
+<li><b>Blocking</b> = espera en cadena. <b>Deadlock</b> = ciclo; el motor mata una víctima (1205). Arreglo: transacciones cortas, mismo orden de acceso, buenos índices, RCSI, reintentos.</li>
+</ul>
+<div class="tw"><table>
+<thead><tr><th>Isolation level</th><th>Dirty</th><th>Non-rep.</th><th>Phantom</th></tr></thead>
+<tbody>
 <tr><td>READ UNCOMMITTED</td><td>Sí</td><td>Sí</td><td>Sí</td></tr>
 <tr><td>READ COMMITTED <i>(default SQL Server)</i></td><td>No</td><td>Sí</td><td>Sí</td></tr>
-<tr><td>READ COMMITTED SNAPSHOT <i>(RCSI · default Azure SQL DB)</i></td><td>No</td><td>Sí</td><td>Sí</td></tr>
+<tr><td>READ COMMITTED SNAPSHOT <i>(RCSI · default Azure SQL DB y Fabric)</i></td><td>No</td><td>Sí</td><td>Sí</td></tr>
 <tr><td>REPEATABLE READ</td><td>No</td><td>No</td><td>Sí</td></tr>
-<tr><td>SNAPSHOT <i>(ALLOW_SNAPSHOT_ISOLATION)</i></td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>SERIALIZABLE</td><td>No</td><td>No</td><td>No</td></tr></tbody></table></div>
-<p class="lead" style="margin:2px 0 0">RCSI y SNAPSHOT usan <i>row versioning</i>: los lectores no bloquean a los escritores.</p></article>
+<tr><td>SNAPSHOT <i>(<code>ALLOW_SNAPSHOT_ISOLATION</code>)</i></td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td>SERIALIZABLE</td><td>No</td><td>No</td><td>No</td></tr>
+</tbody></table></div>
+<p class="rule">RCSI y SNAPSHOT usan <i>row versioning</i>: los lectores no bloquean a los escritores.</p>
+</article>
 
-<article class="card"><h3><span class="n">M7</span>CI/CD con SQL Database Projects</h3><ul>
-<li><b>Flujo:</b> proyecto SQL (SDK-style, <code>Microsoft.Build.Sql</code>) → <code>dotnet build</code> → <code>.dacpac</code> → <code>sqlpackage</code> Publish (o <code>azure/sql-action</code>) → base de datos.</li>
-<li><b>sqlpackage:</b> <code>Publish</code> (aplica) · <code>Script</code> (genera el T-SQL) · <code>DeployReport</code> (resumen) · <code>DriftReport</code> (¿alguien cambió la BD?) · <code>Extract</code> (BD → dacpac).</li>
-<li><b>Pruebas:</b> <i>unit</i> con tSQLt (<code>FakeTable</code>, <code>AssertEquals</code>) vs <i>integration</i> con una BD real o contenedor.</li>
-<li><b>Datos de referencia:</b> post-deployment script idempotente (<code>MERGE</code>), versionado en Git.</li>
-<li><b>Git:</b> ramas + pull request; branch protection (checks obligatorios y revisores) · <code>CODEOWNERS</code> · <i>Environments</i> con <i>required reviewers</i> para producción.</li>
-<li><b>Secretos:</b> GitHub secrets o Azure Key Vault; mejor <b>OIDC</b> (<code>azure/login</code> con <code>id-token: write</code>), sin contraseñas.</li></ul>
-<pre><code class="lang-bash">dotnet build
-sqlpackage /Action:Publish /SourceFile:db.dacpac /TargetConnectionString:"..."</code></pre></article>
-
-<article class="card"><h3><span class="n">M8</span>DAB y servicios de Azure</h3><ul>
-<li><b>Data API builder</b> = API REST + GraphQL sobre tablas, vistas y stored procedures, sin código. CLI: <code>dab init</code>, <code>dab add</code>, <code>dab start</code>.</li>
-<li><b>Por entidad:</b> <code>source</code> (tabla/vista/SP) · <code>permissions</code> (rol + acciones) · <code>relationships</code> (GraphQL) · <code>cache</code> (<code>enabled</code>, <code>ttl-seconds</code>). <b>Paginación:</b> <code>default-page-size</code> / <code>max-page-size</code>.</li>
-<li><b>Consultas:</b> REST <code>$filter</code> <code>$orderby</code> <code>$select</code> <code>$first</code> <code>$after</code> · GraphQL <code>filter</code> <code>orderBy</code> <code>first</code> <code>after</code>.</li>
-<li><b>Hosting:</b> contenedor (Azure Container Apps / App Service) u otro servicio de Azure. <b>Monitoreo:</b> Application Insights (telemetría de la app) + Log Analytics (logs/métricas de la BD vía diagnostic settings).</li></ul>
-<pre><code class="lang-json">{ "data-source": { "database-type": "mssql", "connection-string": "@env('SQL_CONN')" },
-  "runtime": { "rest": { "enabled": true }, "graphql": { "enabled": true }, "host": { "mode": "production" } },
-  "entities": { "Book": { "source": { "object": "dbo.Books", "type": "table" },
-      "permissions": [ { "role": "anonymous", "actions": [ "read" ] } ] } } }</code></pre>
-<div class="tw"><table><thead><tr><th>Para detectar cambios</th><th>Qué da</th><th>Úsalo cuando…</th></tr></thead><tbody>
-<tr><td><b>Change Tracking</b></td><td>solo <i>qué filas</i> cambiaron (PK + operación); ligero; exige PK</td><td>sincronización incremental simple</td></tr>
-<tr><td><b>CDC</b></td><td>historial con valores antes/después (lee el log)</td><td>auditoría o ETL con detalle</td></tr>
-<tr><td><b>CES</b> <i>(Preview)</i></td><td>stream de eventos casi en tiempo real hacia Event Hubs</td><td>arquitectura orientada a eventos</td></tr>
-<tr><td><b>Azure Functions</b> (SQL trigger)</td><td>función serverless que se dispara con los cambios (usa Change Tracking)</td><td>procesar cambios con tu propio código</td></tr>
-<tr><td><b>Logic Apps</b></td><td>flujo low-code con trigger SQL (polling)</td><td>integrar con otros servicios sin programar</td></tr></tbody></table></div></article>
-
-</div></section>
-
-<section id="d3">
-<h2>D3 · IA en la base de datos <small>25–30 %</small></h2>
-<div class="cards">
-
-<article class="card"><h3><span class="n">M9</span>Modelos y embeddings</h3><ul>
-<li><b>Embedding</b> = vector numérico que representa el significado. Se guarda en una columna <code>vector(n)</code>; <b>n debe coincidir con el modelo</b> y no se mezclan modelos.</li>
-<li><b>Elegir modelo:</b> <i>small</i> (barato y rápido) vs <i>large</i> (mejor calidad, más dimensiones) · multilingüe o multimodal solo si el caso lo pide · <i>structured output</i> = el modelo responde con un JSON que cumple un esquema.</li>
-<li><b>Qué incrustar:</b> texto con significado (título + descripción + categoría). No IDs, fechas ni números sueltos.</li>
-<li><b>Chunking:</b> trozos de tamaño fijo con solapamiento (<i>overlap</i>) para respetar el límite de tokens.</li></ul>
-<pre><code class="lang-sql">CREATE EXTERNAL MODEL EmbedModel WITH (
-  LOCATION = 'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;deploy&gt;/embeddings?api-version=...',
-  API_FORMAT = 'Azure OpenAI', MODEL_TYPE = EMBEDDINGS,
-  MODEL = 'text-embedding-3-small', CREDENTIAL = [https://&lt;recurso&gt;.openai.azure.com]);
-SELECT AI_GENERATE_EMBEDDINGS(N'hola' USE MODEL EmbedModel);</code></pre>
-<div class="tw"><table><thead><tr><th>Mantener embeddings al cambiar los datos</th><th>Nota</th></tr></thead><tbody>
-<tr><td><b>Table trigger</b></td><td>simple, pero síncrono: alarga la transacción</td></tr>
-<tr><td><b>Change Tracking</b> / <b>Azure Functions</b></td><td>asíncrono y ligero (Functions usa CT)</td></tr>
-<tr><td><b>Logic Apps</b></td><td>low-code, integra otros servicios</td></tr>
-<tr><td><b>CDC</b> / <b>CES</b></td><td>alto volumen o arquitectura de eventos</td></tr>
-<tr><td><b>Microsoft Foundry</b></td><td>aloja/evalúa el modelo; no detecta cambios por sí solo</td></tr></tbody></table></div></article>
-
-<article class="card"><h3><span class="n">M10</span>Búsqueda inteligente</h3>
-<div class="tw"><table><thead><tr><th></th><th>Full-text</th><th>Vector</th><th>Hybrid</th></tr></thead><tbody>
-<tr><td>Cuándo</td><td>SKU, error, frase exacta</td><td>por significado / sinónimos</td><td>no sabes cómo busca el usuario; RAG</td></tr>
-<tr><td>T-SQL</td><td><code>CONTAINS</code> <code>FREETEXT</code></td><td><code>VECTOR_DISTANCE</code> <code>VECTOR_SEARCH</code></td><td>ambos + RRF</td></tr></tbody></table></div>
+<article class="card" id="m7">
+<h3><span class="num">M7</span>CI/CD con SQL Database Projects</h3>
+<div class="flow" aria-label="Flujo de despliegue">
+<div class="stp"><span class="scard">Proyecto SQL</span><span class="chev" aria-hidden="true"></span></div>
+<div class="stp"><span class="scard">dotnet build</span><span class="chev" aria-hidden="true"></span></div>
+<div class="stp"><span class="scard">sqlpackage</span><span class="chev" aria-hidden="true"></span></div>
+<div class="stp"><span class="scard">Base de datos</span></div>
+</div>
 <ul>
-<li><b>Funciones:</b> <code>VECTOR_DISTANCE('cosine', a, b)</code> (distancia exacta) · <code>VECTOR_SEARCH</code> (búsqueda aproximada con índice) · <code>VECTOR_NORMALIZE</code> (normaliza el vector) · <code>VECTORPROPERTY</code> (dimensiones / tipo base).</li>
-<li><b>Métricas:</b> <i>cosine</i> (la habitual para texto) · <i>euclidean</i> · <i>dot</i> (con vectores normalizados).</li>
-<li><b>ENN</b> (exacta): recall 100 %, recorre todo → pocos datos o filtros muy selectivos. <b>ANN</b> (aproximada): recall &lt; 100 % pero rápida → necesita <code>CREATE VECTOR INDEX</code> (DiskANN) y millones de vectores.</li>
-<li><b>RRF</b> (Reciprocal Rank Fusion): suma <code>1/(k + rank)</code> de cada lista (full-text + vector), con k ≈ 60; no hace falta normalizar scores.</li></ul>
-<pre><code class="lang-sql">-- ENN (exacta)
-SELECT TOP (5) id FROM dbo.Docs ORDER BY VECTOR_DISTANCE('cosine', embedding, @q);
--- ANN, docs vigentes
+<li><b>Proyecto:</b> SDK-style (<code>Microsoft.Build.Sql</code>); <code>dotnet build</code> produce el <code>.dacpac</code>. En GitHub Actions: <code>azure/sql-action</code>.</li>
+<li><b>sqlpackage:</b> <code>Publish</code> (aplica) · <code>Script</code> (genera el T-SQL) · <code>DeployReport</code> (qué cambiaría) · <code>DriftReport</code> (¿alguien cambió la BD? requiere BD registrada como DAC) · <code>Extract</code> (BD → dacpac).</li>
+<li><b>Pruebas:</b> <i>unit</i> con tSQLt (<code>FakeTable</code>, <code>AssertEquals</code>) vs <i>integration</i> con una BD real o contenedor.</li>
+<li><b>Datos de referencia:</b> <i>post-deployment script</i> (uno por proyecto; <code>:r</code> incluye otros) que corre en cada publish → <code>MERGE</code> idempotente.</li>
+<li><b>Git:</b> branch protection (checks y revisores) · <code>CODEOWNERS</code> · <i>Environments</i> con <i>required reviewers</i> para producción.</li>
+<li><b>Secretos:</b> GitHub secrets o Key Vault; mejor <b>OIDC</b> (<code>azure/login</code> + <code>permissions: id-token: write</code>).</li>
+</ul>
+</article>
+
+<article class="card" id="m8">
+<h3><span class="num">M8</span>DAB y servicios de Azure</h3>
+<ul>
+<li><b>Data API builder</b> = API REST + GraphQL (y MCP) sobre tablas, vistas y stored procedures, sin código. CLI: <code>dab init</code>, <code>dab add</code>, <code>dab start</code>.</li>
+<li><b>Por entidad:</b> <code>source</code> (<code>table</code> | <code>view</code> | <code>stored-procedure</code>) · <code>permissions</code> (rol + acciones) · <code>relationships</code> (GraphQL) · <code>cache</code> (<code>enabled</code>, <code>ttl-seconds</code>). <b>Paginación:</b> <code>default-page-size</code> 100 · <code>max-page-size</code> 100,000.</li>
+<li><b>Consultas:</b> REST <code>$filter</code> <code>$orderby</code> <code>$select</code> <code>$first</code> <code>$after</code> · GraphQL <code>filter</code> <code>orderBy</code> <code>first</code> <code>after</code>.</li>
+<li><b>Hosting:</b> contenedor (Container Apps, App Service, ACI, AKS). <b>Monitoreo:</b> Application Insights (telemetría de la app) + Log Analytics (logs y métricas de la BD vía diagnostic settings).</li>
+</ul>
+<figure class="term"><div class="tb"><i></i><i></i><i></i><span>dab-config.json</span><button class="cp" type="button">Copiar</button></div><pre><code class="lang-json">{ "data-source": { "database-type": "mssql", "connection-string": "@env('SQL_CONN')" },
+  "entities": { "Book": {
+      "source": { "object": "dbo.Books", "type": "table" },
+      "permissions": [ { "role": "anonymous", "actions": [ "read" ] } ],
+      "cache": { "enabled": true, "ttl-seconds": 30 } } } }</code></pre></figure>
+<div class="tw"><table>
+<thead><tr><th>Detectar cambios</th><th>Qué da</th></tr></thead>
+<tbody>
+<tr><td><b>Change Tracking</b></td><td>solo <i>qué filas</i> cambiaron (PK + operación); ligero; exige PK</td></tr>
+<tr><td><b>CDC</b></td><td>valores antes/después (lee el log): auditoría o ETL con detalle</td></tr>
+<tr><td><b>CES</b> <span class="bdg pv">Preview</span></td><td>stream de eventos (CloudEvents) a Event Hubs o Fabric Eventstream: arquitectura orientada a eventos</td></tr>
+<tr><td><b>Azure Functions</b></td><td>SQL trigger serverless, usa Change Tracking: procesar con tu propio código</td></tr>
+<tr><td><b>Logic Apps</b></td><td>low-code; el trigger del conector administrado sondea (polling)</td></tr>
+</tbody></table></div>
+</article>
+
+  </div>
+</section>
+
+<!-- ===================== D3 ===================== -->
+<section class="dom" id="d3" data-d="3">
+  <div class="open">
+    <div class="bg"><span class="orb a"></span><span class="orb b"></span></div>
+    <div class="open-in">
+      <span class="otile"><svg class="ic"><use href="#g-spark"/></svg></span>
+      <div>
+        <p class="oh">Dominio 3 · Implement AI capabilities in database solutions</p>
+        <h2>IA en la base de datos</h2>
+        <p class="en">Modelos y embeddings, búsqueda inteligente (full-text, vectorial, híbrida) y RAG con T-SQL.</p>
+        <div class="chips"><span class="chip w">25–30 % del examen</span><a class="chip" href="#m9"><em>M9</em>Modelos y embeddings</a><a class="chip" href="#m10"><em>M10</em>Búsqueda</a><a class="chip" href="#m11"><em>M11</em>RAG</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="cards">
+
+<article class="card" id="m9">
+<h3><span class="num">M9</span>Modelos y embeddings</h3>
+<ul>
+<li><b>Embedding</b> = vector numérico que representa el significado, en una columna <code>vector(n)</code>: <b>n debe coincidir con el modelo</b> y no se mezclan modelos.</li>
+<li><b>Elegir modelo:</b> <i>small</i> (barato, rápido) vs <i>large</i> (mejor calidad, más dimensiones) · multilingüe o multimodal solo si el caso lo pide · <i>structured output</i> = respuesta JSON fácil de procesar en T-SQL.</li>
+<li><b>Qué incrustar:</b> texto con significado (título + descripción + categoría); no IDs, fechas ni números sueltos.</li>
+<li><b>Chunking:</b> <code>AI_GENERATE_CHUNKS(SOURCE = …, CHUNK_TYPE = FIXED, CHUNK_SIZE = n, OVERLAP = p)</code>: <i>n</i> en caracteres (no tokens), <i>p</i> = % de solapamiento (0–50).</li>
+<li><b>Mantener embeddings al día:</b> <i>table trigger</i> (simple, pero síncrono: alarga la transacción) · <i>Change Tracking + Azure Functions</i> o <i>Logic Apps</i> (asíncrono) · <i>CDC</i> / <i>CES</i> <span class="bdg pv">Preview</span> (alto volumen o eventos). <i>Foundry</i> aloja el modelo; no detecta cambios.</li>
+</ul>
+<p class="trap"><svg class="ic"><use href="#g-warn"/></svg><span><b>Trampa:</b> <i>3-large</i> da 3,072 dimensiones y <code>vector</code> float32 admite 1,998: acórtalo con <code>PARAMETERS '{"dimensions":1536}'</code> o usa <code>float16</code> (hasta 3,996).</span></p>
+<figure class="term"><div class="tb"><i></i><i></i><i></i><span>T-SQL</span><button class="cp" type="button">Copiar</button></div><pre><code class="lang-sql">CREATE DATABASE SCOPED CREDENTIAL [https://&lt;recurso&gt;.openai.azure.com]
+  WITH IDENTITY = 'Managed Identity',
+       SECRET = '{"resourceid":"https://cognitiveservices.azure.com"}';
+
+CREATE EXTERNAL MODEL EmbedModel WITH (
+  LOCATION = 'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;d&gt;/embeddings?api-version=…',
+  API_FORMAT = 'Azure OpenAI', MODEL_TYPE = EMBEDDINGS,
+  MODEL = 'text-embedding-3-small',
+  CREDENTIAL = [https://&lt;recurso&gt;.openai.azure.com]);
+
+SELECT AI_GENERATE_EMBEDDINGS(N'hola' USE MODEL EmbedModel);</code></pre></figure>
+</article>
+
+<article class="card" id="m10">
+<h3><span class="num">M10</span>Búsqueda inteligente</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th>Full-text</th><th>Vector</th><th>Hybrid</th></tr></thead>
+<tbody>
+<tr><td><b>Cuándo</b></td><td>SKU, error, frase exacta</td><td>significado / sinónimos</td><td>no sabes cómo busca el usuario; RAG</td></tr>
+<tr><td><b>T-SQL</b></td><td><code>CONTAINS</code> <code>FREETEXT</code></td><td><code>VECTOR_DISTANCE</code> <code>VECTOR_SEARCH</code></td><td><code>CONTAINSTABLE</code> / <code>FREETEXTTABLE</code> + vector → RRF</td></tr>
+</tbody></table></div>
+<ul>
+<li><b>Funciones:</b> <code>VECTOR_DISTANCE('cosine', a, b)</code> (exacta) · <code>VECTOR_SEARCH</code> (aproximada, con índice) · <code>VECTOR_NORMALIZE(v, 'norm2')</code> · <code>VECTORPROPERTY(v, 'Dimensions' | 'BaseType')</code>.</li>
+<li><b>Métricas:</b> <i>cosine</i> (la habitual para texto) · <i>euclidean</i> · <i>dot</i> (producto punto negativo: menor = más similar).</li>
+<li><b>ENN</b> (<code>VECTOR_DISTANCE</code>): exacta, recall 100 %, recorre todo → menos de ~50,000 vectores o filtros selectivos. <b>ANN</b> (<code>VECTOR_SEARCH</code> + <code>CREATE VECTOR INDEX</code>, DiskANN): recall &lt; 100 %, rápida → cientos de miles o más. <span class="bdg pv">Preview</span> en SQL Server 2025; GA en Azure SQL DB y Fabric.</li>
+<li><b>RRF</b> (Reciprocal Rank Fusion): suma <code>1/(k + rank)</code> de cada lista (<code>RANK</code> de <code>CONTAINSTABLE</code> + rank vectorial), k = 60; sin normalizar scores.</li>
+<li><b>Rendimiento:</b> mide el recall de ANN contra ENN con las mismas consultas; en híbrida compara full-text, vector e híbrido, y ajusta <code>k</code> y pesos.</li>
+</ul>
+<figure class="term"><div class="tb"><i></i><i></i><i></i><span>T-SQL</span><button class="cp" type="button">Copiar</button></div><pre><code class="lang-sql">-- ENN (exacta)
+SELECT TOP (5) id FROM dbo.Docs
+ORDER BY VECTOR_DISTANCE('cosine', embedding, @q);
+
+-- ANN (el METRIC debe coincidir con el del índice)
+CREATE VECTOR INDEX ix_docs ON dbo.Docs(embedding)
+  WITH (METRIC = 'cosine', TYPE = 'DiskANN');
 SELECT TOP (5) WITH APPROXIMATE t.id, s.distance
 FROM VECTOR_SEARCH(TABLE = dbo.Docs AS t, COLUMN = embedding,
                    SIMILAR_TO = @q, METRIC = 'cosine') AS s
 ORDER BY s.distance;
--- ANN, como lo enseña Learn: VECTOR_SEARCH(..., TOP_N = 5)</code></pre></article>
+-- Learn (índice antiguo): TOP_N = 5 dentro de VECTOR_SEARCH</code></pre></figure>
+</article>
 
-<article class="card"><h3><span class="n">M11</span>RAG con SQL</h3><ul>
-<li><b>RAG</b> = <i>Retrieve</i> (busca contexto con vector/hybrid) → <i>Augment</i> (lo mete en el prompt) → <i>Generate</i> (el LLM responde).</li>
-<li><b>Úsalo cuando</b> los datos son privados o cambian, necesitas citar la fuente y no quieres reentrenar. <b>Fine-tuning</b> = conocimiento estable que debe quedar dentro del modelo.</li>
-<li><b>En T-SQL:</b> <code>sp_invoke_external_rest_endpoint</code> con <code>@url</code>, <code>@payload</code>, <code>@credential</code> y <code>@response OUTPUT</code> (método por defecto <code>POST</code>).</li>
-<li><b>Contexto:</b> <code>FOR JSON PATH</code> o <code>JSON_OBJECT</code> + <code>JSON_ARRAY</code>. <b>Respuesta:</b> <code>JSON_VALUE</code> sobre <code>$.result.choices[0].message.content</code>.</li>
-<li><b>Seguridad:</b> credencial con Managed Identity; no envíes datos de más; respeta RLS al recuperar el contexto.</li></ul>
-<pre><code class="lang-sql">DECLARE @response nvarchar(max);
-EXEC sp_invoke_external_rest_endpoint
-     @url = N'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;d&gt;/chat/completions?api-version=...',
-     @credential = [https://&lt;recurso&gt;.openai.azure.com],
-     @payload = @json, @response = @response OUTPUT;
-SELECT JSON_VALUE(@response, '$.result.choices[0].message.content');</code></pre></article>
-
-</div></section>
-
-<section id="cifras">
-<h2>Cifras que sí conviene saber</h2>
-<div class="cifras">
-<div><code>MAXRECURSION</code> default <b>100</b> (0 = sin límite)</div>
-<div><code>THROW</code>: n.º de error <b>≥ 50000</b></div>
-<div>Isolation por defecto: SQL Server = <b>READ COMMITTED</b> · Azure SQL DB = <b>RCSI</b></div>
-<div>Deadlock: error <b>1205</b></div>
-<div><code>vector</code>: máx. <b>1,998</b> dims (float32) · <b>3,996</b> (float16)</div>
-<div>Dims: ada-002 y 3-small = <b>1,536</b> · 3-large = <b>3,072</b></div>
-<div>RRF: <code>1/(k+rank)</code>, <b>k ≈ 60</b></div>
-<div><code>sp_invoke_external_rest_endpoint</code>: <code>@timeout</code> <b>30 s</b> (máx. 230) · <code>@retry_count</code> <b>0–10</b></div>
-<div>DAB: página por defecto <b>100</b>, máx. <b>100,000</b></div>
-<div><code>EDIT_DISTANCE_SIMILARITY</code> <b>0–100</b> · <code>JARO_WINKLER_DISTANCE</code> <b>0–1</b> (0 = igual)</div>
+<article class="card wide" id="m11">
+<h3><span class="num">M11</span>RAG con SQL</h3>
+<div class="flow" aria-label="Flujo RAG">
+<div class="stp"><span class="scard">Retrieve<small>vector / hybrid</small></span><span class="chev" aria-hidden="true"></span></div>
+<div class="stp"><span class="scard">Augment<small>contexto en el prompt</small></span><span class="chev" aria-hidden="true"></span></div>
+<div class="stp"><span class="scard">Generate<small>el LLM responde</small></span></div>
 </div>
-<div class="note warn"><b>Learn vs docs actuales:</b> Learn enseña <code>VECTOR_SEARCH(…, TOP_N = k)</code>; la doc vigente usa <code>SELECT TOP (N) WITH APPROXIMATE … ORDER BY distance</code> y marca <code>TOP_N</code> como deprecado. Reconoce las dos formas. Además, <code>JARO_WINKLER_DISTANCE</code> es una <i>distancia</i> (0 = idéntico), no una similitud.</div>
+<div class="cols2">
+<ul>
+<li><b>Úsalo cuando</b> los datos son privados o cambian, necesitas citar la fuente y no quieres reentrenar. <b>Fine-tuning</b> = conocimiento estable dentro del modelo.</li>
+<li><b>En T-SQL:</b> <code>sp_invoke_external_rest_endpoint</code> con <code>@url</code>, <code>@payload</code>, <code>@credential</code> y <code>@response OUTPUT</code> (<code>@method</code> por defecto <code>POST</code>; <code>@timeout</code> 30 s, máx. 230; <code>@retry_count</code> 0–10). Devuelve 0 si la respuesta es 2xx; si no, el código HTTP.</li>
+<li><b>Contexto:</b> <code>FOR JSON PATH</code>. <b>Payload:</b> <code>JSON_OBJECT('messages': JSON_ARRAY(…))</code>. <b>Respuesta:</b> <code>JSON_VALUE(@response, '$.result.choices[0].message.content')</code>.</li>
+<li><b>Seguridad:</b> credencial con Managed Identity; no envíes datos de más. <b>Habilitar:</b> activo en Azure SQL DB y Fabric; en SQL Server 2025, <code>sp_configure 'external rest endpoint enabled', 1</code>.</li>
+</ul>
+<figure class="term"><div class="tb"><i></i><i></i><i></i><span>T-SQL</span><button class="cp" type="button">Copiar</button></div><pre><code class="lang-sql">-- Retrieve
+DECLARE @qv vector(1536) = AI_GENERATE_EMBEDDINGS(@pregunta USE MODEL EmbedModel);
+DECLARE @ctx nvarchar(max) = (
+  SELECT TOP (3) Name, Description FROM dbo.Products
+  ORDER BY VECTOR_DISTANCE('cosine', DescriptionVector, @qv)
+  FOR JSON PATH);
+
+-- Augment
+DECLARE @payload nvarchar(max) = JSON_OBJECT('messages': JSON_ARRAY(
+  JSON_OBJECT('role': 'system', 'content': 'Responde solo con el contexto.'),
+  JSON_OBJECT('role': 'user', 'content': 'Contexto: ' + @ctx + ' Pregunta: ' + @pregunta)));
+
+-- Generate
+DECLARE @response nvarchar(max);
+EXEC sp_invoke_external_rest_endpoint
+  @url = N'https://&lt;recurso&gt;.openai.azure.com/openai/deployments/&lt;chat&gt;/chat/completions?api-version=…',
+  @credential = [https://&lt;recurso&gt;.openai.azure.com],
+  @payload = @payload, @response = @response OUTPUT;
+SELECT JSON_VALUE(@response, '$.result.choices[0].message.content');</code></pre></figure>
+</div>
+</article>
+
+  </div>
 </section>
 
-<footer>Resumen no oficial basado en Microsoft Learn (curso DP-800T00-A) y la documentación oficial, verificado el 30-oct-2026. Skills measured as of March 12, 2026. Confirma lo crítico en la <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-800" target="_blank" rel="noopener">guía de estudio oficial</a>. Material de estudio personal; no es contenido oficial de Microsoft ni está afiliado a Microsoft.</footer>
+<!-- ===================== CIFRAS ===================== -->
+<section class="sec" id="cifras" data-d="x">
+  <div class="sec-h">
+    <h2>Cifras que sí conviene saber</h2>
+    <p class="sub">Valores por defecto y límites que se confunden con facilidad.</p>
+  </div>
+<div class="spec">
+<div class="spec-row" data-d="1"><span class="sv">100</span><span class="st"><code>MAXRECURSION</code> por defecto<small>0 = sin límite</small></span><a class="mt" href="#m3">M3</a></div>
+<div class="spec-row" data-d="1"><span class="sv">≥ 50000</span><span class="st">Número de error propio en <code>THROW</code></span><a class="mt" href="#m3">M3</a></div>
+<div class="spec-row" data-d="1"><span class="sv">0–100</span><span class="st">Similitud en <code>EDIT_DISTANCE_SIMILARITY</code><small><code>JARO_WINKLER_DISTANCE</code>: 0 = idéntico</small></span><a class="mt" href="#m3">M3</a></div>
+<div class="spec-row" data-d="2"><span class="sv">1205</span><span class="st">Error de <b>deadlock</b></span><a class="mt" href="#m6">M6</a></div>
+<div class="spec-row" data-d="2"><span class="sv">RCSI</span><span class="st">Aislamiento por defecto en Azure SQL DB y Fabric<small>SQL Server: READ COMMITTED</small></span><a class="mt" href="#m6">M6</a></div>
+<div class="spec-row" data-d="2"><span class="sv">100 · 100,000</span><span class="st">DAB: página por defecto · máxima</span><a class="mt" href="#m8">M8</a></div>
+<div class="spec-row" data-d="3"><span class="sv">1,998</span><span class="st">Máx. de dimensiones de <code>vector</code> float32<small>float16: 3,996</small></span><a class="mt" href="#m9">M9</a></div>
+<div class="spec-row" data-d="3"><span class="sv">1,536 · 3,072</span><span class="st">Dimensiones: ada-002 y 3-small · 3-large</span><a class="mt" href="#m9">M9</a></div>
+<div class="spec-row" data-d="3"><span class="sv">&lt; 50,000</span><span class="st">Vectores: ENN recomendada<small>ANN: cientos de miles o más</small></span><a class="mt" href="#m10">M10</a></div>
+<div class="spec-row" data-d="3"><span class="sv">k = 60</span><span class="st">Constante habitual de <b>RRF</b></span><a class="mt" href="#m10">M10</a></div>
+<div class="spec-row" data-d="3"><span class="sv">30 s</span><span class="st"><code>@timeout</code> por defecto de <code>sp_invoke_external_rest_endpoint</code><small>máx. 230 s · <code>@retry_count</code> 0–10</small></span><a class="mt" href="#m11">M11</a></div>
+</div>
+<div class="callout"><svg class="ic"><use href="#g-warn"/></svg><div><b>Learn y la doc actual difieren: reconoce ambas formas.</b>
+<ul>
+<li><code>VECTOR_SEARCH</code>: Learn usa <code>TOP_N = k</code> (índice de solo lectura, PK <code>int</code>); la doc vigente usa <code>SELECT TOP (N) WITH APPROXIMATE … ORDER BY distance</code>.</li>
+<li>MCP en VS Code: Learn usa <code>.vscode/mcp.json</code> (<code>servers</code>); las docs recientes añaden <code>.mcp.json</code> (<code>mcpServers</code>).</li>
+<li><code>JARO_WINKLER_DISTANCE</code> es una <i>distancia</i> (0 = idéntico), no una similitud.</li>
+</ul></div></div>
+</section>
+
+</div>
+
+<footer class="dark"><div class="wrap">
+  <div class="ft"><span class="logo">DP<br>800</span>Cheatsheet DP-800</div>
+  <p>Resumen no oficial basado en Microsoft Learn (curso DP-800T00-A) y la documentación oficial, verificado el 17-nov-2026. Skills measured as of March 12, 2026. Confirma lo crítico en la <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-800" target="_blank" rel="noopener">guía de estudio oficial</a>. Material de estudio personal; no es contenido oficial de Microsoft ni está afiliado a Microsoft.</p>
+</div></footer>
 </main>
 
 <script>
 (function(){
 'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Tema */
+$('#theme').addEventListener('click',function(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('dp800s-theme',JSON.stringify(t))}catch(e){}});
+
+/* Resaltado de sintaxis */
 var esc=function(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})};
-var KW=new Set(('ADD ALTER AND AS ASC BY CREATE DECLARE DEFAULT DELETE DESC DROP ELSE END EXEC EXECUTE EXISTS FROM GROUP IN INSERT INTO IS JOIN KEY LEFT NOT NULL OF ON OR ORDER OUTPUT OVER PARTITION PRIMARY SELECT SET TABLE THEN TOP UNION UPDATE USE VALUES VIEW WHEN WHERE WITH SEQUENCE START INCREMENT EXTERNAL MODEL SELECT APPROXIMATE').split(' '));
-var TY=new Set('INT BIGINT BIT DECIMAL DATETIME2 NVARCHAR VARCHAR VECTOR JSON'.split(' '));
+var KW=new Set(('ADD ALTER AND AS ASC BY CREATE DECLARE DEFAULT DELETE DESC DROP ELSE END EXEC EXECUTE EXISTS FROM GROUP IN INSERT INTO IS JOIN KEY LEFT NOT NULL OF ON OR ORDER OUTPUT OVER PARTITION PRIMARY SELECT SET TABLE THEN TOP UNION UPDATE USE VALUES VIEW WHEN WHERE WITH SEQUENCE START INCREMENT EXTERNAL MODEL APPROXIMATE INDEX VECTOR').split(' '));
+var TY=new Set('INT BIGINT BIT DECIMAL DATETIME2 NVARCHAR VARCHAR JSON'.split(' '));
 function run(code,re,cls){var out='',last=0,m;re.lastIndex=0;while((m=re.exec(code))){out+=esc(code.slice(last,m.index));var c=cls(m,re.lastIndex);out+=c?'<span class="'+c+'">'+esc(m[0])+'</span>':esc(m[0]);last=m.index+m[0].length;if(!m[0].length)re.lastIndex++}return out+esc(code.slice(last))}
 var SQL=/(--[^\n]*)|(N?'(?:[^']|'')*')|(@@?[A-Za-z_]\w*)|(\b\d+(?:\.\d+)?\b)|(\b[A-Za-z_][\w$]*\b)/g;
 function hlSql(c){return run(c,SQL,function(m,e){if(m[1])return'tk-c';if(m[2])return'tk-s';if(m[3])return'tk-v';if(m[4])return'tk-n';var u=m[5].toUpperCase();if(TY.has(u))return'tk-t';if(KW.has(u))return'tk-k';if(/^\s*\(/.test(c.slice(e,e+8)))return'tk-f';if(/^[A-Z][A-Z0-9_]+$/.test(m[5]))return'tk-k';return null})}
@@ -350,8 +832,53 @@ var JS=/("(?:[^"\\\n]|\\.)*")(\s*:)?|(\b(?:true|false|null)\b)|(\b\d+\b)/g;
 function hlJson(c){return run(c,JS,function(m){return m[1]?(m[2]?'tk-key':'tk-s'):m[3]?'tk-k':'tk-n'})}
 var SH=/(#[^\n]*)|("(?:[^"\\]|\\.)*")|(\s\/?-{0,2}[A-Za-z]+:|\s--?[A-Za-z][\w-]*)|(\b(?:dotnet|sqlpackage|dab)\b)/g;
 function hlSh(c){return run(c,SH,function(m){return m[1]?'tk-c':m[2]?'tk-s':m[3]?'tk-t':'tk-f'})}
-document.querySelectorAll('pre code').forEach(function(el){var t=el.textContent.replace(/\s+$/,'');var l=(el.className.match(/lang-(\w+)/)||[])[1];el.innerHTML=l==='sql'?hlSql(t):l==='json'?hlJson(t):l==='bash'?hlSh(t):esc(t)});
-document.getElementById('theme').addEventListener('click',function(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('dp800s-theme',JSON.stringify(t))}catch(e){}});
+$$('pre code').forEach(function(el){var t=el.textContent.replace(/\s+$/,'');var l=(el.className.match(/lang-(\w+)/)||[])[1];el.innerHTML=l==='sql'?hlSql(t):l==='json'?hlJson(t):l==='bash'?hlSh(t):esc(t)});
+
+/* Copiar código */
+$$('.term .cp').forEach(function(b){b.addEventListener('click',function(){
+  var t=$('code',b.closest('.term')).textContent;
+  var done=function(){var o=b.textContent;b.textContent='Copiado ✓';setTimeout(function(){b.textContent=o},1400)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+  else{var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}
+})});
+
+/* Pistas: filtro, dominio y modo práctica */
+var rows=$$('.pistas tbody tr'),groups=$$('.grp'),q=$('#q'),seg=$('#seg'),count=$('#count'),empty=$('#empty'),dom='all';
+var norm=function(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')};
+rows.forEach(function(r){r._t=norm(r.textContent)});
+function apply(){
+  var v=norm(q.value.trim()),shown=0;
+  rows.forEach(function(r){var ok=!v||r._t.indexOf(v)>-1;r.hidden=!ok;if(ok&&(dom==='all'||r.closest('.grp').dataset.d===dom))shown++});
+  groups.forEach(function(g){var okd=dom==='all'||g.dataset.d===dom;g.hidden=!okd||!$$('tbody tr:not([hidden])',g).length});
+  count.textContent=(v||dom!=='all')?shown+' de '+rows.length+' pistas':rows.length+' pistas';
+  empty.hidden=shown>0;
+}
+q.addEventListener('input',apply);
+seg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;dom=b.dataset.d;$$('button',seg).forEach(function(x){x.setAttribute('aria-pressed',x===b)});apply()});
+var pr=$('#practice');
+pr.addEventListener('click',function(){var on=pr.getAttribute('aria-pressed')!=='true';pr.setAttribute('aria-pressed',on);document.body.classList.toggle('practice',on);rows.forEach(function(r){r.classList.remove('rv');if(on)r.setAttribute('tabindex','0');else r.removeAttribute('tabindex')})});
+function flip(r){if(document.body.classList.contains('practice'))r.classList.toggle('rv')}
+rows.forEach(function(r){r.addEventListener('click',function(e){if(e.target.closest('a'))return;flip(r)});r.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target===r){e.preventDefault();flip(r)}})});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&!/input|textarea/i.test(document.activeElement.tagName)){e.preventDefault();q.focus();q.scrollIntoView({block:'center'})}});
+apply();
+
+/* Contadores animados (se ejecutan una vez al verse; sin movimiento si el usuario lo reduce) */
+var fmt=function(n,el){return el.dataset.fmt==='n'?n.toLocaleString('en-US'):String(n)};
+function countUp(el){var to=+el.dataset.count,t0=null,dur=1100;if(reduce)return;el.textContent=fmt(0,el);
+  (function step(t){if(t0===null)t0=t;var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e),el);if(p<1)requestAnimationFrame(step);else el.textContent=fmt(to,el)})(performance.now())}
+if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){countUp(x.target);io.unobserve(x.target)}})},{threshold:.4});$$('[data-count]').forEach(function(el){io.observe(el)})}
+
+/* Scrollspy + barra de progreso con el color del dominio */
+var secs=['pistas','d1','d2','d3','cifras'].map(function(id){return document.getElementById(id)}),tabs=$$('#tabs a'),bar=$('#progress i'),cur='';
+var COL={'1':'#0078D4','2':'#5B5FC7','3':'#038387','x':'#C25400'};
+function spy(){
+  var h=document.documentElement,y=window.scrollY,max=h.scrollHeight-innerHeight;
+  bar.style.transform='scaleX('+(max>0?Math.min(1,y/max):0)+')';
+  var act=null;secs.forEach(function(s){if(s.getBoundingClientRect().top<=140)act=s});
+  var id=act?act.id:'';
+  if(id!==cur){cur=id;tabs.forEach(function(a){if(a.dataset.s===id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});bar.style.setProperty('--pc',COL[act?act.dataset.d:'1']||COL['1']);var t=$('#tabs a[aria-current]');if(t&&t.scrollIntoView&&!reduce)t.scrollIntoView({block:'nearest',inline:'center'})}
+}
+addEventListener('scroll',spy,{passive:true});addEventListener('resize',spy);spy();
 })();
 </script>
 </body>

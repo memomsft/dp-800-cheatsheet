@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0b3a6b">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#060A14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230078D4'/%3E%3Cstop offset='.55' stop-color='%235B5FC7'/%3E%3Cstop offset='1' stop-color='%23038387'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='28' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='19' fill='white'%3EDP%3C/text%3E%3Ctext x='32' y='49' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='19' fill='white'%3E800%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DP-800 · Referencia completa</title>
 <script>
@@ -12,22 +12,25 @@
 </script>
 <style>
 :root{
-  --bg:#f3f6fa; --panel:#ffffff; --panel-2:#eef2f7; --text:#16202b; --muted:#59687a; --border:#d8e0ea;
-  --accent:#0f6cbd; --accent-soft:#e3effb;
-  --d1:#2f80ed; --d2:#8b5cf6; --d3:#10b981; --dx:#f59e0b;
-  --code-bg:#0e1621; --code-fg:#e6edf3; --code-bar:#16222f;
-  --inline-bg:#e7eef6; --inline-fg:#0b4a85;
-  --exam:#2f80ed; --warn:#e5484d; --tip:#10b981; --memo:#8b5cf6;
-  --shadow:0 1px 2px rgba(16,24,40,.06),0 6px 18px rgba(16,24,40,.06);
-  --mono:"Cascadia Code","Cascadia Mono",Consolas,"SF Mono",ui-monospace,Menlo,monospace;
-  --sans:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;
+  --bg:#FFFFFF; --panel:#FFFFFF; --panel-2:#F6F6F9; --text:#16161C; --muted:#5B5B68; --border:#E2E2E8;
+  --accent:#0A63B0; --accent-soft:#E8F2FC;
+  --d1:#0078D4; --d2:#5B5FC7; --d3:#038387; --dx:#C25400;
+  --code-bg:#0B0D12; --code-fg:#E7EAF3; --code-bar:#151823;
+  --inline-bg:#ECECF2; --inline-fg:#16161C;
+  --exam:#0078D4; --warn:#C4314B; --tip:#107C10; --memo:#5B5FC7;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 12px 32px rgba(0,0,0,.07);
+  --mono:"Cascadia Code","SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Segoe UI Variable Display","Segoe UI Variable","Segoe UI",system-ui,-apple-system,"SF Pro Display","Helvetica Neue",Roboto,Arial,sans-serif;
+  --navy:#060A14; --dot:#E1E1EA;
 }
 [data-theme="dark"]{
-  --bg:#0a1017; --panel:#111a24; --panel-2:#17222f; --text:#e6edf3; --muted:#92a3b6; --border:#243344;
-  --accent:#5ab0ff; --accent-soft:#12253a;
-  --code-bg:#080d13; --code-fg:#e6edf3; --code-bar:#0f1823;
-  --inline-bg:#1a2736; --inline-fg:#9fd0ff;
-  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 22px rgba(0,0,0,.30);
+  --bg:#070B16; --panel:#0D1426; --panel-2:#141C33; --text:#E8EBF5; --muted:#97A0BD; --border:#232C47;
+  --accent:#6DB6FF; --accent-soft:#102341;
+  --d1:#4DA6FF; --d2:#9A9DF2; --d3:#3BC4C8; --dx:#FFA45C;
+  --code-bg:#05070D; --code-fg:#E7EAF3; --code-bar:#0F1320;
+  --inline-bg:#1A2440; --inline-fg:#CFE3FF;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 12px 32px rgba(0,0,0,.35);
+  --dot:#131C34;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:14px}
@@ -61,7 +64,7 @@ a:hover{text-decoration:underline}
 .nav-domain:before{content:"";width:9px;height:9px;border-radius:3px;background:var(--dc,var(--accent))}
 .nav-group.d0{--dc:#ef4444}.nav-group.d1{--dc:var(--d1)}.nav-group.d2{--dc:var(--d2)}.nav-group.d3{--dc:var(--d3)}.nav-group.dx{--dc:var(--dx)}
 .nav-mod{margin:1px 0}
-.nav-mod-link{display:flex!important;align-items:center;gap:8px;padding:6px 9px;font-size:13.5px;font-weight:600;border-left:3px solid var(--dc,var(--accent));border-radius:0 8px 8px 0!important}
+.nav-mod-link{display:flex!important;align-items:center;gap:8px;padding:6px 9px;font-size:13.5px;font-weight:600;border-radius:10px!important}
 .nav-mod-link .num{font-size:11px;font-weight:800;color:var(--dc);min-width:24px}
 .nav-mod-link .t{flex:1}
 .nav-mod-link .cnt{font-size:11px;color:var(--muted);font-weight:500}
@@ -96,7 +99,7 @@ h4{font-size:14px;margin:0 0 6px;color:var(--muted);text-transform:uppercase;let
 .domainbars .pct{font-weight:700;text-align:right}
 
 .module{margin:42px 0 0;scroll-margin-top:12px}
-.module-head{border-radius:16px;padding:18px 22px;background:var(--panel);border:1px solid var(--border);border-top:5px solid var(--dc,var(--accent));box-shadow:var(--shadow)}
+.module-head{position:relative;border-radius:26px;padding:26px 28px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow)}
 .module[data-domain="d0"]{--dc:#ef4444}.module[data-domain="d1"]{--dc:var(--d1)}.module[data-domain="d2"]{--dc:var(--d2)}.module[data-domain="d3"]{--dc:var(--d3)}.module[data-domain="dx"]{--dc:var(--dx)}
 .module-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
 .pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:700;background:color-mix(in srgb,var(--dc,var(--accent)) 16%,transparent);color:var(--dc,var(--accent));border:1px solid color-mix(in srgb,var(--dc,var(--accent)) 35%,transparent)}
@@ -106,7 +109,7 @@ h4{font-size:14px;margin:0 0 6px;color:var(--muted);text-transform:uppercase;let
 
 .topic{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px 20px 18px;margin:16px 0;box-shadow:var(--shadow);scroll-margin-top:12px}
 .module.quick .module-head{background:linear-gradient(135deg,color-mix(in srgb,var(--dc) 14%,var(--panel)),var(--panel))}
-.module.quick .topic{border-left:5px solid var(--dc)}
+.module.quick .topic{border-color:color-mix(in srgb,var(--dc) 28%,var(--border))}
 .module.quick .card{background:var(--panel)}
 .module.quick .card ul{margin:4px 0;padding-left:18px;font-size:14px}
 .module.quick .card li{margin:2px 0}
@@ -165,7 +168,7 @@ table.kv td:first-child,table.cmp td:first-child{font-weight:600;white-space:now
 td code,th code{white-space:nowrap;overflow-wrap:normal}
 td ul,td ol{margin:0;padding-left:18px}
 
-.callout{margin:12px 0;padding:10px 14px 10px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--cc) 40%,transparent);border-left:5px solid var(--cc);background:color-mix(in srgb,var(--cc) 10%,var(--panel));font-size:14px}
+.callout{margin:12px 0;padding:10px 14px 10px 14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--cc) 40%,transparent);background:color-mix(in srgb,var(--cc) 10%,var(--panel));font-size:14px}
 .callout>:first-child{margin-top:0}.callout>:last-child{margin-bottom:0}
 .callout:before{margin-right:6px}
 .callout.exam{--cc:var(--exam)}.callout.exam:before{content:"🎯"}
@@ -232,6 +235,70 @@ footer.site{margin-top:60px;padding-top:16px;border-top:1px solid var(--border);
   .print-quick .module:not(.quick),.print-quick .overview,.print-quick .hero{display:none!important}
   .print-quick .module.quick{margin-top:12px;break-before:auto}
 }
+
+/* ==========================================================================
+   Skin v2 · mismo lenguaje visual que el cheatsheet corto y el deck «Fabric AI Development»
+   (keynote + Azure Architecture + Fluent 2). Solo estilo: contenido y comportamiento no cambian.
+   ========================================================================== */
+body{background-image:radial-gradient(var(--dot) 1.3px,transparent 1.7px);background-size:38px 38px}
+h1,h2,h3{text-wrap:balance}
+:focus-visible{outline:3px solid #0078D4;outline-offset:2px;border-radius:6px}
+
+/* Sidebar */
+.brand .logo{border-radius:11px;background:linear-gradient(135deg,#0078D4,#5B5FC7 55%,#038387);font-size:11px;line-height:1.05;text-align:center}
+.brand b{letter-spacing:-.01em}
+.search input{border-radius:12px;border-width:1.5px}
+.btn{border-radius:11px;border-width:1.5px;font-weight:600}
+.bar{height:7px}.bar>span{background:linear-gradient(90deg,#0078D4,#5B5FC7,#038387)}
+.nav-domain{letter-spacing:.14em}
+.nav-mod-link{padding-left:8px}
+.nav-mod-link .num{min-width:30px;padding:1px 6px;border-radius:8px;text-align:center;background:color-mix(in srgb,var(--dc) 14%,transparent)}
+
+/* Hero oscuro con orbes y rejilla (como la portada del deck) */
+.hero{position:relative;overflow:hidden;isolation:isolate;border-radius:30px;padding:46px 46px 40px;color:#fff;background:var(--navy);box-shadow:0 20px 48px rgba(0,0,0,.2)}
+.hero .bg{position:absolute;inset:0;overflow:hidden;z-index:-1}
+.hero .bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 70% 40%,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 40%,#000 0%,transparent 70%)}
+.hero .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 16s ease-in-out infinite}
+.hero .orb.a{width:520px;height:520px;left:-140px;top:-220px;background:#0b5cc4}
+.hero .orb.b{width:440px;height:440px;right:-80px;top:10px;background:#5B5FC7;animation-delay:-5s}
+.hero .orb.c{width:380px;height:380px;left:40%;bottom:-260px;background:#038387;animation-delay:-9s}
+@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(50px,-34px,0) scale(1.08)}}
+.hero .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:650;color:#7fb8ff;margin:0}
+.hero h1{margin:14px 0 14px;font-size:clamp(38px,6vw,72px);line-height:.96;letter-spacing:-.04em;font-weight:700}
+.hero h1 .grad{display:block;background:linear-gradient(100deg,#4aa8ff,#8c90ff 45%,#e879b9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin:0;max-width:62ch;font-size:clamp(16px,1.6vw,19px);line-height:1.45;color:#c5cce0;opacity:1}
+.hero .lead a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.hero .meta{margin-top:22px}
+.hero .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);color:#fff;padding:6px 14px;font-size:13px;font-weight:600}
+
+/* Secciones y tarjetas */
+h2{letter-spacing:-.03em;font-weight:700}
+.stat,.topic{border-radius:22px}
+.stat b{letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.module-head::before{content:"";position:absolute;left:28px;top:-1px;width:48px;height:4px;border-radius:0 0 4px 4px;background:var(--dc,var(--accent))}
+.pill{padding:3px 11px}
+.card{border-radius:16px}
+.table-wrap{border-radius:14px}
+thead th{letter-spacing:.1em}
+ol.steps>li:before{background:var(--accent)}
+[data-theme="dark"] ol.steps>li:before{color:#05070D}
+
+/* Bloques de código como terminal (patrón .term del deck) */
+.codeblock{border-radius:16px;border-color:#232734;box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.codebar{padding:9px 14px;gap:12px}
+.codebar::before{content:"";width:11px;height:11px;border-radius:50%;background:#ff5f57;box-shadow:19px 0 0 #febc2e,38px 0 0 #28c840;margin-right:44px;flex:none}
+.tk-k{color:#6cb6ff}.tk-f{color:#ffd479}.tk-s{color:#ff9e7a}.tk-n{color:#4fd0a0}.tk-c{color:#7e87a6}.tk-t{color:#4fd0a0}
+
+@media (max-width:640px){.hero{padding:30px 22px 26px;border-radius:22px}.module-head{padding:20px 18px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .hero .bg{display:none}
+  .hero{border-radius:0}
+  .hero .eyebrow{color:#555}.hero .lead{color:#222}.hero .lead a{color:#0b5cad}
+  .hero h1 .grad{background:none;color:#0b5cad;-webkit-text-fill-color:#0b5cad}
+  .codebar::before{display:none}
+  .module-head::before{display:none}
+}
 </style>
 </head>
 <body>
@@ -254,8 +321,10 @@ footer.site{margin-top:60px;padding-top:16px;border-top:1px solid var(--border);
 
   <main id="main">
     <header class="hero">
-      <h1>DP-800 · Developing AI-Enabled Database Solutions</h1>
-      <p><b>Referencia completa</b> (detallada y muy técnica) para <b>Microsoft Certified: SQL AI Developer Associate</b>. Para repasar rápido usa el <a href="index.html" style="color:#bfe0ff;font-weight:700">cheatsheet corto →</a> Explicaciones en español; términos técnicos, sintaxis y opciones en inglés.</p>
+      <div class="bg"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+      <p class="eyebrow">Microsoft Certified · SQL AI Developer Associate</p>
+      <h1>DP-800 <span class="grad">Referencia completa</span></h1>
+      <p class="lead">Developing AI-Enabled Database Solutions, en detalle y muy técnica. Para repasar rápido usa el <a href="index.html">cheatsheet corto →</a> Explicaciones en español; términos técnicos, sintaxis y opciones en inglés.</p>
       <div class="meta"><span>📚 11 módulos de Microsoft Learn + docs oficiales</span><span>🗓️ Skills measured as of March 12, 2026</span><span>🔎 Verificado: 30-oct-2026</span></div>
     </header>
 
