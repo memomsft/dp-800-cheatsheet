@@ -3,17 +3,26 @@
 
 Las páginas en español (index.html, referencia.html) son la fuente. Este script:
   1. extrae el texto traducible (bloques de texto con su marcado en línea, atributos
-     title/aria-label/placeholder/alt, <title>, meta description y comentarios de
-     los bloques de código) SIN tocar el resto del archivo (CSS, JS, estructura);
+     title/aria-label/placeholder/alt/data-title/data-short, <title>, meta description y
+     comentarios de los bloques de código) SIN tocar el resto del archivo (CSS, JS, estructura);
   2. sustituye cada fragmento por su traducción de i18n/en.<pagina>.json
      (diccionario «fragmento en español» -> «fragmento en inglés»);
-  3. aplica unos pocos reemplazos fijos (idioma, enlaces, textos del JS).
+  3. aplica unos pocos reemplazos fijos (idioma, enlaces, textos que inserta el JS).
+Los literales en español dentro de bloques de código (mensajes de error, datos de ejemplo…) no son
+comentarios: se sustituyen antes de extraer con i18n/code.<pagina>.json ([es, en, veces]).
 
 Uso:
   python3 i18n/build.py build [-v]       # genera en/*.html (-v: detalle de avisos)
+  python3 i18n/build.py status [pagina]  # fragmentos traducidos / pendientes
   python3 i18n/build.py todo [pagina]    # lista los fragmentos sin traducir (JSON)
   python3 i18n/build.py import <pagina> <lista.json>
                                          # añade traducciones: lista EN en el mismo orden que `todo`
+  python3 i18n/build.py chunk <pagina> <dir> [max_chars]
+                                         # parte los pendientes en lotes de texto plano cNNN.es.txt
+  python3 i18n/build.py verify <lote.es.txt> <lote.en.txt>
+                                         # valida una traducción (etiquetas, atributos, números, español residual)
+  python3 i18n/build.py merge <pagina> <lote.es.txt> <lote.en.txt> [-q]
+                                         # verifica y añade las traducciones válidas al diccionario
   python3 i18n/build.py check            # cobertura y validación de marcado
 """
 import json
@@ -33,12 +42,12 @@ BLOCK = {"html", "head", "body", "main", "header", "footer", "nav", "section", "
          "option", "select", "textarea"}
 SKIP = {"script", "style", "svg", "pre", "noscript", "template"}
 NOTEXT = {"code", "kbd", "svg", "samp", "var"}
-ATTRS = ("title", "aria-label", "placeholder", "alt")
+ATTRS = ("title", "aria-label", "placeholder", "alt", "data-title", "data-short")
 WORD = re.compile(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]{2,}")
 COMMENT_RE = {
     "sql": re.compile(r"--[ \t]*([^\n]*)"),
-    "hash": re.compile(r"(?:^|[ \t])#[ \t]*([^\n]*)"),
-    "slash": re.compile(r"(?:^|[ \t])//[ \t]*([^\n]*)"),
+    "hash": re.compile(r"(?:^|[ \t])#[ \t]*([^\n]*)", re.M),
+    "slash": re.compile(r"(?:^|[ \t])//[ \t]*([^\n]*)", re.M),
 }
 LANG_COMMENT = {"sql": "sql", "tsql": "sql", "bash": "hash", "sh": "hash", "shell": "hash", "powershell": "hash", "pwsh": "hash",
                 "yaml": "hash", "yml": "hash", "json": "slash", "jsonc": "slash", "js": "slash", "javascript": "slash",
@@ -177,6 +186,7 @@ def extract(src):
     def walk(n):
         if n.tag in SKIP:
             if n.tag == "pre":
+                attr_units(n)
                 code_units(n)
             return
         if n.tag != "#root" and skipped(n):
@@ -272,6 +282,8 @@ def skeleton(fragment):
 # --------------------------------------------------------------------------------------------
 LANG_LINK_ES = '<a class="tbtn lang" id="lang" href="en/" data-base="en/" hreflang="en" lang="en" title="English version"><svg class="ic"><use href="#g-globe"/></svg>EN</a>'
 LANG_LINK_EN = '<a class="tbtn lang" id="lang" href="../" data-base="../" hreflang="es" lang="es" title="Versión en español"><svg class="ic"><use href="#g-globe"/></svg>ES</a>'
+REF_LINK_ES = '<a class="btn" id="btnLang" href="en/reference.html" data-base="en/reference.html" hreflang="en" lang="en" title="English version">🌐 EN</a>'
+REF_LINK_EN = '<a class="btn" id="btnLang" href="../referencia.html" data-base="../referencia.html" hreflang="es" lang="es" title="Versión en español">🌐 ES</a>'
 
 PAGES = {
     "index": {
@@ -281,9 +293,52 @@ PAGES = {
         "raw": [
             ('<html lang="es">', '<html lang="en">', 1),
             (LANG_LINK_ES, LANG_LINK_EN, 1),
-            ('href="referencia.html"', 'href="../referencia.html"', 1),
+            ('href="referencia.html"', 'href="reference.html"', 1),
             ("b.textContent='Copiado ✓'", "b.textContent='Copied ✓'", 1),
             ("shown+' de '+rows.length+' pistas':rows.length+' pistas'", "shown+' of '+rows.length+' clues':rows.length+' clues'", 1),
+        ],
+    },
+    "referencia": {
+        "src": "referencia.html",
+        "out": "en/reference.html",
+        "dict": "en.referencia.json",
+        # Literales en español dentro de bloques de código (se sustituyen en el fuente ANTES de extraer)
+        "pre": "code.referencia.json",
+        # Textos que el JS de la página inserta en tiempo de ejecución
+        "raw": [
+            ('<html lang="es">', '<html lang="en">', 1),
+            (REF_LINK_ES, REF_LINK_EN, 1),
+            ("text: ['Texto', esc]", "text: ['Text', esc]", 1),
+            ('type="button">Copiar</button>', 'type="button">Copy</button>', 1),
+            ("e.target.textContent = '¡Copiado!'; setTimeout(() => e.target.textContent = 'Copiar', 1200);",
+             "e.target.textContent = 'Copied!'; setTimeout(() => e.target.textContent = 'Copy', 1200);", 1),
+            ('title="Marcar para repasar">☆</button><label title="Marcar como repasado"><input type="checkbox"> Repasado</label>',
+             'title="Mark to review again">☆</button><label title="Mark as reviewed"><input type="checkbox"> Reviewed</label>', 1),
+            ("d0: '⚡ Repaso final'", "d0: '⚡ Final review'", 1),
+            ("dx: 'Apéndice'", "dx: 'Appendix'", 1),
+            ('data-t="overview">🏁 Resumen del examen</a>', 'data-t="overview">🏁 Exam overview</a>', 1),
+            ("' temas repasados · '", "' topics reviewed · '", 1),
+            ("' tema(s) coinciden'", "' topic(s) match'", 1),
+            ("'⇕ Desplegar todo' : '⇕ Plegar todo'", "'⇕ Expand all' : '⇕ Collapse all'", 1),
+            # Marcadores de posición en español que quedan dentro de <code> en línea (el código no se traduce)
+            ("execute&lt;Entidad&gt;(…)", "execute&lt;Entity&gt;(…)", 1),
+            ("dab add &lt;entidad&gt;", "dab add &lt;entity&gt;", 1),
+            ("dab update &lt;entidad&gt;", "dab update &lt;entity&gt;", 1),
+            ("<code>&lt;entidad&gt;</code>", "<code>&lt;entity&gt;</code>", 1),
+            ("dab validate --config &lt;ruta&gt;", "dab validate --config &lt;path&gt;", 1),
+            ("<code>ON catálogo</code></td><td><code>nombre</code> · <code>(nombre, FILEGROUP fg)</code>",
+             "<code>ON catalog</code></td><td><code>name</code> · <code>(name, FILEGROUP fg)</code>", 1),
+            ("<code>SYSTEM</code> · <code>nombre</code>", "<code>SYSTEM</code> · <code>name</code>", 1),
+            ("DATABASE SCOPED CREDENTIAL::[nombre]", "DATABASE SCOPED CREDENTIAL::[name]", 1),
+            ("N'texto' [, LANGUAGE l]", "N'text' [, LANGUAGE l]", 1),
+            ("LEFT(texto, 400)", "LEFT(text, 400)", 1),
+            ("HISTORY_TABLE = schema.tabla", "HISTORY_TABLE = schema.table", 1),
+            ("WHERE col = valor", "WHERE col = value", 1),
+            ("OPTIMIZE FOR (@p = valor)", "OPTIMIZE FOR (@p = value)", 1),
+            ("<code>/api/{entidad}</code>", "<code>/api/{entity}</code>", 1),
+            ("SELECT * FROM TablaInexistente", "SELECT * FROM NonexistentTable", 1),
+            ('{ "columna": "alias" }', '{ "column": "alias" }', 1),
+            ('"rol:acciones"', '"role:actions"', 1),
         ],
     },
 }
@@ -294,9 +349,21 @@ def load_dict(page):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
-def translate(page, strict=False):
+def load_src(page):
+    """Fuente en español de la página, con los literales de código ya en inglés (si la página los define)."""
     cfg = PAGES[page]
     src = (ROOT / cfg["src"]).read_text(encoding="utf-8")
+    if cfg.get("pre"):
+        for es, en, cnt in json.loads((I18N / cfg["pre"]).read_text(encoding="utf-8")):
+            if src.count(es) != cnt:
+                raise SystemExit(f"{cfg['pre']}: «{es[:70]}» aparece {src.count(es)} veces (esperado {cnt})")
+            src = src.replace(es, en)
+    return src
+
+
+def translate(page, strict=False):
+    cfg = PAGES[page]
+    src = load_src(page)
     d = load_dict(page)
     units = extract(src)
     out, pos, missing, bad, info = [], 0, [], [], []
@@ -344,26 +411,26 @@ def cmd_build():
     return 0 if ok else 1
 
 
-def cmd_todo(page):
-    src = (ROOT / PAGES[page]["src"]).read_text(encoding="utf-8")
+def pending(page):
+    """Fragmentos únicos aún sin traducir, en orden de aparición: (fuente, [(offset, tipo, texto)])."""
+    src = load_src(page)
     d = load_dict(page)
     seen, todo = set(), []
-    for _, _, _, es in extract(src):
+    for s, _, kind, es in extract(src):
         if es not in d and es not in seen:
             seen.add(es)
-            todo.append(es)
-    print(json.dumps(todo, ensure_ascii=False, indent=0))
+            todo.append((s, kind, es))
+    return src, todo
+
+
+def cmd_todo(page):
+    print(json.dumps([es for _, _, es in pending(page)[1]], ensure_ascii=False, indent=0))
 
 
 def cmd_import(page, listfile):
     """Une la lista de traducciones (mismo orden que `todo`) con sus fragmentos y la guarda en el diccionario."""
-    src = (ROOT / PAGES[page]["src"]).read_text(encoding="utf-8")
     d = load_dict(page)
-    seen, todo = set(), []
-    for _, _, _, es in extract(src):
-        if es not in d and es not in seen:
-            seen.add(es)
-            todo.append(es)
+    todo = [es for _, _, es in pending(page)[1]]
     en = json.loads(Path(listfile).read_text(encoding="utf-8"))
     if len(en) != len(todo):
         print(f"ERROR: {len(en)} traducciones para {len(todo)} fragmentos pendientes")
@@ -374,20 +441,253 @@ def cmd_import(page, listfile):
             bad += 1
             print("   · etiquetas distintas:", es[:100].replace("\n", " "), "=>", t[:100].replace("\n", " "))
         d[es] = t
-    (I18N / PAGES[page]["dict"]).write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    save_dict(page, d)
     print(f"{len(en)} traducciones guardadas en i18n/{PAGES[page]['dict']} ({bad} con marcado distinto)")
     return 1 if bad else 0
 
 
+def save_dict(page, d):
+    (I18N / PAGES[page]["dict"]).write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+
+# --------------------------------------------------------------------------------------------
+# Traducción por lotes (varios traductores en paralelo): chunk -> verify -> merge
+#
+# Formato de texto plano, sin escapes (los fragmentos llevan HTML con comillas y barras invertidas):
+#   @@ ctx <sección › tema>        contexto informativo (se ignora al leer)
+#   @@ 0042 t                      cabecera: id y tipo (t = texto HTML, a = valor de atributo, c = comentario de código)
+#   <fragmento, puede ocupar varias líneas>
+# La respuesta usa «@@ 0042» + traducción, o «@@ 0042 =» si el fragmento se queda igual.
+# --------------------------------------------------------------------------------------------
+SENT = "@@ "
+HEAD_RE = re.compile(r"<(h[23])\b[^>]*>(.*?)</\1>", re.S)
+HDR_RE = re.compile(r"^@@ (\d{4})\b(.*)$")
+START_TAG_RE = re.compile(r"<([a-zA-Z][\w-]*)\b([^<>]*)>")
+ATTR_RE = re.compile(r"([\w:-]+)\s*=\s*(\"[^\"]*\"|'[^']*')")
+ES_STOP = set("""el la los las del que una con por para sin más como cuando solo sólo también pero está están este esta estos estas
+ desde entre sobre donde dónde según cada todo todos todas otro otra otros otras muy ya hacia pues aunque mientras tras
+ puede pueden debe deben usa usar hace hacer tiene tienen son fue ser sus cuyo cuya algo nada siempre nunca además ejemplo""".split())
+ES_CHARS = re.compile(r"[áéíóúñÁÉÍÓÚÑ¿¡]")
+WORDS_RE = re.compile(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]+")
+
+
+def heading_marks(src):
+    marks = []
+    for m in HEAD_RE.finditer(src):
+        t = re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", "", m.group(2)))).strip()
+        marks.append((m.start(), m.group(1), t[:80]))
+    return marks
+
+
+def context_at(marks, off):
+    h2 = h3 = None
+    for o, lvl, t in marks:
+        if o > off:
+            break
+        if lvl == "h2":
+            h2, h3 = t, None
+        else:
+            h3 = t
+    return " › ".join(x for x in (h2, h3) if x)
+
+
+def cmd_chunk(page, outdir, max_chars=13000):
+    src, todo = pending(page)
+    marks = heading_marks(src)
+    out = Path(outdir)
+    out.mkdir(parents=True, exist_ok=True)
+    manifest, buf, size, first, last_ctx, n = [], [], 0, None, None, 0
+
+    def flush():
+        nonlocal buf, size, first, last_ctx, n
+        if not buf:
+            return
+        name = f"c{len(manifest) + 1:03d}"
+        (out / f"{name}.es.txt").write_text("".join(buf), encoding="utf-8")
+        manifest.append({"file": name, "first": first, "last": first + n - 1, "n": n, "chars": size})
+        buf, size, first, last_ctx, n = [], 0, None, None, 0
+
+    for i, (off, kind, es) in enumerate(todo, 1):
+        if any(ln.startswith(SENT) for ln in es.split("\n")):
+            raise SystemExit(f"fragmento {i} contiene una línea que empieza por «@@ »")
+        if size + len(es) > max_chars and buf:
+            flush()
+        if first is None:
+            first = i
+        ctx = context_at(marks, off)
+        if ctx and ctx != last_ctx:
+            buf.append(f"{SENT}ctx {ctx}\n")
+            last_ctx = ctx
+        buf.append(f"{SENT}{i:04d} {kind}\n{es}\n")
+        size += len(es)
+        n += 1
+    flush()
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
+    print(f"{len(todo)} fragmentos pendientes -> {len(manifest)} lotes en {out}")
+
+
+def parse_entries(path):
+    """Lee un lote: {id: (tipo, texto, igual)} (tipo vacío en las respuestas)."""
+    entries, cur = {}, None
+    for line in Path(path).read_text(encoding="utf-8").replace("\r\n", "\n").split("\n"):
+        m = HDR_RE.match(line)
+        if m:
+            rest = m.group(2).split()
+            kind = next((t for t in rest if t in ("t", "a", "c")), "")
+            cur = int(m.group(1))
+            entries[cur] = [kind, [], "=" in rest]
+            continue
+        if line.startswith(SENT):
+            cur = None
+            continue
+        if cur is not None:
+            entries[cur][1].append(line)
+    return {k: (v[0], "\n".join(v[1]).strip(), v[2]) for k, v in entries.items()}
+
+
+def start_tags(fragment):
+    """Etiquetas de apertura con sus atributos, sin el valor de los atributos traducibles."""
+    res = []
+    for m in START_TAG_RE.finditer(fragment):
+        attrs = []
+        for a in ATTR_RE.finditer(m.group(2)):
+            name = a.group(1).lower()
+            attrs.append((name, "*" if name in ATTRS else a.group(2)))
+        res.append((m.group(1).lower(), tuple(sorted(attrs))))
+    return res
+
+
+def plain(fragment, keep_code=False):
+    if not keep_code:
+        fragment = re.sub(r"<code[^>]*>.*?</code>", " ", fragment, flags=re.S)
+    return unescape(re.sub(r"<[^>]*>", " ", fragment))
+
+
+def numbers(fragment):
+    return sorted(re.findall(r"\d+", plain(re.sub(r"&#?\w+;", " ", fragment), keep_code=True)))
+
+
+def spanish_hits(fragment):
+    text = plain(fragment)
+    hits = set(ES_CHARS.findall(text))
+    for w in WORDS_RE.findall(text):
+        if (w.islower() or w.istitle()) and w.lower() in ES_STOP:
+            hits.add(w.lower())
+    return sorted(hits)
+
+
+def check_pair(kind, es, en):
+    """Devuelve (errores, avisos) de una traducción."""
+    err, warn = [], []
+    if not en:
+        return ["vacío"], warn
+    if kind in ("a", "c"):
+        if "\n" in en:
+            err.append("el fragmento debe ir en una sola línea")
+        if kind == "a" and '"' in en:
+            err.append('un atributo no puede llevar comillas dobles (usa &quot;)')
+        if kind == "a" and "<" in en:
+            err.append("un atributo no puede llevar «<»")
+    if kind in ("t", ""):
+        (tes, ces), (ten, cen) = skeleton(es), skeleton(en)
+        if tes != ten:
+            err.append(f"etiquetas distintas: {[('/' if a else '') + b for a, b in tes]} => {[('/' if a else '') + b for a, b in ten]}")
+        elif start_tags(es) != start_tags(en):
+            err.append("atributos de etiquetas modificados (solo se traducen title, aria-label, placeholder, alt, data-title, data-short)")
+        elif ces != cen:
+            warn.append(f"código modificado: {ces} => {cen}")
+        if "<" in re.sub(r"<[^>]*>", "", en):
+            err.append("«<» suelto fuera de una etiqueta (usa &lt;)")
+        bare = lambda f: len(re.findall(r"&(?!#?\w+;)", re.sub(r"<[^>]*>", "", f)))
+        if bare(en) > bare(es):
+            err.append("«&» suelto (usa &amp;)")
+    if numbers(es) != numbers(en):
+        a, b = numbers(es), numbers(en)
+        only_es = [x for x in a if x not in b or a.count(x) > b.count(x)]
+        only_en = [x for x in b if x not in a or b.count(x) > a.count(x)]
+        warn.append(f"números distintos: solo ES {sorted(set(only_es))} / solo EN {sorted(set(only_en))}")
+    if es == en and spanish_hits(es):
+        warn.append(f"sin traducir (señales de español: {spanish_hits(es)})")
+    elif es != en:
+        h = spanish_hits(en)
+        if h:
+            warn.append(f"posible español residual: {h}")
+        if len(es) > 80 and not (0.4 <= len(en) / len(es) <= 2.4):
+            warn.append(f"longitud sospechosa: {len(es)} => {len(en)}")
+    return err, warn
+
+
+def verify_files(es_path, en_path, show=True):
+    es_entries, en_entries = parse_entries(es_path), parse_entries(en_path)
+    problems, good = [], {}
+    for i in sorted(set(es_entries) | set(en_entries)):
+        if i not in en_entries:
+            problems.append((i, ["falta en la respuesta"], []))
+            continue
+        if i not in es_entries:
+            problems.append((i, ["id que no existe en el lote"], []))
+            continue
+        kind, es, _ = es_entries[i]
+        _, en, same = en_entries[i]
+        if same:
+            en = es
+        err, warn = check_pair(kind, es, en)
+        if err or warn:
+            problems.append((i, err, warn))
+        if not err:
+            good[es] = en
+    n_err = sum(1 for p in problems if p[1])
+    n_warn = sum(1 for p in problems if p[2] and not p[1])
+    if show:
+        for i, err, warn in problems:
+            kind, es, _ = es_entries.get(i, ("", "", False))
+            en = en_entries.get(i, ("", "", False))
+            en = es if en[2] else en[1]
+            for e in err:
+                print(f"ERROR  {i:04d}: {e}")
+            for w in warn:
+                print(f"aviso  {i:04d}: {w}")
+            if err or warn:
+                print(f"       ES: {es[:300]!r}\n       EN: {en[:300]!r}")
+        print(f"{len(es_entries)} fragmentos · {len(en_entries)} traducidos · {n_err} con ERROR · {n_warn} solo con avisos")
+    return good, n_err
+
+
+def cmd_verify(es_path, en_path):
+    return 1 if verify_files(es_path, en_path)[1] else 0
+
+
+def cmd_merge(page, es_path, en_path):
+    good, n_err = verify_files(es_path, en_path, show="-q" not in sys.argv)
+    d = load_dict(page)
+    d.update(good)
+    save_dict(page, d)
+    print(f"{len(good)} traducciones añadidas a i18n/{PAGES[page]['dict']} ({n_err} rechazadas con ERROR)")
+    return 1 if n_err else 0
+
+
+def cmd_status(page):
+    src, todo = pending(page)
+    total = len({u[3] for u in extract(src)})
+    print(f"{page}: {total} fragmentos únicos · {total - len(todo)} traducidos · {len(todo)} pendientes")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "build"
-    if cmd == "build":
+    args = [a for a in sys.argv[2:] if not a.startswith("-")]
+    if cmd == "build" or cmd == "check":
         sys.exit(cmd_build())
-    if cmd == "todo":
-        cmd_todo(sys.argv[2] if len(sys.argv) > 2 else "index")
+    elif cmd == "todo":
+        cmd_todo(args[0] if args else "index")
     elif cmd == "import":
-        sys.exit(cmd_import(sys.argv[2], sys.argv[3]))
-    elif cmd == "check":
-        sys.exit(cmd_build())
+        sys.exit(cmd_import(args[0], args[1]))
+    elif cmd == "chunk":
+        cmd_chunk(args[0], args[1], int(args[2]) if len(args) > 2 else 13000)
+    elif cmd == "verify":
+        sys.exit(cmd_verify(args[0], args[1]))
+    elif cmd == "merge":
+        sys.exit(cmd_merge(args[0], args[1], args[2]))
+    elif cmd == "status":
+        cmd_status(args[0] if args else "index")
     else:
         print(__doc__)

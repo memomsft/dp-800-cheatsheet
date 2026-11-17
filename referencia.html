@@ -52,7 +52,7 @@ a:hover{text-decoration:underline}
 .search button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px 6px}
 .toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
 .btn{border:1px solid var(--border);background:var(--panel-2);color:var(--text);border-radius:8px;padding:5px 9px;font:inherit;font-size:12px;cursor:pointer}
-.btn:hover{border-color:var(--accent)}
+.btn:hover{border-color:var(--accent);text-decoration:none}
 .btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .overall{margin:4px 0 12px;font-size:11.5px;color:var(--muted)}
 .bar{height:6px;border-radius:99px;background:var(--panel-2);overflow:hidden;margin-bottom:4px;border:1px solid var(--border)}
@@ -313,6 +313,7 @@ ol.steps>li:before{background:var(--accent)}
       <button class="btn" id="btnHideDone" title="Ocultar temas ya repasados">✓ Ocultar repasados</button>
       <button class="btn" id="btnFold" title="Plegar / desplegar todos los temas">⇕ Plegar todo</button>
       <button class="btn" id="btnPrintQuick" title="Imprimir / guardar como PDF solo las hojas rápidas ⚡">🖨️ Imprimir ⚡</button>
+      <a class="btn" id="btnLang" href="en/reference.html" data-base="en/reference.html" hreflang="en" lang="en" title="English version">🌐 EN</a>
     </div>
     <div class="overall"><div class="bar"><span id="overallBar"></span></div><span id="overallTxt"></span></div>
     <div class="result-count" id="resultCount"></div>
@@ -6320,7 +6321,7 @@ dab configure --show-effective-permissions</code></pre>
       <thead><tr><th>Parámetro serverless</th><th>Valores</th><th>Default</th></tr></thead>
       <tbody>
         <tr><td>Min vCores</td><td>Depende del max vCores elegido</td><td>0.5</td></tr>
-        <tr><td>Max vCores</td><td>Autoscale hasta 80 vCores; memoria hasta 24 GB por vCore (máx. 240 GB)</td><td>—</td></tr>
+        <tr><td>Max vCores</td><td>Autoscale hasta 80 vCores; memoria hasta 3 GB por vCore (máx. 240 GB)</td><td>—</td></tr>
         <tr><td>Auto-pause delay · GP</td><td>15–10,080 min (7 días), pasos de 1 min; <code>-1</code> = desactivar</td><td>60 min</td></tr>
         <tr><td>Auto-pause delay · Hyperscale <span class="tag preview">Preview</span></td><td>60–10,080 min; <code>-1</code> = desactivar</td><td>60 min</td></tr>
       </tbody>
@@ -11450,6 +11451,13 @@ function spy() {
 }
 
 decorateCode(); decorateTopics(); buildNav(); refreshProgress(); spy();
+
+/* Selector de idioma: conserva la sección en la que estás (también con clic central o «abrir en pestaña nueva») */
+const langBtn = $('#btnLang');
+if (langBtn) {
+  const upd = () => { const a = $('#nav a.active'); langBtn.href = langBtn.dataset.base + (a ? '#' + a.dataset.t : ''); };
+  ['pointerenter', 'focus', 'click', 'auxclick'].forEach(ev => langBtn.addEventListener(ev, upd));
+}
 if (location.hash) { const t = $(location.hash); if (t && t.classList && t.classList.contains('collapsed')) t.classList.remove('collapsed'); }
 })();
 </script>
